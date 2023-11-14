@@ -49,7 +49,7 @@ public class UserRole {
 		final int prime = 31;
 		
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
 		
 		return result;
 	}
@@ -66,15 +66,15 @@ public class UserRole {
 		
 		UserRole other = (UserRole) obj;
 		
-		if (id != other.id) {
+		if (getId() != other.getId()) {
 			return false;
 		}
 		
-		if (name == null) {
-			if (other.name != null) {
+		if (getName() == null) {
+			if (other.getName() != null) {
 				return false;
 			}
-		} else if (!name.equals(other.name)) {
+		} else if (!getName().equals(other.getName())) {
 			return false;
 		}
 		

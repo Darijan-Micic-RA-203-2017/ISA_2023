@@ -266,8 +266,8 @@ public abstract class User {
 		final int prime = 29;
 		int result = 1;
 		
-		result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((getEmailAddress() == null) ? 0 : getEmailAddress().hashCode());
+		result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
 		
 		return result;
 	}
@@ -284,31 +284,23 @@ public abstract class User {
 		
 		User other = (User) obj;
 		
-		if (id != other.id) {
+		if (getId() != other.getId()) {
 			return false;
 		}
 		
-		if (roles == null) {
-			if (other.roles != null) {
+		if (getEmailAddress() == null) {
+			if (other.getEmailAddress() != null) {
 				return false;
 			}
-		} else if (!roles.equals(other.roles)) {
+		} else if (!getEmailAddress().equals(other.getEmailAddress())) {
 			return false;
 		}
 		
-		if (emailAddress == null) {
-			if (other.emailAddress != null) {
+		if (getUsername() == null) {
+			if (other.getUsername() != null) {
 				return false;
 			}
-		} else if (!emailAddress.equals(other.emailAddress)) {
-			return false;
-		}
-		
-		if (username == null) {
-			if (other.username != null) {
-				return false;
-			}
-		} else if (!username.equals(other.username)) {
+		} else if (!getUsername().equals(other.getUsername())) {
 			return false;
 		}
 		
