@@ -3,12 +3,16 @@ package ftn.project.ISAMedicalEquipmentBackend.domain.user;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 
 @Entity
 @Table(name = "procurement_managers")
@@ -23,6 +27,9 @@ public class ProcurementManagerOfHospital extends User {
 	@JoinColumn(name = "loyalty_program_id")
 	private LoyaltyProgram loyaltyProgram;
 	
+	@OneToMany(mappedBy = "procurementManager", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Complaint> complaints;
+	
 	public ProcurementManagerOfHospital() {}
 	
 	public ProcurementManagerOfHospital(long id, Set<UserRole> roles, boolean isEnabled, 
@@ -30,7 +37,8 @@ public class ProcurementManagerOfHospital extends User {
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, 
 			String personalIdentityNumber, Gender gender, String profession, String companyName, 
-			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram) {
+			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram, 
+			Set<Complaint> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
@@ -38,6 +46,7 @@ public class ProcurementManagerOfHospital extends User {
 		this.penaltyPoints = penaltyPoints;
 		this.loyaltyPoints = loyaltyPoints;
 		this.loyaltyProgram = loyaltyProgram;
+		this.complaints = complaints;
 	}
 	
 	public int getPenaltyPoints() {
@@ -62,5 +71,13 @@ public class ProcurementManagerOfHospital extends User {
 	
 	public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
 		this.loyaltyProgram = loyaltyProgram;
+	}
+	
+	public Set<Complaint> getComplaints() {
+		return complaints;
+	}
+	
+	public void setComplaints(Set<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 }
