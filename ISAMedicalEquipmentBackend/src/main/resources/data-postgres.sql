@@ -96,7 +96,7 @@ INSERT INTO Medical_equipment_companies(id, name, address, description, average_
 	'najvećih farmaceutskih kompanija u celoj Latinskoj Americi.', CHR(10), 
 	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
 	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
-	'medicinska sredstva.', 4.0);
+	'medicinska sredstva.'), 4.0, 'Ponedeljak – petak: 08:00 – 17:00');
 INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade) VALUES (2, 
 	'Apotekarska ustanova Janković', 'Dr. Ilije Đuričića 2A, 21000 Novi Sad', 
 	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
@@ -112,4 +112,6 @@ INSERT INTO Medical_equipment_companies(id, name, address, description, average_
 	'Pored izuzetne snabdevenosti lekovima i medicinskim sredstvima, nudimo i širok asortiman ', 
 	'dijetetskih suplemenata, kozmetike, opreme za bebe. Izdajemo lekove na recept civilnim i ', 
 	'vojnim osiguranicima, izrađujemo magistralne lekove, podeljene praškove i galenske lekove. ', 
-	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.', 4.5);
+	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 4.5, 
+	CONCAT('Ponedeljak - petak: 07:30 - 21:30;', CHR(10), 'Subota: 07:30 - 21:30;', CHR(10), 
+	'Nedelja: 07:30 - 21:30'));

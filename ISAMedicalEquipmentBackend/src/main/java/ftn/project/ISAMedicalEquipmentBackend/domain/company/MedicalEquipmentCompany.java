@@ -36,6 +36,9 @@ public class MedicalEquipmentCompany {
 	@Column(name = "average_grade", nullable = false)
 	private double averageGrade;
 	
+	@Column(name = "work_time", nullable = false)
+	private String workTime;
+	
 	@OneToMany(mappedBy="company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<MedicalEquipment> equipment;
 	
@@ -48,13 +51,14 @@ public class MedicalEquipmentCompany {
 	public MedicalEquipmentCompany() {}
 	
 	public MedicalEquipmentCompany(long id, String name, String address, String description, 
-			double averageGrade, Set<MedicalEquipment> equipment, 
+			double averageGrade, String workTime, Set<MedicalEquipment> equipment, 
 			Set<ExchangeTerm> unoccupiedExchangeTerms, Set<CompanyAdministrator> administrators) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
 		this.averageGrade = averageGrade;
+		this.workTime = workTime;
 		this.equipment = equipment;
 		this.unoccupiedExchangeTerms = unoccupiedExchangeTerms;
 		this.administrators = administrators;
@@ -98,6 +102,14 @@ public class MedicalEquipmentCompany {
 	
 	public void setAverageGrade(double averageGrade) {
 		this.averageGrade = averageGrade;
+	}
+	
+	public String getWorkTime() {
+		return workTime;
+	}
+	
+	public void setWorkTime(String workTime) {
+		this.workTime = workTime;
 	}
 	
 	public Set<MedicalEquipment> getEquipment() {
