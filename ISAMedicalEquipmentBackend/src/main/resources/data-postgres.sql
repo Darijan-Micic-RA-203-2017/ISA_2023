@@ -78,3 +78,9 @@ SELECT SETVAL('user_ids_sequence', (
 				SELECT COALESCE(MAX(SA.id), 1) AS id FROM System_administrators SA
 		) AS max_id
 ));
+
+-- Loyalty programs:
+INSERT INTO Loyalty_programs(id, name, necessary_points, 
+	points_gained_for_each_successful_exchange) VALUES (1, 'Osnovni', 0, 2);
+INSERT INTO Loyalty_programs(id, name, necessary_points, 
+	points_gained_for_each_successful_exchange) VALUES (2, 'Srebrni', 6, 3);
