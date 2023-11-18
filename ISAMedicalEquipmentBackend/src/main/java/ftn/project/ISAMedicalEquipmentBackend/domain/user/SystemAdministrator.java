@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "system_administrators")
 public class SystemAdministrator extends User {
-	@Column(name = "since", nullable = false)
+	@Column(name = "employed_since", nullable = false)
 	private Timestamp employedSince;
 	
 	public SystemAdministrator() {}
