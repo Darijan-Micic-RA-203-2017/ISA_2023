@@ -41,7 +41,8 @@ INSERT INTO Company_administrators(id, is_enabled, user_code, email_address, use
 	'milana.urosevic@gmail.com', 'MilanaUrosevic1991', 
 	'$2a$10$ioMKVjvTZ2qqh4fKKOZnIu8IbqdeGjyEWRKynikFNWVOldEzBPE3u', '2023-11-13 14:27:00.508-07', 
 	'Milana', 'Urošević', 'Laze Nančića 22', 'Novi Sad', 'Srbija', '+381 63682738', 
-	'1708991620486', 'FEMALE', 'Administrator kompanije', 'Janković', 2, 0, 0, 1);
+	'1708991620486', 'FEMALE', 'Administrator kompanije', 'Apotekarska ustanova Janković', 
+	2, 0, 0, 1);
 
 -- System administrators:
 -- Password for this user is 'oLukic1990'.
@@ -84,3 +85,31 @@ INSERT INTO Loyalty_programs(id, name, necessary_points,
 	points_gained_for_each_successful_exchange) VALUES (1, 'Osnovni', 0, 2);
 INSERT INTO Loyalty_programs(id, name, necessary_points, 
 	points_gained_for_each_successful_exchange) VALUES (2, 'Srebrni', 6, 3);
+
+-- Medical equipment companies:
+-- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
+INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade) VALUES (1, 
+	'Galenika', 'Batajnički drum b.b., 11080 Beograd - Zemun', 
+	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
+	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
+	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
+	'najvećih farmaceutskih kompanija u celoj Latinskoj Americi.', CHR(10), 
+	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
+	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
+	'medicinska sredstva.', 4.0);
+INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade) VALUES (2, 
+	'Apotekarska ustanova Janković', 'Dr. Ilije Đuričića 2A, 21000 Novi Sad', 
+	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
+	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 
+	'omogućila je da postanemo jedna od najpoznatijih i najposećenijih apoteka.', CHR(10), 
+	'Apotekarsku ustanovu "Janković" možete posetiti na čak 150 lokacija, širom Vojvodine i ', 
+	'dela centralne Srbije.', CHR(10), 
+	'Naš ceo stručni tim od preko 600 članova, koji se sastoji od farmaceutskih tehničara, ', 
+	'diplomiranih farmaceuta, magistara farmacije, specijalista i doktora nauka, stoji Vam na ', 
+	'raspolaganju. Konstantnim edukacijama, stručnim usavršavanjima, praćenjem inovacija na ', 
+	'globalnom nivou, trudimo se da prenesemo znanje, pomognemo u očuvanju i poboljšanju ', 
+	'zdravlja, ali i da povećamo svest o zdravom životu.', CHR(10), 
+	'Pored izuzetne snabdevenosti lekovima i medicinskim sredstvima, nudimo i širok asortiman ', 
+	'dijetetskih suplemenata, kozmetike, opreme za bebe. Izdajemo lekove na recept civilnim i ', 
+	'vojnim osiguranicima, izrađujemo magistralne lekove, podeljene praškove i galenske lekove. ', 
+	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.', 4.5);
