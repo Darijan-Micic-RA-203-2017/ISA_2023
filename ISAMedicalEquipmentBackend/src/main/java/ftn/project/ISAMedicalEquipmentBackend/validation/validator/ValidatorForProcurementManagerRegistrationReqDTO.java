@@ -28,7 +28,7 @@ public class ValidatorForProcurementManagerRegistrationReqDTO implements Validat
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return ValidatorForProcurementManagerRegistrationReqDTO.class.isAssignableFrom(clazz);
+		return ProcurementManagerRegistrationReqDTO.class.isAssignableFrom(clazz);
 	}
 	
 	@Override
