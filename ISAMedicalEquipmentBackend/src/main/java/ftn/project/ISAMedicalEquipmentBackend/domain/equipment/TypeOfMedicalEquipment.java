@@ -15,7 +15,7 @@ public class TypeOfMedicalEquipment {
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, columnDefinition = "text")
 	private String name;
 	
 	public TypeOfMedicalEquipment() {}
