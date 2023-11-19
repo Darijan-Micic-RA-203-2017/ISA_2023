@@ -1,0 +1,75 @@
+package ftn.project.ISAMedicalEquipmentBackend.controller.equipment;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
+import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
+import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipmentService;
+import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
+
+@RestController
+@RequestMapping(path = "/medical-equipment", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MedicalEquipmentController {
+	private final MedicalEquipmentService medicalEquipmentService;
+	
+	@Autowired
+	public MedicalEquipmentController(
+			MedicalEquipmentService medicalEquipmentService) {
+		this.medicalEquipmentService = medicalEquipmentService;
+	}
+	
+	@GetMapping(path = "")
+	public ResponseEntity<List<MedicalEquipment>> findAll() {
+		List<MedicalEquipment> allMedicalEquipment = medicalEquipmentService.findAll();
+		
+		return new ResponseEntity<List<MedicalEquipment>>(allMedicalEquipment, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<MedicalEquipment> findById(@PathVariable(name = "id") String id) {
+		MedicalEquipment existingMedicalEquipment = null;
+		
+		long idAsLong = 0;
+		try {
+			idAsLong = Long.parseLong(id);
+		} catch (NumberFormatException nFE) {
+			return new ResponseEntity<MedicalEquipment>(existingMedicalEquipment, 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		existingMedicalEquipment = medicalEquipmentService.findById(idAsLong);
+		if (existingMedicalEquipment == null) {
+			return new ResponseEntity<MedicalEquipment>(existingMedicalEquipment, 
+					HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<MedicalEquipment>(existingMedicalEquipment, 
+				HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/search-by-name", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MedicalEquipment>> searchByName(
+			@RequestBody SearchCriterionDTO searchCriterionDTO) {
+		List<MedicalEquipment> equipment = null;
+		
+		String validationMessages = ValidationPerformer.getValidationMessages(searchCriterionDTO);
+		if (validationMessages != null) {
+			return new ResponseEntity<List<MedicalEquipment>>(equipment, HttpStatus.BAD_REQUEST);
+		}
+		
+		equipment = medicalEquipmentService.searchByName(searchCriterionDTO);
+		
+		return new ResponseEntity<List<MedicalEquipment>>(equipment, HttpStatus.OK);
+	}
+}

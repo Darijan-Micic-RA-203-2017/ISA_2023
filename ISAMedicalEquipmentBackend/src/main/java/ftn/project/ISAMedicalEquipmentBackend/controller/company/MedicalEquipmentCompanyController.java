@@ -31,10 +31,10 @@ public class MedicalEquipmentCompanyController {
 	
 	@GetMapping(path = "")
 	public ResponseEntity<List<MedicalEquipmentCompany>> findAll() {
-		List<MedicalEquipmentCompany> allMedicalEquipmentCompanys = 
+		List<MedicalEquipmentCompany> allMedicalEquipmentCompanies = 
 				medicalEquipmentCompanyService.findAll();
 		
-		return new ResponseEntity<List<MedicalEquipmentCompany>>(allMedicalEquipmentCompanys, 
+		return new ResponseEntity<List<MedicalEquipmentCompany>>(allMedicalEquipmentCompanies, 
 				HttpStatus.OK);
 	}
 	
@@ -64,17 +64,17 @@ public class MedicalEquipmentCompanyController {
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicalEquipmentCompany>> searchByNameOrPopulatedPlace(
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
-		List<MedicalEquipmentCompany> centres = null;
+		List<MedicalEquipmentCompany> companies = null;
 		
 		String validationMessages = ValidationPerformer.getValidationMessages(searchCriterionDTO);
 		if (validationMessages != null) {
-			return new ResponseEntity<List<MedicalEquipmentCompany>>(centres, 
+			return new ResponseEntity<List<MedicalEquipmentCompany>>(companies, 
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		centres = medicalEquipmentCompanyService.searchByNameOrPopulatedPlace(searchCriterionDTO);
+		companies = medicalEquipmentCompanyService.searchByNameOrPopulatedPlace(searchCriterionDTO);
 		
-		return new ResponseEntity<List<MedicalEquipmentCompany>>(centres, 
+		return new ResponseEntity<List<MedicalEquipmentCompany>>(companies, 
 				HttpStatus.OK);
 	}
 }
