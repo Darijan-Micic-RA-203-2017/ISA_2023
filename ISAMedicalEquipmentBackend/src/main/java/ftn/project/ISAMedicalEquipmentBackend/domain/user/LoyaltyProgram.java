@@ -1,15 +1,10 @@
 package ftn.project.ISAMedicalEquipmentBackend.domain.user;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,18 +24,14 @@ public class LoyaltyProgram {
 	@Column(name = "points_gained_for_each_successful_exchange", nullable = false)
 	private int pointsGainedForEachSuccessfulExchange;
 	
-	@OneToMany(mappedBy = "loyaltyProgram", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<User> users;
-	
 	public LoyaltyProgram() {}
 	
 	public LoyaltyProgram(long id, String name, int necessaryPoints, 
-			int pointsGainedForEachSuccessfulExchange, Set<User> users) {
+			int pointsGainedForEachSuccessfulExchange) {
 		this.id = id;
 		this.name = name;
 		this.necessaryPoints = necessaryPoints;
 		this.pointsGainedForEachSuccessfulExchange = pointsGainedForEachSuccessfulExchange;
-		this.users = users;
 	}
 	
 	public long getId() {
@@ -73,14 +64,6 @@ public class LoyaltyProgram {
 	
 	public void setPointsGainedForEachSuccessfulExchange(int pointsGainedForEachSuccessfulExchange) {
 		this.pointsGainedForEachSuccessfulExchange = pointsGainedForEachSuccessfulExchange;
-	}
-	
-	public Set<User> getUsers() {
-		return users;
-	}
-	
-	public void setUsers(Set<User> users) {
-		this.users = users;
 	}
 	
 	@Override
