@@ -27,8 +27,14 @@ public class MedicalEquipmentCompany {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "address", nullable = false)
-	private String address;
+	@Column(name = "street_and_number", nullable = false)
+	private String streetAndNumber;
+	
+	@Column(name = "populated_place", nullable = false)
+	private String populatedPlace;
+	
+	@Column(name = "country", nullable = false)
+	private String country;
 	
 	@Column(name = "description", nullable = false, columnDefinition = "text")
 	private String description;
@@ -50,12 +56,15 @@ public class MedicalEquipmentCompany {
 	
 	public MedicalEquipmentCompany() {}
 	
-	public MedicalEquipmentCompany(long id, String name, String address, String description, 
-			double averageGrade, String workTime, Set<MedicalEquipment> equipment, 
+	public MedicalEquipmentCompany(long id, String name, String streetAndNumber, 
+			String populatedPlace, String country, String description, double averageGrade, 
+			String workTime, Set<MedicalEquipment> equipment, 
 			Set<ExchangeTerm> unoccupiedExchangeTerms, Set<CompanyAdministrator> administrators) {
 		this.id = id;
 		this.name = name;
-		this.address = address;
+		this.streetAndNumber = streetAndNumber;
+		this.populatedPlace = populatedPlace;
+		this.country = country;
 		this.description = description;
 		this.averageGrade = averageGrade;
 		this.workTime = workTime;
@@ -80,12 +89,28 @@ public class MedicalEquipmentCompany {
 		this.name = name;
 	}
 	
-	public String getAddress() {
-		return address;
+	public String getStreetAndNumber() {
+		return streetAndNumber;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreetAndNumber(String streetAndNumber) {
+		this.streetAndNumber = streetAndNumber;
+	}
+	
+	public String getPopulatedPlace() {
+		return populatedPlace;
+	}
+	
+	public void setPopulatedPlace(String populatedPlace) {
+		this.populatedPlace = populatedPlace;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	public String getDescription() {
@@ -142,6 +167,11 @@ public class MedicalEquipmentCompany {
 		int result = 1;
 		
 		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		result = prime * result + 
+				((getStreetAndNumber() == null) ? 0 : getStreetAndNumber().hashCode());
+		result = prime * result + 
+				((getPopulatedPlace() == null) ? 0 : getPopulatedPlace().hashCode());
+		result = prime * result + ((getCountry() == null) ? 0 : getCountry().hashCode());
 		long temp = Double.doubleToLongBits(getAverageGrade());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		
@@ -169,6 +199,30 @@ public class MedicalEquipmentCompany {
 				return false;
 			}
 		} else if (!getName().equals(other.getName())) {
+			return false;
+		}
+		
+		if (getStreetAndNumber() == null) {
+			if (other.getStreetAndNumber() != null) {
+				return false;
+			}
+		} else if (!getStreetAndNumber().equals(other.getStreetAndNumber())) {
+			return false;
+		}
+		
+		if (getPopulatedPlace() == null) {
+			if (other.getPopulatedPlace() != null) {
+				return false;
+			}
+		} else if (!getPopulatedPlace().equals(other.getPopulatedPlace())) {
+			return false;
+		}
+		
+		if (getCountry() == null) {
+			if (other.getCountry() != null) {
+				return false;
+			}
+		} else if (!getCountry().equals(other.getCountry())) {
 			return false;
 		}
 		

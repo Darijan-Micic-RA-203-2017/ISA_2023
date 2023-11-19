@@ -3,18 +3,23 @@ package ftn.project.ISAMedicalEquipmentBackend.dto.company;
 public class MedicalEquipmentCompanyDTO {
 	private long id;
 	private String name;
-	private String address;
+	private String streetAndNumber;
+	private String populatedPlace;
+	private String country;
 	private String description;
 	private double averageGrade;
 	private String workTime;
 	
 	public MedicalEquipmentCompanyDTO() {}
 	
-	public MedicalEquipmentCompanyDTO(long id, String name, String address, String description, 
-			double averageGrade, String workTime) {
+	public MedicalEquipmentCompanyDTO(long id, String name, String streetAndNumber, 
+			String populatedPlace, String country, String description, double averageGrade, 
+			String workTime) {
 		this.id = id;
 		this.name = name;
-		this.address = address;
+		this.streetAndNumber = streetAndNumber;
+		this.populatedPlace = populatedPlace;
+		this.country = country;
 		this.description = description;
 		this.averageGrade = averageGrade;
 		this.workTime = workTime;
@@ -36,12 +41,28 @@ public class MedicalEquipmentCompanyDTO {
 		this.name = name;
 	}
 	
-	public String getAddress() {
-		return address;
+	public String getStreetAndNumber() {
+		return streetAndNumber;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreetAndNumber(String streetAndNumber) {
+		this.streetAndNumber = streetAndNumber;
+	}
+	
+	public String getPopulatedPlace() {
+		return populatedPlace;
+	}
+	
+	public void setPopulatedPlace(String populatedPlace) {
+		this.populatedPlace = populatedPlace;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	public String getDescription() {

@@ -6,8 +6,9 @@ INSERT INTO Loyalty_programs(id, name, necessary_points,
 
 -- Medical equipment companies:
 -- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
-INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade, work_time) 
-	VALUES (1, 'Galenika', 'Batajnički drum b.b., 11080 Beograd - Zemun', 
+INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
+	description, average_grade, work_time) VALUES (1, 'Galenika', 'Batajnički drum b.b.', 'Zemun', 
+	'Srbija', 
 	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
 	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
 	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
@@ -15,8 +16,9 @@ INSERT INTO Medical_equipment_companies(id, name, address, description, average_
 	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
 	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
 	'medicinska sredstva.'), 0.0, 'Ponedeljak – petak: 08:00 – 17:00');
-INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade, work_time) 
-	VALUES (2, 'Apotekarska ustanova Janković', 'Dr. Ilije Đuričića 2A, 21000 Novi Sad', 
+INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
+	description, average_grade, work_time) VALUES (2, 'Apotekarska ustanova Janković', 
+	'Dr. Ilije Đuričića 2A', 'Novi Sad', 'Srbija', 
 	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
 	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 
 	'omogućila je da postanemo jedna od najpoznatijih i najposećenijih apoteka.', CHR(10), 
