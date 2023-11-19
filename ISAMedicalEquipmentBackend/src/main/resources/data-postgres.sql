@@ -1,3 +1,39 @@
+-- Loyalty programs:
+INSERT INTO Loyalty_programs(id, name, necessary_points, 
+	points_gained_for_each_successful_exchange) VALUES (1, 'Osnovni', 0, 2);
+INSERT INTO Loyalty_programs(id, name, necessary_points, 
+	points_gained_for_each_successful_exchange) VALUES (2, 'Srebrni', 6, 3);
+
+-- Medical equipment companies:
+-- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
+INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade, work_time) 
+	VALUES (1, 'Galenika', 'Batajnički drum b.b., 11080 Beograd - Zemun', 
+	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
+	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
+	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
+	'najvećih farmaceutskih kompanija u celoj Latinskoj Americi.', CHR(10), 
+	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
+	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
+	'medicinska sredstva.'), 4.0, 'Ponedeljak – petak: 08:00 – 17:00');
+INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade, work_time) 
+	VALUES (2, 'Apotekarska ustanova Janković', 'Dr. Ilije Đuričića 2A, 21000 Novi Sad', 
+	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
+	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 
+	'omogućila je da postanemo jedna od najpoznatijih i najposećenijih apoteka.', CHR(10), 
+	'Apotekarsku ustanovu "Janković" možete posetiti na čak 150 lokacija, širom Vojvodine i ', 
+	'dela centralne Srbije.', CHR(10), 
+	'Naš ceo stručni tim od preko 600 članova, koji se sastoji od farmaceutskih tehničara, ', 
+	'diplomiranih farmaceuta, magistara farmacije, specijalista i doktora nauka, stoji Vam na ', 
+	'raspolaganju. Konstantnim edukacijama, stručnim usavršavanjima, praćenjem inovacija na ', 
+	'globalnom nivou, trudimo se da prenesemo znanje, pomognemo u očuvanju i poboljšanju ', 
+	'zdravlja, ali i da povećamo svest o zdravom životu.', CHR(10), 
+	'Pored izuzetne snabdevenosti lekovima i medicinskim sredstvima, nudimo i širok asortiman ', 
+	'dijetetskih suplemenata, kozmetike, opreme za bebe. Izdajemo lekove na recept civilnim i ', 
+	'vojnim osiguranicima, izrađujemo magistralne lekove, podeljene praškove i galenske lekove. ', 
+	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 4.5, 
+	CONCAT('Ponedeljak - petak: 07:30 - 21:30;', CHR(10), 'Subota: 07:30 - 21:30;', CHR(10), 
+	'Nedelja: 07:30 - 21:30'));
+
 -- Procurement managers of hospitals:
 -- Password for this user is 'pBorisavljevic1999'.
 INSERT INTO Procurement_managers(id, is_enabled, user_code, email_address, username, password, 
@@ -8,7 +44,7 @@ INSERT INTO Procurement_managers(id, is_enabled, user_code, email_address, usern
 	'pavle.borisavljevic@gmail.com', 'PavleBorisavljevic1999', 
 	'$2a$10$4MBoCfFOa8U0OrT8ZC34ZOhFAwh8MHpF7fMnXFurJX1VpbVvUsktq', '2023-11-11 09:35:00.508-07', 
 	'Pavle', 'Borisavljević', 'Fruškogorska 37', 'Novi Sad', 'Srbija', '+381 63569456', 
-	'0601999710135', 'MALE', 'Šef nabavke', 'Klinički centar Vojvodine', 0, 0, 1);
+	'0601999710135', 'MALE', 'Šef nabavke', 'Klinički centar Vojvodine', 0, 2, 1);
 -- Password for this user is 'dMilosevic2000'.
 INSERT INTO Procurement_managers(id, is_enabled, user_code, email_address, username, password, 
 	last_password_reset_date, first_name, last_name, residence, populated_place, country, 
@@ -30,7 +66,7 @@ INSERT INTO Company_administrators(id, is_enabled, user_code, email_address, use
 	'emil.rajkovic@gmail.com', 'EmilRajkovic1986', 
 	'$2a$10$jMY/yxEvMO239YWOSJL6f.7oRR7DQIbNEX89NmPOn1ee3dln9ELty', '2023-11-12 20:03:00.508-07', 
 	'Emil', 'Rajković', 'Almaška 14', 'Novi Sad', 'Srbija', '+381 623859070', '2702986710117', 
-	'MALE', 'Administrator kompanije', 'Galenika', 1, 0, 0, 1);
+	'MALE', 'Administrator kompanije', 'Galenika', 1, 0, 2, 1);
 
 -- Password for this user is 'mUrosevic1991'.
 INSERT INTO Company_administrators(id, is_enabled, user_code, email_address, username, password, 
@@ -80,41 +116,26 @@ SELECT SETVAL('user_ids_sequence', (
 		) AS max_id
 ));
 
--- Loyalty programs:
-INSERT INTO Loyalty_programs(id, name, necessary_points, 
-	points_gained_for_each_successful_exchange) VALUES (1, 'Osnovni', 0, 2);
-INSERT INTO Loyalty_programs(id, name, necessary_points, 
-	points_gained_for_each_successful_exchange) VALUES (2, 'Srebrni', 6, 3);
+-- Complaints:
+INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
+	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 
+	1, 1, -1);
 
--- Medical equipment companies:
--- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
-INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade) VALUES (1, 
-	'Galenika', 'Batajnički drum b.b., 11080 Beograd - Zemun', 
-	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
-	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
-	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
-	'najvećih farmaceutskih kompanija u celoj Latinskoj Americi.', CHR(10), 
-	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
-	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
-	'medicinska sredstva.'), 4.0, 'Ponedeljak – petak: 08:00 – 17:00');
-INSERT INTO Medical_equipment_companies(id, name, address, description, average_grade) VALUES (2, 
-	'Apotekarska ustanova Janković', 'Dr. Ilije Đuričića 2A, 21000 Novi Sad', 
-	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
-	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 
-	'omogućila je da postanemo jedna od najpoznatijih i najposećenijih apoteka.', CHR(10), 
-	'Apotekarsku ustanovu "Janković" možete posetiti na čak 150 lokacija, širom Vojvodine i ', 
-	'dela centralne Srbije.', CHR(10), 
-	'Naš ceo stručni tim od preko 600 članova, koji se sastoji od farmaceutskih tehničara, ', 
-	'diplomiranih farmaceuta, magistara farmacije, specijalista i doktora nauka, stoji Vam na ', 
-	'raspolaganju. Konstantnim edukacijama, stručnim usavršavanjima, praćenjem inovacija na ', 
-	'globalnom nivou, trudimo se da prenesemo znanje, pomognemo u očuvanju i poboljšanju ', 
-	'zdravlja, ali i da povećamo svest o zdravom životu.', CHR(10), 
-	'Pored izuzetne snabdevenosti lekovima i medicinskim sredstvima, nudimo i širok asortiman ', 
-	'dijetetskih suplemenata, kozmetike, opreme za bebe. Izdajemo lekove na recept civilnim i ', 
-	'vojnim osiguranicima, izrađujemo magistralne lekove, podeljene praškove i galenske lekove. ', 
-	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 4.5, 
-	CONCAT('Ponedeljak - petak: 07:30 - 21:30;', CHR(10), 'Subota: 07:30 - 21:30;', CHR(10), 
-	'Nedelja: 07:30 - 21:30'));
+-- Types of medical equipment:
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (1, 
+	'Kozmetički proizvodi');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (2, 
+	'Prva pomoć');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (3, 
+	'Lekovi za lečenje kože i potkožnog tkiva');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (4, 
+	'Lekovi za lečenje bolesti mišićno-koštanog sistema');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (5, 
+	'Sredstva za dezinfekciju');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (6, 
+	'Ulošci za stopala');
+INSERT INTO Types_of_medical_equipment(id, name) VALUES (7, 
+	'Apoteka za bebe');
 
 -- Medical equipment:
 INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALUES (1, 1, 
@@ -134,31 +155,11 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALU
 INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALUES (8, 7, 
 	'Bebicol Forte 10ml probiotske kapi', 1157.91, 750, 2);
 
--- Types of medical equipment:
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (1, 
-	'Kozmetički proizvodi');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (2, 
-	'Prva pomoć');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (3, 
-	'Lekovi za lečenje kože i potkožnog tkiva');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (4, 
-	'Lekovi za lečenje bolesti mišićno-koštanog sistema');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (5, 
-	'Sredstva za dezinfekciju');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (6, 
-	'Ulošci za stopala');
-INSERT INTO Types_of_medical_equipment(id, name) VALUES (7, 
-	'Apoteka za bebe');
-
--- Complaints:
-INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
-	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 
-	1, 1, null);
-
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
 	administrator_id) VALUES (1, '2023-11-15 08:00:00.508-07', '2023-11-15 08:30:00.508-07', 
 	1, 1, 3);
+/*
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
 	administrator_id) VALUES (2, '2023-11-27 08:00:00.508-07', '2023-11-27 08:30:00.508-07', 
 	null, 1, 3);
@@ -252,3 +253,14 @@ INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_i
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
 	administrator_id) VALUES (32, '2023-11-27 15:00:00.508-07', '2023-11-27 15:30:00.508-07', 
 	null, 2, 4);
+*/
+
+-- Equipment orders:
+INSERT INTO Equipment_orders(id, exchange_term_id, procurement_manager_id, total_price) VALUES 
+	(1, 1, 1, 39997.5);
+
+-- Details of equipment orders:
+INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
+	(1, 1, 1, 50, 9999.5);
+INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
+	(2, 1, 2, 200, 29998.0);
