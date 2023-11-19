@@ -1,0 +1,50 @@
+.matCardDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+mat-card {
+    text-align: center;
+    min-width: 100%;
+    animation: fadein 1s;
+    -o-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -webkit-animation: fadein 1s;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.genderRadioGroup {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+
+.genderRadioButton {
+    margin-left: 15px;
+}
+
+.buttonDiv, .spinnerDiv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+form > div.buttonDiv > button {
+    width: 50%;
+}
+
+mat-card-actions > div.buttonDiv > button {
+    width: 100%;
+}

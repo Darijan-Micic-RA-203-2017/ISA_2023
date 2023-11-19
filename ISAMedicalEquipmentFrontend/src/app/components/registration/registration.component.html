@@ -1,0 +1,129 @@
+<div class="matCardDiv">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Registracija kao zaposleni u odeljenju nabavke bolnice</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form #registrationForm="ngForm" (ngSubmit)="submitRegistrationRequest()" *ngIf="!isSubmitted" 
+                [formGroup]="form">
+                <mat-form-field>
+                    <mat-label>Adresa elektronske pošte: </mat-label>
+                    <input matInput #emailAddressInput type="text" [formControl]="form.get('emailAddress')">
+                    <mat-error *ngIf="form.get('emailAddress').invalid">
+                        {{ getErrorMessageFor('emailAddress') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Korisničko ime: </mat-label>
+                    <input matInput #usernameInput type="text" [formControl]="form.get('username')">
+                    <mat-hint align="start" *ngIf="!form.get('username').errors?.pattern">
+                        Najmanje 4, a najviše 32 znaka
+                    </mat-hint>
+                    <mat-hint align="end" *ngIf="!form.get('username').errors?.pattern">
+                        {{ usernameInput.value?.length || 0 }}/32
+                    </mat-hint>
+                    <mat-error *ngIf="form.get('username').invalid">{{ getErrorMessageFor('username') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Lozinka: </mat-label>
+                    <input matInput #passwordInput [type]="hidePassword ? 'password' : 'text'" 
+                        [formControl]="form.get('password')">
+                    <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-hint align="start" *ngIf="!form.get('password').errors?.passwordsDoNotMatch">
+                        Najmanje 4, a najviše 32 znaka
+                    </mat-hint>
+                    <mat-hint align="end" *ngIf="!form.get('password').errors?.passwordsDoNotMatch">
+                        {{ passwordInput.value?.length || 0 }}/32
+                    </mat-hint>
+                    <mat-error *ngIf="form.get('password').invalid">{{ getErrorMessageFor('password') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Još jednom unesite lozinku: </mat-label>
+                    <input matInput #passwordConfirmationInput [type]="hidePasswordConfirmation ? 'password' : 'text'" 
+                        [formControl]="form.get('passwordConfirmation')">
+                    <button mat-icon-button matSuffix type="button" 
+                        (click)="hidePasswordConfirmation = !hidePasswordConfirmation">
+                        <mat-icon>{{ hidePasswordConfirmation ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-hint align="start" *ngIf="!form.get('passwordConfirmation').errors?.passwordsDoNotMatch">
+                        Najmanje 4, a najviše 32 znaka
+                    </mat-hint>
+                    <mat-hint align="end" *ngIf="!form.get('passwordConfirmation').errors?.passwordsDoNotMatch">
+                        {{ passwordConfirmationInput.value?.length || 0 }}/32
+                    </mat-hint>
+                    <mat-error *ngIf="form.get('passwordConfirmation').invalid">
+                        {{ getErrorMessageFor('passwordConfirmation') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Ime: </mat-label>
+                    <input matInput #firstNameInput type="text" [formControl]="form.get('firstName')">
+                    <mat-error *ngIf="form.get('firstName').invalid">{{ getErrorMessageFor('firstName') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Prezime: </mat-label>
+                    <input matInput #lastNameInput type="text" [formControl]="form.get('lastName')">
+                    <mat-error *ngIf="form.get('lastName').invalid">{{ getErrorMessageFor('lastName') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Ulica i broj: </mat-label>
+                    <input matInput #residenceInput type="text" [formControl]="form.get('residence')">
+                    <mat-error *ngIf="form.get('residence').invalid">{{ getErrorMessageFor('residence') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Mesto: </mat-label>
+                    <input matInput #populatedPlaceInput type="text" [formControl]="form.get('populatedPlace')">
+                    <mat-error *ngIf="form.get('populatedPlace').invalid">
+                        {{ getErrorMessageFor('populatedPlace') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Država: </mat-label>
+                    <input matInput #countryInput type="text" [formControl]="form.get('country')">
+                    <mat-error *ngIf="form.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Broj telefona: </mat-label>
+                    <input matInput #phoneNumberInput type="text" [formControl]="form.get('phoneNumber')">
+                    <mat-hint align="start">Npr. +381 61250250</mat-hint>
+                    <mat-hint align="end">Mora biti unet u ovom formatu</mat-hint>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>JMBG: </mat-label>
+                    <input matInput #personalIdentityNumberInput type="text" 
+                        [formControl]="form.get('personalIdentityNumber')">
+                    <mat-hint align="start">Tačno 13 cifara</mat-hint>
+                    <mat-hint align="end">{{ personalIdentityNumberInput.value?.length || 0 }}/13</mat-hint>
+                </mat-form-field>
+                <mat-radio-group class="genderRadioGroup" name="genderRadioGroup">
+                    <mat-label>Pol: </mat-label>
+                    <mat-radio-button class="genderRadioButton" value="MALE" checked="true">Muški</mat-radio-button>
+                    <mat-radio-button class="genderRadioButton" value="FEMALE">Ženski</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field>
+                    <mat-label>Zanimanje: </mat-label>
+                    <input matInput #professionInput type="text" [formControl]="form.get('profession')">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Naziv bolnice: </mat-label>
+                    <input matInput #companyNameInput type="text" [formControl]="form.get('companyName')">
+                </mat-form-field>
+                <div class="buttonDiv">
+                    <button [disabled]="form.invalid" color="accent" mat-raised-button 
+                        type="submit">Registruj se</button>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="buttonDiv">
+                <button [disabled]="isSubmitted" color="primary" mat-raised-button mat-button 
+                    type="button" routerLink="/">Početna stranica</button>
+            </div>
+        </mat-card-actions>
+        <div class="spinnerDiv">
+            <mat-spinner *ngIf="isSubmitted" mode="indeterminate"></mat-spinner>
+        </div>
+    </mat-card>
+</div>
