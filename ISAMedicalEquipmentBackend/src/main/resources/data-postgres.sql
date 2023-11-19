@@ -152,7 +152,8 @@ INSERT INTO Types_of_medical_equipment(id, name) VALUES (7,
 
 -- Complaints:
 INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 1, 1, null);
+	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 
+	1, 1, null);
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
