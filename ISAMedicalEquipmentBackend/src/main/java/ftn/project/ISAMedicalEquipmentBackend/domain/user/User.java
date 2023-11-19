@@ -1,6 +1,7 @@
 package ftn.project.ISAMedicalEquipmentBackend.domain.user;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,11 +20,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public abstract class User implements UserDetails {
 	@Id
 	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_ids_sequence", 
 		initialValue = 1, allocationSize = 1)
@@ -130,6 +134,7 @@ public abstract class User {
 		this.roles = roles;
 	}
 	
+	@Override
 	public boolean isEnabled() {
 		return isEnabled;
 	}
@@ -154,6 +159,7 @@ public abstract class User {
 		this.emailAddress = emailAddress;
 	}
 	
+	@Override
 	public String getUsername() {
 		return username;
 	}
@@ -162,6 +168,7 @@ public abstract class User {
 		this.username = username;
 	}
 	
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -259,6 +266,30 @@ public abstract class User {
 	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 	
 	@Override

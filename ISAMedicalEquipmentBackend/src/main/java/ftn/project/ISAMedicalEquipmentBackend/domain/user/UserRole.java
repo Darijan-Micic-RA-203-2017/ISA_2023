@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user_roles")
-public class UserRole {
+public class UserRole implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
@@ -42,6 +44,12 @@ public class UserRole {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@JsonIgnore
+	@Override
+	public String getAuthority() {
+		return name;
 	}
 	
 	@Override
