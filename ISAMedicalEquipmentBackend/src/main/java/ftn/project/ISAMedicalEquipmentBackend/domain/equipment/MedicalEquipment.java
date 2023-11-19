@@ -1,5 +1,8 @@
 package ftn.project.ISAMedicalEquipmentBackend.domain.equipment;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.order.DetailsOfEquipmentOrder;
 
 @Entity
 @Table(name = "medical_equipment")
@@ -37,16 +42,20 @@ public class MedicalEquipment {
 	@JoinColumn(name = "company_id")
 	private MedicalEquipmentCompany company;
 	
+	@OneToMany(mappedBy = "equipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<DetailsOfEquipmentOrder> details;
+	
 	public MedicalEquipment() {}
 	
 	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, int amount, 
-			MedicalEquipmentCompany company) {
+			MedicalEquipmentCompany company, Set<DetailsOfEquipmentOrder> details) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
 		this.company = company;
+		this.details = details;
 	}
 	
 	public long getId() {
@@ -95,6 +104,14 @@ public class MedicalEquipment {
 	
 	public void setCompany(MedicalEquipmentCompany company) {
 		this.company = company;
+	}
+	
+	public Set<DetailsOfEquipmentOrder> getDetails() {
+		return details;
+	}
+	
+	public void setDetails(Set<DetailsOfEquipmentOrder> details) {
+		this.details = details;
 	}
 	
 	@Override
