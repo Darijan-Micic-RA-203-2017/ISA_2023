@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
+import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 
 @Entity
 @Table(name = "procurement_managers")
@@ -28,6 +29,9 @@ public class ProcurementManagerOfHospital extends User {
 	private LoyaltyProgram loyaltyProgram;
 	
 	@OneToMany(mappedBy = "procurementManager", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<ExchangeTerm> exchangeTerms;
+	
+	@OneToMany(mappedBy = "procurementManager", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Complaint> complaints;
 	
 	public ProcurementManagerOfHospital() {}
@@ -38,7 +42,7 @@ public class ProcurementManagerOfHospital extends User {
 			String populatedPlace, String country, String phoneNumber, 
 			String personalIdentityNumber, Gender gender, String profession, String companyName, 
 			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram, 
-			Set<Complaint> complaints) {
+			Set<ExchangeTerm> exchangeTerms, Set<Complaint> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
@@ -46,6 +50,7 @@ public class ProcurementManagerOfHospital extends User {
 		this.penaltyPoints = penaltyPoints;
 		this.loyaltyPoints = loyaltyPoints;
 		this.loyaltyProgram = loyaltyProgram;
+		this.exchangeTerms = exchangeTerms;
 		this.complaints = complaints;
 	}
 	
@@ -71,6 +76,14 @@ public class ProcurementManagerOfHospital extends User {
 	
 	public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
 		this.loyaltyProgram = loyaltyProgram;
+	}
+	
+	public Set<ExchangeTerm> getExchangeTerms() {
+		return exchangeTerms;
+	}
+	
+	public void setExchangeTerms(Set<ExchangeTerm> exchangeTerms) {
+		this.exchangeTerms = exchangeTerms;
 	}
 	
 	public Set<Complaint> getComplaints() {

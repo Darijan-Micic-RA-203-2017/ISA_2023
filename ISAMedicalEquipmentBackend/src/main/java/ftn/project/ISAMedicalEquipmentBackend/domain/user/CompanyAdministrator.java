@@ -3,14 +3,17 @@ package ftn.project.ISAMedicalEquipmentBackend.domain.user;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 
 @Entity
 @Table(name = "company_administrators")
@@ -29,6 +32,9 @@ public class CompanyAdministrator extends User {
 	@JoinColumn(name = "loyalty_program_id")
 	private LoyaltyProgram loyaltyProgram;
 	
+	@OneToMany(mappedBy = "companyAdministrator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<ExchangeTerm> exchangeTerms;
+	
 	public CompanyAdministrator() {}
 	
 	public CompanyAdministrator(long id, Set<UserRole> roles, boolean isEnabled, 
@@ -37,7 +43,7 @@ public class CompanyAdministrator extends User {
 			String populatedPlace, String country, String phoneNumber, 
 			String personalIdentityNumber, Gender gender, String profession, String companyName, 
 			MedicalEquipmentCompany company, int penaltyPoints, int loyaltyPoints, 
-			LoyaltyProgram loyaltyProgram) {
+			LoyaltyProgram loyaltyProgram, Set<ExchangeTerm> exchangeTerms) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
@@ -46,6 +52,7 @@ public class CompanyAdministrator extends User {
 		this.penaltyPoints = penaltyPoints;
 		this.loyaltyPoints = loyaltyPoints;
 		this.loyaltyProgram = loyaltyProgram;
+		this.exchangeTerms = exchangeTerms;
 	}
 	
 	public MedicalEquipmentCompany getCompany() {
@@ -78,5 +85,13 @@ public class CompanyAdministrator extends User {
 	
 	public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
 		this.loyaltyProgram = loyaltyProgram;
+	}
+	
+	public Set<ExchangeTerm> getExchangeTerms() {
+		return exchangeTerms;
+	}
+	
+	public void setExchangeTerms(Set<ExchangeTerm> exchangeTerms) {
+		this.exchangeTerms = exchangeTerms;
 	}
 }

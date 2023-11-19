@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
 
 @Entity
 @Table(name = "exchange_terms")
@@ -30,6 +31,10 @@ public class ExchangeTerm {
 	private Timestamp endingTime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "procurement_manager_id")
+	private ProcurementManagerOfHospital procurementManager;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
 	private MedicalEquipmentCompany company;
 	
@@ -40,10 +45,12 @@ public class ExchangeTerm {
 	public ExchangeTerm() {}
 	
 	public ExchangeTerm(long id, Timestamp startingTime, Timestamp endingTime, 
-			MedicalEquipmentCompany company, CompanyAdministrator companyAdministrator) {
+			ProcurementManagerOfHospital procurementManager, MedicalEquipmentCompany company, 
+			CompanyAdministrator companyAdministrator) {
 		this.id = id;
 		this.startingTime = startingTime;
 		this.endingTime = endingTime;
+		this.procurementManager = procurementManager;
 		this.company = company;
 		this.companyAdministrator = companyAdministrator;
 	}
@@ -70,6 +77,14 @@ public class ExchangeTerm {
 	
 	public void setEndingTime(Timestamp endingTime) {
 		this.endingTime = endingTime;
+	}
+	
+	public ProcurementManagerOfHospital getProcurementManager() {
+		return procurementManager;
+	}
+	
+	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
+		this.procurementManager = procurementManager;
 	}
 	
 	public MedicalEquipmentCompany getCompany() {
