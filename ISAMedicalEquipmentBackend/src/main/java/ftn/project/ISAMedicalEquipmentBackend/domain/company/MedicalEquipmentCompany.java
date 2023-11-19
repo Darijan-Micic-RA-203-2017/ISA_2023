@@ -30,7 +30,7 @@ public class MedicalEquipmentCompany {
 	@Column(name = "address", nullable = false)
 	private String address;
 	
-	@Column(name = "description", nullable = false)
+	@Column(name = "description", nullable = false, columnDefinition = "text")
 	private String description;
 	
 	@Column(name = "average_grade", nullable = false)
