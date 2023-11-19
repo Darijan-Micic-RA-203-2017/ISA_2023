@@ -115,3 +115,21 @@ INSERT INTO Medical_equipment_companies(id, name, address, description, average_
 	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 4.5, 
 	CONCAT('Ponedeljak - petak: 07:30 - 21:30;', CHR(10), 'Subota: 07:30 - 21:30;', CHR(10), 
 	'Nedelja: 07:30 - 21:30'));
+
+-- Medical equipment:
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (1, 
+	'Borna voda 250ml', 199.99, 900, 1);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (2, 
+	'Gaza 10kom', 149.99, 7500, 1);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (3, 
+	'Hydrocyclin mast 20g', 349.99, 600, 1);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (4, 
+	'Diklofen gastrorezistentna tableta 20 x 50mg', 299.99, 13000, 1);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (5, 
+	'Jeko mast 30g', 249.99, 400, 2);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (6, 
+	'Asepsol rastvor 1% 1l', 149.12, 22000, 2);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (7, 
+	'Scholl Party feet gel jastučići', 577.44, 500, 2);
+INSERT INTO Medical_equipment(id, name, price, amount, company_id) VALUES (8, 
+	'Bebicol Forte 10ml probiotske kapi', 1157.91, 750, 2);
