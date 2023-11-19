@@ -6,8 +6,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
 
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForProcurementManagerRegistrationReqDTO;
+import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForSearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserCodeWrapperDTO;
 
 public class ValidationPerformer {
@@ -48,6 +50,9 @@ public class ValidationPerformer {
 					target, bindingResult);
 		} else if (target.getClass().isAssignableFrom(UserCodeWrapperDTO.class)) {
 			ValidationUtils.invokeValidator(new ValidatorForUserCodeWrapperDTO(), 
+					target, bindingResult);
+		} else if (target.getClass().isAssignableFrom(SearchCriterionDTO.class)) {
+			ValidationUtils.invokeValidator(new ValidatorForSearchCriterionDTO(), 
 					target, bindingResult);
 		}
 	}
