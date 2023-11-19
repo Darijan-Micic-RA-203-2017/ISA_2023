@@ -1,0 +1,8 @@
+span.spacer {
+    flex: 1 1 auto;
+    padding-right: 1rem;
+}
+
+.mat-raised-button {
+    margin-left: 1%;
+}

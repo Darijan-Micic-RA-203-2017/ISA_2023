@@ -1,0 +1,11 @@
+<mat-toolbar class="navbar" color="accent">
+    <button type="button" style="font-size: 25px" mat-button [routerLink]="['/']">
+        Medicinska oprema
+    </button>
+
+    <span class="spacer"></span>
+
+    <button *ngIf="!userId" type="button" mat-raised-button mat-button [routerLink]="['/register']">Registruj se</button>
+    <button *ngIf="!userId" type="button" mat-raised-button mat-button [routerLink]="['/login']">Prijavi se</button>
+    <button *ngIf="userId" type="button" mat-raised-button mat-button (click)="logout()">Odjavi se</button>
+</mat-toolbar>

@@ -10,14 +10,26 @@ import { TokenInterceptor } from './interceptor/token-interceptor';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 
+import { HeaderComponent } from './components/header/header.component';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+
+const MaterialComponents = [
+  MatToolbarModule,
+  MatButtonModule
+];
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialComponents
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
