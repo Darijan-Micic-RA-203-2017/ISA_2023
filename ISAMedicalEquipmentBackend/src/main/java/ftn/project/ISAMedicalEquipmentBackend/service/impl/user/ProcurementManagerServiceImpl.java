@@ -27,6 +27,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHo
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.ProcurementManagerRepository;
+import ftn.project.ISAMedicalEquipmentBackend.service.user.LoyaltyProgramService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.UserRoleService;
 
@@ -38,6 +39,8 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	private final UserRoleService userRoleService;
 	
+	private final LoyaltyProgramService loyaltyProgramService;
+	
 	private final JavaMailSender javaMailSender;
 	
 	private final Environment environment;
@@ -45,10 +48,12 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	@Autowired
 	public ProcurementManagerServiceImpl(ProcurementManagerRepository procurementManagerRepository, 
 			PasswordEncoder passwordEncoder, UserRoleService userRoleService, 
-			JavaMailSender javaMailSender, Environment environment) {
+			LoyaltyProgramService loyaltyProgramService, JavaMailSender javaMailSender, 
+			Environment environment) {
 		this.procurementManagerRepository = procurementManagerRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.userRoleService = userRoleService;
+		this.loyaltyProgramService = loyaltyProgramService;
 		this.javaMailSender = javaMailSender;
 		this.environment = environment;
 	}
@@ -105,7 +110,7 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		
 		int penaltyPoints = 0;
 		int loyaltyPoints = 0;
-		LoyaltyProgram loyaltyProgram = null;
+		LoyaltyProgram loyaltyProgram = loyaltyProgramService.findById(1);
 		Set<ExchangeTerm> exchangeTerms = null;
 		Set<Complaint> complaints = null;
 		
