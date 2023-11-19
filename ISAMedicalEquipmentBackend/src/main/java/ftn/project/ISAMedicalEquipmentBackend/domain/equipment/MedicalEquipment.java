@@ -20,6 +20,10 @@ public class MedicalEquipment {
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "type_id")
+	private TypeOfMedicalEquipment type;
+	
 	@Column(name = "name", nullable = false)
 	private String name;
 	
@@ -35,9 +39,10 @@ public class MedicalEquipment {
 	
 	public MedicalEquipment() {}
 	
-	public MedicalEquipment(long id, String name, double price, int amount, 
+	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, int amount, 
 			MedicalEquipmentCompany company) {
 		this.id = id;
+		this.type = type;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
@@ -50,6 +55,14 @@ public class MedicalEquipment {
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public TypeOfMedicalEquipment getType() {
+		return type;
+	}
+	
+	public void setType(TypeOfMedicalEquipment type) {
+		this.type = type;
 	}
 	
 	public String getName() {
