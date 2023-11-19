@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -41,7 +42,8 @@ const MaterialComponents = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ActivateAccountComponent
   ],
   imports: [
     BrowserModule,
