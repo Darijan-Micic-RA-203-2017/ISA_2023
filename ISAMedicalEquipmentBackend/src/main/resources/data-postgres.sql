@@ -150,97 +150,104 @@ INSERT INTO Types_of_medical_equipment(id, name) VALUES (6,
 INSERT INTO Types_of_medical_equipment(id, name) VALUES (7, 
 	'Apoteka za bebe');
 
+-- Complaints:
+INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
+	administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 1, 1, null);
+
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2023-11-27 08:00:00.508-07', '2023-11-27 08:30:00.508-07', 
+	administrator_id) VALUES (1, '2023-11-15 08:00:00.508-07', '2023-11-15 08:30:00.508-07', 
+	1, 1, 3);
+INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
+	administrator_id) VALUES (2, '2023-11-27 08:00:00.508-07', '2023-11-27 08:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (2, '2023-11-27 08:30:00.508-07', '2023-11-27 09:00:00.508-07', 
+	administrator_id) VALUES (3, '2023-11-27 08:30:00.508-07', '2023-11-27 09:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (3, '2023-11-27 09:00:00.508-07', '2023-11-27 09:30:00.508-07', 
+	administrator_id) VALUES (4, '2023-11-27 09:00:00.508-07', '2023-11-27 09:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (4, '2023-11-27 09:30:00.508-07', '2023-11-27 10:00:00.508-07', 
+	administrator_id) VALUES (5, '2023-11-27 09:30:00.508-07', '2023-11-27 10:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (5, '2023-11-27 10:00:00.508-07', '2023-11-27 10:30:00.508-07', 
+	administrator_id) VALUES (6, '2023-11-27 10:00:00.508-07', '2023-11-27 10:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (6, '2023-11-27 10:30:00.508-07', '2023-11-27 11:00:00.508-07', 
+	administrator_id) VALUES (7, '2023-11-27 10:30:00.508-07', '2023-11-27 11:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (7, '2023-11-27 11:00:00.508-07', '2023-11-27 11:30:00.508-07', 
+	administrator_id) VALUES (8, '2023-11-27 11:00:00.508-07', '2023-11-27 11:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (8, '2023-11-27 11:30:00.508-07', '2023-11-27 12:00:00.508-07', 
+	administrator_id) VALUES (9, '2023-11-27 11:30:00.508-07', '2023-11-27 12:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (9, '2023-11-27 13:00:00.508-07', '2023-11-27 13:30:00.508-07', 
+	administrator_id) VALUES (10, '2023-11-27 13:00:00.508-07', '2023-11-27 13:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (10, '2023-11-27 13:30:00.508-07', '2023-11-27 14:00:00.508-07', 
+	administrator_id) VALUES (11, '2023-11-27 13:30:00.508-07', '2023-11-27 14:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (11, '2023-11-27 14:00:00.508-07', '2023-11-27 14:30:00.508-07', 
+	administrator_id) VALUES (12, '2023-11-27 14:00:00.508-07', '2023-11-27 14:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (12, '2023-11-27 14:30:00.508-07', '2023-11-27 15:00:00.508-07', 
+	administrator_id) VALUES (13, '2023-11-27 14:30:00.508-07', '2023-11-27 15:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (13, '2023-11-27 15:00:00.508-07', '2023-11-27 15:30:00.508-07', 
+	administrator_id) VALUES (14, '2023-11-27 15:00:00.508-07', '2023-11-27 15:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (14, '2023-11-27 15:30:00.508-07', '2023-11-27 16:00:00.508-07', 
+	administrator_id) VALUES (15, '2023-11-27 15:30:00.508-07', '2023-11-27 16:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (15, '2023-11-27 16:00:00.508-07', '2023-11-27 16:30:00.508-07', 
+	administrator_id) VALUES (16, '2023-11-27 16:00:00.508-07', '2023-11-27 16:30:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (16, '2023-11-27 16:30:00.508-07', '2023-11-27 17:00:00.508-07', 
+	administrator_id) VALUES (17, '2023-11-27 16:30:00.508-07', '2023-11-27 17:00:00.508-07', 
 	null, 1, 3);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (17, '2023-11-27 07:30:00.508-07', '2023-11-27 08:00:00.508-07', 
+	administrator_id) VALUES (18, '2023-11-27 07:30:00.508-07', '2023-11-27 08:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (18, '2023-11-27 08:00:00.508-07', '2023-11-27 08:30:00.508-07', 
+	administrator_id) VALUES (19, '2023-11-27 08:00:00.508-07', '2023-11-27 08:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (19, '2023-11-27 08:30:00.508-07', '2023-11-27 09:00:00.508-07', 
+	administrator_id) VALUES (20, '2023-11-27 08:30:00.508-07', '2023-11-27 09:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (20, '2023-11-27 09:00:00.508-07', '2023-11-27 09:30:00.508-07', 
+	administrator_id) VALUES (21, '2023-11-27 09:00:00.508-07', '2023-11-27 09:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (21, '2023-11-27 09:30:00.508-07', '2023-11-27 10:00:00.508-07', 
+	administrator_id) VALUES (22, '2023-11-27 09:30:00.508-07', '2023-11-27 10:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (22, '2023-11-27 10:00:00.508-07', '2023-11-27 10:30:00.508-07', 
+	administrator_id) VALUES (23, '2023-11-27 10:00:00.508-07', '2023-11-27 10:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (23, '2023-11-27 10:30:00.508-07', '2023-11-27 11:00:00.508-07', 
+	administrator_id) VALUES (24, '2023-11-27 10:30:00.508-07', '2023-11-27 11:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (24, '2023-11-27 11:00:00.508-07', '2023-11-27 11:30:00.508-07', 
+	administrator_id) VALUES (25, '2023-11-27 11:00:00.508-07', '2023-11-27 11:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (25, '2023-11-27 12:00:00.508-07', '2023-11-27 12:30:00.508-07', 
+	administrator_id) VALUES (26, '2023-11-27 12:00:00.508-07', '2023-11-27 12:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (26, '2023-11-27 12:30:00.508-07', '2023-11-27 13:00:00.508-07', 
+	administrator_id) VALUES (27, '2023-11-27 12:30:00.508-07', '2023-11-27 13:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (27, '2023-11-27 13:00:00.508-07', '2023-11-27 13:30:00.508-07', 
+	administrator_id) VALUES (28, '2023-11-27 13:00:00.508-07', '2023-11-27 13:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (28, '2023-11-27 13:30:00.508-07', '2023-11-27 14:00:00.508-07', 
+	administrator_id) VALUES (29, '2023-11-27 13:30:00.508-07', '2023-11-27 14:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (29, '2023-11-27 14:00:00.508-07', '2023-11-27 14:30:00.508-07', 
+	administrator_id) VALUES (30, '2023-11-27 14:00:00.508-07', '2023-11-27 14:30:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (30, '2023-11-27 14:30:00.508-07', '2023-11-27 15:00:00.508-07', 
+	administrator_id) VALUES (31, '2023-11-27 14:30:00.508-07', '2023-11-27 15:00:00.508-07', 
 	null, 2, 4);
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (31, '2023-11-27 15:00:00.508-07', '2023-11-27 15:30:00.508-07', 
+	administrator_id) VALUES (32, '2023-11-27 15:00:00.508-07', '2023-11-27 15:30:00.508-07', 
 	null, 2, 4);
