@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.ISAMedicalEquipmentBackend.converter.company.MedicalEquipmentCompanyConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.company.MedicalEquipmentCompanyDTO;
 import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
 import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
@@ -30,51 +32,47 @@ public class MedicalEquipmentCompanyController {
 	}
 	
 	@GetMapping(path = "")
-	public ResponseEntity<List<MedicalEquipmentCompany>> findAll() {
+	public ResponseEntity<List<MedicalEquipmentCompanyDTO>> findAll() {
 		List<MedicalEquipmentCompany> allMedicalEquipmentCompanies = 
 				medicalEquipmentCompanyService.findAll();
 		
-		return new ResponseEntity<List<MedicalEquipmentCompany>>(allMedicalEquipmentCompanies, 
+		return new ResponseEntity<List<MedicalEquipmentCompanyDTO>>(
+				MedicalEquipmentCompanyConverter.convertToDTOsList(allMedicalEquipmentCompanies), 
 				HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<MedicalEquipmentCompany> findById(@PathVariable(name = "id") String id) {
-		MedicalEquipmentCompany existingMedicalEquipmentCompany = null;
+	public ResponseEntity<MedicalEquipmentCompanyDTO> findById(@PathVariable(name = "id") String id) {
+		MedicalEquipmentCompanyDTO company = null;
 		
 		long idAsLong = 0;
 		try {
 			idAsLong = Long.parseLong(id);
 		} catch (NumberFormatException nFE) {
-			return new ResponseEntity<MedicalEquipmentCompany>(existingMedicalEquipmentCompany, 
-					HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<MedicalEquipmentCompanyDTO>(company, HttpStatus.BAD_REQUEST);
 		}
 		
-		existingMedicalEquipmentCompany = medicalEquipmentCompanyService.findById(idAsLong);
-		if (existingMedicalEquipmentCompany == null) {
-			return new ResponseEntity<MedicalEquipmentCompany>(existingMedicalEquipmentCompany, 
-					HttpStatus.NOT_FOUND);
-		}
+		company = MedicalEquipmentCompanyConverter.convertToDTO(
+				medicalEquipmentCompanyService.findById(idAsLong));
 		
-		return new ResponseEntity<MedicalEquipmentCompany>(existingMedicalEquipmentCompany, 
-				HttpStatus.OK);
+		return new ResponseEntity<MedicalEquipmentCompanyDTO>(company, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/search-by-name-or-populated-place", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<MedicalEquipmentCompany>> searchByNameOrPopulatedPlace(
+	public ResponseEntity<List<MedicalEquipmentCompanyDTO>> searchByNameOrPopulatedPlace(
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
-		List<MedicalEquipmentCompany> companies = null;
+		List<MedicalEquipmentCompanyDTO> companies = null;
 		
 		String validationMessages = ValidationPerformer.getValidationMessages(searchCriterionDTO);
 		if (validationMessages != null) {
-			return new ResponseEntity<List<MedicalEquipmentCompany>>(companies, 
+			return new ResponseEntity<List<MedicalEquipmentCompanyDTO>>(companies, 
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		companies = medicalEquipmentCompanyService.searchByNameOrPopulatedPlace(searchCriterionDTO);
+		companies = MedicalEquipmentCompanyConverter.convertToDTOsList(
+				medicalEquipmentCompanyService.searchByNameOrPopulatedPlace(searchCriterionDTO));
 		
-		return new ResponseEntity<List<MedicalEquipmentCompany>>(companies, 
-				HttpStatus.OK);
+		return new ResponseEntity<List<MedicalEquipmentCompanyDTO>>(companies, HttpStatus.OK);
 	}
 }

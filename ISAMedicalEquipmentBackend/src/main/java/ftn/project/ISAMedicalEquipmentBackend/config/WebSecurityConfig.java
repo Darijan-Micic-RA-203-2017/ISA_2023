@@ -58,6 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/auth/**").permitAll()
 				.antMatchers("/users/register-as-a-procurement-manager").permitAll()
 				.antMatchers("/users/activate-account").permitAll()
+				.antMatchers("/medical-equipment-companies").permitAll()
+				.antMatchers("/medical-equipment-companies/{id}").permitAll()
+				.antMatchers("/medical-equipment-companies/search-by-name-or-populated-place").permitAll()
+				.antMatchers("/medical-equipment").permitAll()
+				.antMatchers("/medical-equipment/{id}").permitAll()
+				.antMatchers("/medical-equipment/search-by-name").permitAll()
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 
