@@ -1,0 +1,66 @@
+.greetingTextAndTableOfCompaniesDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+mat-card {
+    text-align: center;
+    min-width: 100%;
+    animation: fadein 1s;
+    -o-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -webkit-animation: fadein 1s;
+}
+
+.searchFormDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+form > button {
+    margin-left: 15px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-name {
+    width: 25%;
+}
+
+.mat-column-streetAndNumber {
+    width: 25%;
+}
+
+.mat-column-populatedPlace {
+    width: 20%;
+}
+
+.mat-column-country {
+    width: 20%;
+}
+
+.mat-column-averageGrade {
+    width: 10%;
+}
+
+table th {
+    text-align: center;
+}

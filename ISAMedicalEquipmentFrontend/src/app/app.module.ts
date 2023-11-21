@@ -11,9 +11,13 @@ import { AppComponent } from './app.component';
 import { TokenInterceptor } from './interceptor/token-interceptor';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
+import { MedicalEquipmentCompanyService } from './services/medical-equipment-company/medical-equipment-company.service';
+import { MedicalEquipmentService } from './services/medical-equipment/medical-equipment.service';
 
 import { HeaderComponent } from './components/header/header.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
-import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { MatTableModule } from '@angular/material/table';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -35,7 +39,8 @@ const MaterialComponents = [
   MatIconModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTableModule
 ];
 
 @NgModule({
@@ -43,7 +48,8 @@ const MaterialComponents = [
     AppComponent,
     HeaderComponent,
     RegistrationComponent,
-    ActivateAccountComponent
+    ActivateAccountComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +66,8 @@ const MaterialComponents = [
     JwtHelperService,
     AuthService,
     UserService,
+    MedicalEquipmentCompanyService,
+    MedicalEquipmentService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
   ],
   bootstrap: [AppComponent]

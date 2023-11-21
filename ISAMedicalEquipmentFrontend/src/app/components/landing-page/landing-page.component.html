@@ -1,0 +1,63 @@
+<div class="greetingTextAndTableOfCompaniesDiv">
+    <div>
+        <b><h1>Dobro došli na sajt "Medicinska oprema"!</h1></b>
+        <h3>Registrujte se ili prijavite kako bi mogli pristupiti funkcionalnostima sajta. U kartici možete videti 
+            listu kompanija koje proizvode medicinsku opremu u okviru našeg sistema. Kompanije možete pretražiti po 
+            nazivu ili mestu.</h3>
+    </div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Kompanije</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="searchFormDiv">
+                <form #searchForm="ngForm" (ngSubmit)="searchCompaniesByNameOrPopulatedPlace()" [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>Unesite naziv ili mesto: </mat-label>
+                        <input matInput #searchCriterionInput type="text" [formControl]="form.get('searchCriterion')">
+                    </mat-form-field>
+                    <button [disabled]="form.invalid" color="accent" mat-raised-button type="submit">Pretraži</button>
+                </form>
+            </div>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Naziv
+                    </th>
+                    <td mat-cell *matCellDef="let company">{{ company.name }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="streetAndNumber">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Ulica i broj
+                    </th>
+                    <td mat-cell *matCellDef="let company">{{ company.streetAndNumber }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="populatedPlace">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Mesto
+                    </th>
+                    <td mat-cell *matCellDef="let company">{{ company.populatedPlace }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="country">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Država
+                    </th>
+                    <td mat-cell *matCellDef="let company">{{ company.country }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="averageGrade">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Prosečna ocena
+                    </th>
+                    <td mat-cell *matCellDef="let company">{{ company.averageGrade }}</td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>
