@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { MedicalEquipmentCompanyService } from 'src/app/services/medical-equipment-company/medical-equipment-company.service';
+import { MedicalEquipmentService } from 'src/app/services/medical-equipment/medical-equipment.service';
 
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipment-company';
+import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
 import { SearchCriterion } from 'src/app/domain/search-criterion';
 
 @Component({
@@ -14,18 +16,31 @@ import { SearchCriterion } from 'src/app/domain/search-criterion';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  form: any;
+  companyForm: any;
+  equipmentForm: any;
 
-  displayedColumns: string[] = ['name', 'streetAndNumber', 'populatedPlace', 'country', 'averageGrade'];
+  displayedColumnsOfCompany: string[] = ['name', 'streetAndNumber', 'populatedPlace', 'country', 'averageGrade'];
   allMedicalEquipmentCompanies: MedicalEquipmentCompany[] = [];
   shownMedicalEquipmentCompanies: MedicalEquipmentCompany[] = [];
-  dataSource: MatTableDataSource<MedicalEquipmentCompany> = 
+  companiesDataSource: MatTableDataSource<MedicalEquipmentCompany> = 
       new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+  displayedColumnsOfEquipment: string[] = ['name', 'type'];
+  allMedicalEquipment: MedicalEquipment[] = [];
+  shownMedicalEquipment: MedicalEquipment[] = [];
+  equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
+      new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
   
-  constructor(private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, private formBuilder: FormBuilder) { }
+  constructor(private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
+      private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder) { }
   
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    this.companyForm = this.formBuilder.group({
+      searchCriterion: new FormControl('', {
+        validators: [Validators.pattern(/^$|^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
+        updateOn: 'change'
+      })
+    });
+    this.equipmentForm = this.formBuilder.group({
       searchCriterion: new FormControl('', {
         validators: [Validators.pattern(/^$|^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
         updateOn: 'change'
@@ -38,33 +53,68 @@ export class LandingPageComponent implements OnInit {
         
         this.allMedicalEquipmentCompanies = data;
         this.shownMedicalEquipmentCompanies = data;
-        this.dataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+        this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
       },
       error => {
         console.log('Error on retrieving all medical equipment companies!', error);
       }
     );
+    this.medicalEquipmentService.findAll().subscribe(
+      data => {
+        console.log('Retrieving all medical equipment response: ', data);
+        
+        this.allMedicalEquipment = data;
+        this.shownMedicalEquipment = data;
+        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+      },
+      error => {
+        console.log('Error on retrieving all medical equipment!', error);
+      }
+    );
   }
 
   searchCompaniesByNameOrPopulatedPlace(): void {
-    if (!this.form.value.searchCriterion) {
+    if (!this.companyForm.value.searchCriterion) {
       this.shownMedicalEquipmentCompanies = this.allMedicalEquipmentCompanies;
-      this.dataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+      this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
 
       return;
     }
 
-    const searchCriterion = new SearchCriterion(this.form.value.searchCriterion);
+    const searchCriterion = new SearchCriterion(this.companyForm.value.searchCriterion);
 
     this.medicalEquipmentCompanyService.searchByNameOrPopulatedPlace(searchCriterion).subscribe(
       data => {
         console.log('Search medical equipment companies by name or populated place response: ', data);
 
         this.shownMedicalEquipmentCompanies = data;
-        this.dataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+        this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
       },
       error => {
         console.log('Error on search medical equipment companies by name or populated place!', error);
+      }
+    );
+  }
+
+  searchEquipmentByName(): void {
+    if (!this.equipmentForm.value.searchCriterion) {
+      this.shownMedicalEquipment = this.allMedicalEquipment;
+      this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+
+      return;
+    }
+
+    const searchCriterion = new SearchCriterion(this.equipmentForm.value.searchCriterion);
+
+    this.medicalEquipmentService.searchByName(searchCriterion).subscribe(
+      data => {
+        console.log('Search medical equipment by name response: ', data);
+
+        this.shownMedicalEquipment = data;
+        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+      },
+      error => {
+        console.log('Error on search medical equipment by name!', error);
       }
     );
   }
