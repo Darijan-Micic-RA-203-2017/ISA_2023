@@ -1,9 +1,17 @@
 package ftn.project.ISAMedicalEquipmentBackend.repository.equipment;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 
 public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipment, Long> {
+	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t")
+	List<MedicalEquipment> getAll();
+	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t WHERE meq.id = ?1")
+	MedicalEquipment getById(long id);
+	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t WHERE meq.name = ?1")
 	MedicalEquipment findByName(String name);
 }

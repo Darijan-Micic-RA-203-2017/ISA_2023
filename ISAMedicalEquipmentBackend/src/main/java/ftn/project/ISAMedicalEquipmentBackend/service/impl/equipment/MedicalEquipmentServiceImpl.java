@@ -23,7 +23,7 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	
 	@Override
 	public MedicalEquipment findById(long id) throws AccessDeniedException {
-		return medicalEquipmentRepository.findById(id).orElse(null);
+		return medicalEquipmentRepository.getById(id);
 	}
 	
 	@Override
@@ -33,7 +33,7 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	
 	@Override
 	public List<MedicalEquipment> findAll() {
-		return medicalEquipmentRepository.findAll();
+		return medicalEquipmentRepository.getAll();
 	}
 	
 	@Override
