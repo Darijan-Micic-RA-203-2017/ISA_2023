@@ -13,6 +13,7 @@
 mat-card {
     text-align: center;
     min-width: 100%;
+    margin-bottom: 10px;
     animation: fadein 1s;
     -o-animation: fadein 1s;
     -moz-animation: fadein 1s;
@@ -41,26 +42,47 @@ table {
     width: 100%;
 }
 
-.mat-column-name {
+table th {
+    text-align: center;
+    border: 1px groove gray;
+}
+
+table td {
+    border: 1px groove gray;
+}
+
+.mat-header-cell {
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.mat-cell {
+    color: rgba(0, 0, 0, 1);
+}
+
+#companiesTable .mat-column-name {
     width: 25%;
 }
 
-.mat-column-streetAndNumber {
+#companiesTable .mat-column-streetAndNumber {
     width: 25%;
 }
 
-.mat-column-populatedPlace {
+#companiesTable .mat-column-populatedPlace {
     width: 20%;
 }
 
-.mat-column-country {
+#companiesTable .mat-column-country {
     width: 20%;
 }
 
-.mat-column-averageGrade {
+#companiesTable .mat-column-averageGrade {
     width: 10%;
 }
 
-table th {
-    text-align: center;
+#equipmentTable .mat-column-name {
+    width: 60%;
+}
+
+#equipmentTable .mat-column-type {
+    width: 40%;
 }

@@ -1,9 +1,10 @@
 <div class="greetingTextAndTablesDiv">
     <div>
         <b><h1>Dobro došli na sajt "Medicinska oprema"!</h1></b>
-        <h3>Registrujte se ili prijavite kako bi mogli pristupiti funkcionalnostima sajta. U kartici možete videti 
-            listu kompanija koje proizvode medicinsku opremu u okviru našeg sistema. Kompanije možete pretražiti po 
-            nazivu ili mestu.</h3>
+        <h3>Registrujte se ili prijavite kako bi mogli pristupiti funkcionalnostima sajta. Na početnoj stranici možete 
+            videti, jednu ispod druge, listu kompanija koje proizvode medicinsku opremu i listu medicinske opreme u 
+            okviru našeg sistema.<br/>
+            Kompanije možete pretražiti po nazivu ili mestu, dok opremu možete pretražiti po nazivu.</h3>
     </div>
     <mat-card>
         <mat-card-header>
@@ -19,7 +20,7 @@
                     <button [disabled]="companyForm.invalid" color="accent" mat-raised-button type="submit">Pretraži</button>
                 </form>
             </div>
-            <table mat-table [dataSource]="companiesDataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="companiesDataSource" id="companiesTable" class="mat-elevation-z8">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>
                         Naziv
@@ -74,7 +75,7 @@
                     <button [disabled]="equipmentForm.invalid" color="accent" mat-raised-button type="submit">Pretraži</button>
                 </form>
             </div>
-            <table mat-table [dataSource]="equipmentDataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="equipmentDataSource" id="equipmentTable" class="mat-elevation-z8">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>
                         Naziv
