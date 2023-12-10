@@ -55,8 +55,24 @@ table td {
     color: rgba(0, 0, 0, 0.75);
 }
 
+.mat-header-cell:first-of-type {
+    padding-left: 0px;
+}
+
+.mat-header-cell:last-of-type {
+    padding-right: 0px;
+}
+
 .mat-cell {
     color: rgba(0, 0, 0, 1);
+}
+
+.mat-cell:first-of-type {
+    padding-left: 0px;
+}
+
+.mat-cell:last-of-type {
+    padding-right: 0px;
 }
 
 #companiesTable .mat-column-name {
@@ -80,9 +96,13 @@ table td {
 }
 
 #equipmentTable .mat-column-name {
-    width: 60%;
+    width: 50%;
 }
 
 #equipmentTable .mat-column-type {
-    width: 40%;
+    width: 30%;
+}
+
+#equipmentTable .mat-column-company {
+    width: 20%;
 }

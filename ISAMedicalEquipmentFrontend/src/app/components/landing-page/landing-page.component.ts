@@ -24,7 +24,7 @@ export class LandingPageComponent implements OnInit {
   shownMedicalEquipmentCompanies: MedicalEquipmentCompany[] = [];
   companiesDataSource: MatTableDataSource<MedicalEquipmentCompany> = 
       new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
-  displayedColumnsOfEquipment: string[] = ['name', 'type'];
+  displayedColumnsOfEquipment: string[] = ['name', 'type', 'company'];
   allMedicalEquipment: MedicalEquipment[] = [];
   shownMedicalEquipment: MedicalEquipment[] = [];
   equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
