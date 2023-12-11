@@ -15,6 +15,7 @@ import { MedicalEquipmentCompanyService } from './services/medical-equipment-com
 import { MedicalEquipmentService } from './services/medical-equipment/medical-equipment.service';
 
 import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -47,6 +48,7 @@ const MaterialComponents = [
   declarations: [
     AppComponent,
     HeaderComponent,
+    LoginComponent,
     RegistrationComponent,
     ActivateAccountComponent,
     LandingPageComponent

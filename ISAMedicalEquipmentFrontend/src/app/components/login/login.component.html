@@ -1,0 +1,51 @@
+<div class="matCardDiv">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Prijava na sistem</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form #loginForm="ngForm" (ngSubmit)="submitCredentials()" *ngIf="!isSubmitted" [formGroup]="form">
+                <mat-form-field>
+                    <mat-label>Korisničko ime: </mat-label>
+                    <input matInput #usernameInput type="text" [formControl]="form.get('username')">
+                    <mat-hint align="start" *ngIf="!form.get('username').errors?.pattern">
+                        Najmanje 4, a najviše 32 znaka
+                    </mat-hint>
+                    <mat-hint align="end" *ngIf="!form.get('username').errors?.pattern">
+                        {{ usernameInput.value?.length || 0 }}/32
+                    </mat-hint>
+                    <mat-error *ngIf="form.get('username').invalid">{{ getErrorMessageFor('username') }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Lozinka: </mat-label>
+                    <input matInput #passwordInput [type]="hidePassword ? 'password' : 'text'" 
+                        [formControl]="form.get('password')">
+                    <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-hint align="start" 
+                        *ngIf="!form.get('password').errors?.minLength && !form.get('password').errors?.maxLength">
+                        Najmanje 4, a najviše 32 znaka
+                    </mat-hint>
+                    <mat-hint align="end" 
+                        *ngIf="!form.get('password').errors?.minLength && !form.get('password').errors?.maxLength">
+                        {{ passwordInput.value?.length || 0 }}/32
+                    </mat-hint>
+                    <mat-error *ngIf="form.get('password').invalid">{{ getErrorMessageFor('password') }}</mat-error>
+                </mat-form-field>
+                <div class="buttonDiv">
+                    <button [disabled]="form.invalid" color="accent" mat-raised-button type="submit">Prijavi se</button>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="buttonDiv">
+                <button [disabled]="isSubmitted" color="primary" mat-raised-button mat-button 
+                    type="button" routerLink="/">Početna stranica</button>
+            </div>
+        </mat-card-actions>
+        <div class="spinnerDiv">
+            <mat-spinner *ngIf="isSubmitted" mode="indeterminate"></mat-spinner>
+        </div>
+    </mat-card>
+</div>
