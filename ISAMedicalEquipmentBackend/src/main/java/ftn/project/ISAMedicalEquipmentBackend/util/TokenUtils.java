@@ -45,7 +45,6 @@ public class TokenUtils {
 		return Jwts.builder()
 				.claim("userId", user.getId())
 				.claim("role", roleName)
-				.claim("gender", user.getGender())
 				.setIssuer(APP_NAME)
 				.setSubject(user.getUsername())
 				.setAudience(generateAudience())

@@ -20,8 +20,7 @@ export class RegistrationComponent implements OnInit {
   hidePassword: boolean = true;
   hidePasswordConfirmation: boolean = true;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, 
-      private snackBar: MatSnackBar) { }
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -91,7 +90,7 @@ export class RegistrationComponent implements OnInit {
       companyName = this.form.value.companyName;
     }
 
-    const procurementManagerRegistrationReq: ProcurementManagerRegistrationReq = new ProcurementManagerRegistrationReq(
+    let procurementManagerRegistrationReq: ProcurementManagerRegistrationReq = new ProcurementManagerRegistrationReq(
         this.form.value.emailAddress, this.form.value.username, this.form.value.password, this.form.value.firstName, 
         this.form.value.lastName, this.form.value.residence, this.form.value.populatedPlace, this.form.value.country, 
         this.form.value.phoneNumber, this.form.value.personalIdentityNumber, checkedGender, profession, companyName);

@@ -47,8 +47,8 @@ public class MedicalEquipment {
 	
 	public MedicalEquipment() {}
 	
-	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, int amount, 
-			MedicalEquipmentCompany company, Set<DetailsOfEquipmentOrder> details) {
+	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, 
+			int amount, MedicalEquipmentCompany company, Set<DetailsOfEquipmentOrder> details) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
