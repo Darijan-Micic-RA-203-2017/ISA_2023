@@ -3,6 +3,36 @@ span.spacer {
     padding-right: 1rem;
 }
 
+#usernameAndRoleDiv, #usernameAndRoleDiv * {
+    box-sizing: border-box;
+}
+
+#usernameAndRoleDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    margin-left: 1%;
+}
+
+#usernameAndRoleDiv p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#usernameAndRoleDiv p:first-of-type {
+    flex: 60%;
+    font-size: 15px;
+}
+
+#usernameAndRoleDiv p:last-of-type {
+    flex: 40%;
+    font-size: 13px;
+}
+
 .mat-raised-button {
     margin-left: 1%;
 }

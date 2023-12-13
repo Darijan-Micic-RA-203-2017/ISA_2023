@@ -1,5 +1,5 @@
 <mat-toolbar class="navbar" color="accent">
-    <button type="button" style="font-size: 25px" mat-button [routerLink]="['/']">
+    <button type="button" style="font-size: 22px" mat-button [routerLink]="['/']">
         Medicinska oprema
     </button>
 
@@ -7,5 +7,9 @@
 
     <button *ngIf="!userId" type="button" mat-raised-button mat-button [routerLink]="['/register']">Registruj se</button>
     <button *ngIf="!userId" type="button" mat-raised-button mat-button [routerLink]="['/login']">Prijavi se</button>
+    <div *ngIf="userId" id="usernameAndRoleDiv">
+        <p><b>{{ username }}</b></p>
+        <p>{{ getRoleName() }}</p>
+    </div>
     <button *ngIf="userId" type="button" mat-raised-button mat-button (click)="logout()">Odjavi se</button>
 </mat-toolbar>
