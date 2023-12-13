@@ -24,11 +24,11 @@
                         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                     </button>
                     <mat-hint align="start" 
-                        *ngIf="!form.get('password').errors?.minLength && !form.get('password').errors?.maxLength">
+                        *ngIf="!form.get('password').errors?.minlength && !form.get('password').errors?.maxlength">
                         Najmanje 4, a najviše 32 znaka
                     </mat-hint>
                     <mat-hint align="end" 
-                        *ngIf="!form.get('password').errors?.minLength && !form.get('password').errors?.maxLength">
+                        *ngIf="!form.get('password').errors?.minlength && !form.get('password').errors?.maxlength">
                         {{ passwordInput.value?.length || 0 }}/32
                     </mat-hint>
                     <mat-error *ngIf="form.get('password').invalid">{{ getErrorMessageFor('password') }}</mat-error>

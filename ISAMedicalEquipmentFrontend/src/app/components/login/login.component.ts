@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
           errorMessage = 'Morate uneti lozinku!';
         }
         
-        if (this.form.get('password').hasError('minLength') || this.form.get('password').hasError('maxLength')) {
+        if (this.form.get('password').hasError('minlength') || this.form.get('password').hasError('maxlength')) {
           errorMessage = 'Lozinka mora sadržati najmanje 4, a najviše 32 znaka!';
         }
         
