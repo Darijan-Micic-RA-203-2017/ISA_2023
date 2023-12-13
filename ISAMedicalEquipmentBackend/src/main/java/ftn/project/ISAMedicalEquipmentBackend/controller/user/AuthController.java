@@ -51,12 +51,12 @@ public class AuthController {
 			System.out.println("\nUser with sent credentials is disabled.\n");
 			
 			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
-					HttpStatus.BAD_REQUEST);
+					HttpStatus.CONFLICT);
 		} catch (LockedException lE) {
 			System.out.println("\nUser with sent credentials is locked.\n");
 			
 			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
-					HttpStatus.BAD_REQUEST);
+					HttpStatus.LOCKED);
 		} catch (BadCredentialsException bCE) {
 			System.out.println("\nBad credentials have been sent to the server.\n");
 			
@@ -67,7 +67,6 @@ public class AuthController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		User user = (User) authentication.getPrincipal();
-		
 		accessToken = tokenUtils.generateToken(user);
 		expiresIn = tokenUtils.getExpiresIn();
 		

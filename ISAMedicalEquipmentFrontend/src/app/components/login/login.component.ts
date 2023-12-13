@@ -61,7 +61,15 @@ export class LoginComponent implements OnInit {
         this.isSubmitted = false;
 
         console.log('Error on login!', errorResponse.error.textMessage);
-        this.snackBar.open('Uneto je neispravno korisničko ime i/ili lozinka!', 'Zatvori', { duration: 5000 });
+        if (errorResponse.status == 409) {
+          this.snackBar.open('Korisnikov nalog je deaktiviran!', 'Zatvori', { duration: 5000 });
+        }
+        if (errorResponse.status == 423) {
+          this.snackBar.open('Korisnikov nalog je zaključan!', 'Zatvori', { duration: 5000 });
+        }
+        if (errorResponse.status == 400) {
+          this.snackBar.open('Uneto je neispravno korisničko ime i/ili lozinka!', 'Zatvori', { duration: 5000 });
+        }
       }
     );
   }
