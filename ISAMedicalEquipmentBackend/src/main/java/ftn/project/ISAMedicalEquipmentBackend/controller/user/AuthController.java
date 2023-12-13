@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,27 +39,40 @@ public class AuthController {
 	@PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccessTokenDTO> login(@RequestBody CredentialsDTO credentials, 
 			HttpServletResponse response) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(credentials.getUsername(), 
-						credentials.getPassword()));
+		Authentication authentication = null;
+		String accessToken = "";
+		long expiresIn = 0;
+		
+		try {
+			authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(credentials.getUsername(), 
+							credentials.getPassword()));
+		} catch (DisabledException dE) {
+			System.out.println("\nUser with sent credentials is disabled.\n");
+			
+			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
+					HttpStatus.BAD_REQUEST);
+		} catch (LockedException lE) {
+			System.out.println("\nUser with sent credentials is locked.\n");
+			
+			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
+					HttpStatus.BAD_REQUEST);
+		} catch (BadCredentialsException bCE) {
+			System.out.println("\nBad credentials have been sent to the server.\n");
+			
+			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
+					HttpStatus.BAD_REQUEST);
+		}
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		String accessToken = "";
-		long expiresIn = 0;
-		try {
-			User user = (User) authentication.getPrincipal();
-			
-			accessToken = tokenUtils.generateToken(user);
-			expiresIn = tokenUtils.getExpiresIn();
-		} catch (BadCredentialsException bCE) {
-			System.out.println("\nBad credentials have been sent to the server.\n");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		User user = (User) authentication.getPrincipal();
+		
+		accessToken = tokenUtils.generateToken(user);
+		expiresIn = tokenUtils.getExpiresIn();
 		
 		System.out.println("\nUser with username \"" + credentials.getUsername() + "\" has " + 
-				"been successfully logged in.\n");
+			"been successfully logged in.\n");
 		
 		return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
 				HttpStatus.OK);
