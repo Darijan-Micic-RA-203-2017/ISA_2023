@@ -14,11 +14,14 @@ import { UserService } from './services/user/user.service';
 import { MedicalEquipmentCompanyService } from './services/medical-equipment-company/medical-equipment-company.service';
 import { MedicalEquipmentService } from './services/medical-equipment/medical-equipment.service';
 
+import { OnlyAuthenticatedUsersGuard } from './guards/only-authenticated-users/only-authenticated-users.guard';
+
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -51,7 +54,8 @@ const MaterialComponents = [
     LoginComponent,
     RegistrationComponent,
     ActivateAccountComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    CompanyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,7 @@ const MaterialComponents = [
     UserService,
     MedicalEquipmentCompanyService,
     MedicalEquipmentService,
+    OnlyAuthenticatedUsersGuard,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
   ],
   bootstrap: [AppComponent]
