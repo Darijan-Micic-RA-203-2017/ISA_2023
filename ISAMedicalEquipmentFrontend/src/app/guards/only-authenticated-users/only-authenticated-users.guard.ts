@@ -21,7 +21,14 @@ export class OnlyAuthenticatedUsersGuard implements CanActivate {
       }
     }
     
-    console.log('Guard "OnlyAuthenticatedUsersGuard" has denied activation of route "' + route.url.toString() + '"!');
+    let deniedUrl: string = "";
+    for (let i = 0; i < route.url.length; i++) {
+      if (i > 0) {
+        deniedUrl = deniedUrl.concat('/');
+      }
+      deniedUrl = deniedUrl.concat(route.url[i].path);
+    }
+    console.log('Guard "OnlyAuthenticatedUsersGuard" has denied activation of route "' + deniedUrl + '"!');
     this.router.navigateByUrl('/login').then(() => {
       this.snackBar.open('Nemate pravo pristupa unetoj putanji!', 'Zatvori', { duration: 7500 });
     });
