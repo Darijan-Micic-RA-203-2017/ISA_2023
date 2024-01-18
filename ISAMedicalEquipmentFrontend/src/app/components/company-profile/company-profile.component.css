@@ -24,6 +24,13 @@ mat-form-field {
     margin-bottom: 15px;
 }
 
+/* REFERENCE: https://www.geeksforgeeks.org/how-to-create-auto-resize-textarea-using-javascript-jquery/ */
+textarea {
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+
 .buttonDiv, .spinnerDiv {
     display: flex;
     flex-direction: row;

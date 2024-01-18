@@ -36,7 +36,9 @@
                 </div>
                 <mat-form-field>
                     <mat-label>Opis: </mat-label>
-                    <input matInput #descriptionInput type="text" [formControl]="form.get('description')">
+                    <!-- REFERENCE: https://v12.material.angular.io/cdk/text-field/overview -->
+                    <textarea matInput cdkTextareaAutosize #descriptionInput="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+                        [formControl]="form.get('description')"></textarea>
                     <mat-error *ngIf="form.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
                 <div class="buttonDiv">
