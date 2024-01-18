@@ -42,7 +42,8 @@
                     <mat-error *ngIf="form.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
                 <div class="buttonDiv">
-                    <button [disabled]="isDisabled" color="accent" mat-raised-button type="submit">Izmeni</button>
+                    <button *ngIf="isHidden" [disabled]="isDisabled" color="accent" mat-raised-button 
+                        type="submit">Izmeni</button>
                 </div>
             </form>
         </mat-card-content>

@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { MedicalEquipmentCompanyService } from 'src/app/services/medical-equipment-company/medical-equipment-company.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,6 +19,7 @@ import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipmen
 })
 export class CompanyProfileComponent implements OnInit {
   form: any;
+  isHidden: boolean = false;
   isDisabled: boolean = true;
   isSubmitted: boolean = false;
 
@@ -32,10 +34,12 @@ export class CompanyProfileComponent implements OnInit {
     workTime: ''
   };
   
-  constructor(private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, private formBuilder: FormBuilder, 
-      private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
+      private formBuilder: FormBuilder, private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
+    this.hideEditButtonIfUserIsAProcurementManager();
+    
     this.fillFormWithCompanyData();
     
     let route: string = this.router.url;
@@ -59,6 +63,12 @@ export class CompanyProfileComponent implements OnInit {
         this.snackBar.open('Kompanija nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
       }
     );
+  }
+
+  hideEditButtonIfUserIsAProcurementManager(): void {
+    if (this.authService.isUserACompanyAdministrator()) {
+      this.isHidden = true;
+    }
   }
 
   fillFormWithCompanyData(): void {

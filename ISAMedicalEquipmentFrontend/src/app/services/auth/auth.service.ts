@@ -45,4 +45,47 @@ export class AuthService {
     
     return true;
   }
+
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
+  isUserAProcurementManager(): boolean {
+    let answer: boolean = false;
+
+    let role = this.getRole();
+    if (role) {
+      if (role == 'ROLE_PROCUREMENT_MANAGER') {
+        answer = true;
+      }
+    }
+
+    return answer;
+  }
+
+  isUserACompanyAdministrator(): boolean {
+    let answer: boolean = false;
+
+    let role = this.getRole();
+    if (role) {
+      if (role == 'ROLE_COMPANY_ADMINISTRATOR') {
+        answer = true;
+      }
+    }
+
+    return answer;
+  }
+
+  isUserASystemAdministrator(): boolean {
+    let answer: boolean = false;
+
+    let role = this.getRole();
+    if (role) {
+      if (role == 'ROLE_SYSTEM_ADMINISTRATOR') {
+        answer = true;
+      }
+    }
+
+    return answer;
+  }
 }
