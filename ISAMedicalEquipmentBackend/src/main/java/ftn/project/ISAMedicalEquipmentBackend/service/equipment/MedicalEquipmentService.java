@@ -12,4 +12,5 @@ public interface MedicalEquipmentService {
 	MedicalEquipment findByName(String name);
 	List<MedicalEquipment> findAll();
 	List<MedicalEquipment> searchByName(SearchCriterionDTO searchCriterionDTO);
+	List<MedicalEquipment> findAllOfCompany(long companyId);
 }

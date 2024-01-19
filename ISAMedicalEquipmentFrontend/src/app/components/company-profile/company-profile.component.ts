@@ -7,10 +7,13 @@ import { take } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { MedicalEquipmentCompanyService } from 'src/app/services/medical-equipment-company/medical-equipment-company.service';
+import { MedicalEquipmentService } from 'src/app/services/medical-equipment/medical-equipment.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipment-company';
+import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
 
 @Component({
   selector: 'app-company-profile',
@@ -33,9 +36,15 @@ export class CompanyProfileComponent implements OnInit {
     averageGrade: 0.0,
     workTime: ''
   };
+
+  displayedColumnsOfEquipment: string[] = ['name', 'type', 'price'];
+  medicalEquipmentOfCompany: MedicalEquipment[] = [];
+  equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
+      new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
-      private formBuilder: FormBuilder, private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
+      private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder, 
+      private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.hideEditButtonIfUserIsAProcurementManager();
@@ -57,6 +66,19 @@ export class CompanyProfileComponent implements OnInit {
 
         this.company = data;
         this.fillFormWithCompanyData();
+
+        this.medicalEquipmentService.findAllOfCompany(companyId).subscribe(
+          data => {
+            console.log('Retrieving all medical equipment of company response: ', data);
+
+            this.medicalEquipmentOfCompany = data;
+            this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
+          },
+          (errorResponse: HttpErrorResponse) => {
+            console.log('Error on retrieving all medical equipment of company!', errorResponse.error.textMessage);
+            this.snackBar.open('Oprema kompanije nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
+          }
+        );
       },
       (errorResponse: HttpErrorResponse) => {
         console.log('Error on retrieving medical equipment company by id!', errorResponse.error.textMessage);

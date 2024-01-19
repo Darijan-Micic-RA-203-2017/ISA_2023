@@ -11,6 +11,7 @@ import { SearchCriterion } from 'src/app/domain/search-criterion';
 export class MedicalEquipmentService {
   private medicalEquipmentControllerURL: string = 'http://localhost:8080/medical-equipment';
   private searchEquipmentByNameURL: string = this.medicalEquipmentControllerURL.concat('/search-by-name');
+  private findAllEquipmentOfCompanyURL: string = this.medicalEquipmentControllerURL.concat('/find-all-of-company');
   
   constructor(private httpClient: HttpClient) { }
   
@@ -40,5 +41,14 @@ export class MedicalEquipmentService {
 
     return this.httpClient.post(this.searchEquipmentByNameURL, JSON.stringify(searchCriterion), 
         { headers: searchByNameHeaders });
+  }
+
+  findAllOfCompany(companyId: number): Observable<any> {
+    const medicalEquipmentRetrievalByCompanyIdHeaders = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    return this.httpClient.get(this.findAllEquipmentOfCompanyURL.concat(`/${companyId}`), 
+        { headers: medicalEquipmentRetrievalByCompanyIdHeaders });
   }
 }

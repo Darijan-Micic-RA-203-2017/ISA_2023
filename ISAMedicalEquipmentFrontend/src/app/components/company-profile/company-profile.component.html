@@ -1,7 +1,7 @@
-<div class="matCardDiv">
+<div class="matCardsDiv">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>{{ company.name }} - profil</mat-card-title>
+            <mat-card-title>Podaci kompanije</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isSubmitted" [formGroup]="form">
@@ -56,5 +56,37 @@
         <div class="spinnerDiv">
             <mat-spinner *ngIf="isSubmitted" mode="indeterminate"></mat-spinner>
         </div>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Medicinska oprema kompanije</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table mat-table [dataSource]="equipmentDataSource" id="equipmentTable" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Naziv
+                    </th>
+                    <td mat-cell *matCellDef="let equipment">{{ equipment.name }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Tip
+                    </th>
+                    <td mat-cell *matCellDef="let equipment">{{ equipment.type.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Cena
+                    </th>
+                    <td mat-cell *matCellDef="let equipment">{{ equipment.price }}</td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsOfEquipment"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsOfEquipment;"></tr>
+            </table>
+        </mat-card-content>
     </mat-card>
 </div>

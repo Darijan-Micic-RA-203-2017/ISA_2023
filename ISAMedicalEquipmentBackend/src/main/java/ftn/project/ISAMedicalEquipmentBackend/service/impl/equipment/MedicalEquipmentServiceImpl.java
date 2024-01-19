@@ -51,4 +51,9 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 		
 		return equipment;
 	}
+	
+	@Override
+	public List<MedicalEquipment> findAllOfCompany(long companyId) {
+		return medicalEquipmentRepository.getAllOfCompany(companyId);
+	}
 }

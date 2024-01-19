@@ -1,22 +1,29 @@
-.matCardDiv {
+.matCardsDiv {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     height: 100%;
-    margin-left: 5vw;
-    margin-right: 45vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 mat-card {
     text-align: center;
-    min-width: 100%;
     animation: fadein 1s;
     -o-animation: fadein 1s;
     -moz-animation: fadein 1s;
     -webkit-animation: fadein 1s;
+}
+
+.matCardsDiv > mat-card:first-child {
+    width: 40%;
+}
+
+.matCardsDiv > mat-card:last-child {
+    width: 50%;
 }
 
 mat-form-field {
@@ -29,6 +36,55 @@ textarea {
     display: block;
     overflow: hidden;
     resize: none;
+}
+
+table {
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+    border: 1px groove gray;
+}
+
+table td {
+    border: 1px groove gray;
+}
+
+.mat-header-cell {
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.mat-header-cell:first-of-type {
+    padding-left: 0px;
+}
+
+.mat-header-cell:last-of-type {
+    padding-right: 0px;
+}
+
+.mat-cell {
+    color: rgba(0, 0, 0, 1);
+}
+
+.mat-cell:first-of-type {
+    padding-left: 0px;
+}
+
+.mat-cell:last-of-type {
+    padding-right: 0px;
+}
+
+#equipmentTable .mat-column-name {
+    width: 45%;
+}
+
+#equipmentTable .mat-column-type {
+    width: 35%;
+}
+
+#equipmentTable .mat-column-price {
+    width: 20%;
 }
 
 .buttonDiv, .spinnerDiv {

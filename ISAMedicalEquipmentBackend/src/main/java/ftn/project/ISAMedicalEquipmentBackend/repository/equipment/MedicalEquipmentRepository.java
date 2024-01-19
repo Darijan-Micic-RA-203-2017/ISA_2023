@@ -13,10 +13,16 @@ public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipme
 	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t " 
 			+ "JOIN FETCH meq.company c")
 	List<MedicalEquipment> getAll();
+	
 	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t " + 
 			"JOIN FETCH meq.company c WHERE meq.id = ?1")
 	MedicalEquipment getById(long id);
+	
 	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t " + 
 			"JOIN FETCH meq.company c WHERE meq.name = ?1")
 	MedicalEquipment findByName(String name);
+	
+	@Query(value = "SELECT meq FROM MedicalEquipment meq JOIN FETCH meq.type t " + 
+			"JOIN FETCH meq.company c WHERE c.id = ?1")
+	List<MedicalEquipment> getAllOfCompany(long companyId);
 }

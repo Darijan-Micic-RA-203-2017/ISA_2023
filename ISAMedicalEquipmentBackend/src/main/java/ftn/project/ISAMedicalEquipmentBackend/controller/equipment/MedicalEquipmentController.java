@@ -72,4 +72,24 @@ public class MedicalEquipmentController {
 		
 		return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.OK);
 	}
+	
+	@GetMapping(path = "/find-all-of-company/{companyId}")
+	public ResponseEntity<List<MedicalEquipmentDTO>> findAllOfCompany(
+			@PathVariable(name = "companyId") String companyId) {
+		List<MedicalEquipmentDTO> allEquipmentOfSpecifiedCompany = null;
+		
+		long companyIdAsLong = 0;
+		try {
+			companyIdAsLong = Long.parseLong(companyId);
+		} catch (NumberFormatException nFE) {
+			return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		allEquipmentOfSpecifiedCompany = MedicalEquipmentConverter.convertToDTOsList(
+				medicalEquipmentService.findAllOfCompany(companyIdAsLong));
+		
+		return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
+				HttpStatus.OK);
+	}
 }
