@@ -27,7 +27,8 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Radno vreme: </mat-label>
-                    <input matInput #workTimeInput type="text" [formControl]="form.get('workTime')">
+                    <textarea matInput cdkTextareaAutosize #workTimeInput="cdkTextareaAutosize" cdkAutosizeMinRows="1" 
+                        [formControl]="form.get('workTime')"></textarea>
                     <mat-error *ngIf="form.get('workTime').invalid">{{ getErrorMessageFor('workTime') }}</mat-error>
                 </mat-form-field>
                 <div>
@@ -41,9 +42,8 @@
                         [formControl]="form.get('description')"></textarea>
                     <mat-error *ngIf="form.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
-                <div class="buttonDiv">
-                    <button *ngIf="isHidden" [disabled]="isDisabled" color="accent" mat-raised-button 
-                        type="submit">Izmeni</button>
+                <div *ngIf="isHidden" class="buttonDiv">
+                    <button [disabled]="isDisabled" color="accent" mat-raised-button type="submit">Izmeni</button>
                 </div>
             </form>
         </mat-card-content>

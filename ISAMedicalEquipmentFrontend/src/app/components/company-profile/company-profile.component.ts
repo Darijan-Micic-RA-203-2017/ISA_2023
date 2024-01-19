@@ -113,10 +113,14 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   // REFERENCE: https://v12.material.angular.io/cdk/text-field/overview
+  @ViewChild('workTimeInput') workTimeInput = CdkTextareaAutosize;
   @ViewChild('descriptionInput') descriptionInput = CdkTextareaAutosize;
 
-  autoResize(): any {
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => this.descriptionInput.prototype.resizeToFitContent(true));
+  autoResizeTextAreas(): void {
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
+      this.workTimeInput.prototype.resizeToFitContent(true);
+      this.descriptionInput.prototype.resizeToFitContent(true);
+    });
   }
 
   editCompany(): void { }
