@@ -1,13 +1,21 @@
-.matCardsDiv {
+.companyProfileDiv {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     height: 100%;
     margin-left: 2vw;
     margin-right: 2vw;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.matCardsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
 }
 
 mat-card {
