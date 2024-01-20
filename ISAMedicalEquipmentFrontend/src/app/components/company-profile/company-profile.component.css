@@ -10,14 +10,6 @@
     margin-bottom: 10px;
 }
 
-.matCardsDiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-}
-
 mat-card {
     text-align: center;
     animation: fadein 1s;
@@ -26,12 +18,8 @@ mat-card {
     -webkit-animation: fadein 1s;
 }
 
-.matCardsDiv > mat-card:first-child {
-    width: 40%;
-}
-
-.matCardsDiv > mat-card:last-child {
-    width: 50%;
+.companyProfileDiv > mat-card {
+    width: 70%;
 }
 
 mat-form-field {
@@ -44,6 +32,44 @@ textarea {
     display: block;
     overflow: hidden;
     resize: none;
+}
+
+.buttonDiv, .spinnerDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+form > div.buttonDiv > button {
+    width: 50%;
+}
+
+mat-card-actions > div.buttonDiv > button {
+    width: 100%;
+}
+
+.companyProfileDiv > button {
+    font-size: 18px;
+    width: 30%;
+    margin-top: 25px;
+}
+
+.equipmentAndTermsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.equipmentAndTermsDiv > *:first-child {
+    width: 50%;
+}
+
+.equipmentAndTermsDiv > *:last-child {
+    width: 40%;
 }
 
 table {
@@ -93,19 +119,4 @@ table td {
 
 #equipmentTable .mat-column-price {
     width: 20%;
-}
-
-.buttonDiv, .spinnerDiv {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-}
-
-form > div.buttonDiv > button {
-    width: 50%;
-}
-
-mat-card-actions > div.buttonDiv > button {
-    width: 100%;
 }

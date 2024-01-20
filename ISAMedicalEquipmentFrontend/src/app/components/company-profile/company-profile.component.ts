@@ -168,7 +168,7 @@ export class CompanyProfileComponent implements OnInit {
         }
         
         if (this.form.get('streetAndNumber').hasError('pattern')) {
-          errorMessage = 'Naziv ulice mora poceti velikim slovom!';
+          errorMessage = 'Naziv ulice mora početi velikim slovom!';
         }
         
         break;
@@ -178,17 +178,17 @@ export class CompanyProfileComponent implements OnInit {
         }
         
         if (this.form.get('populatedPlace').hasError('pattern')) {
-          errorMessage = 'Naziv mesta mora poceti velikim slovom!';
+          errorMessage = 'Naziv mesta mora početi velikim slovom!';
         }
         
         break;
       case 'country':
         if (this.form.get('country').hasError('required')) {
-          errorMessage = 'Morate uneti drzavu!';
+          errorMessage = 'Morate uneti državu!';
         }
         
         if (this.form.get('country').hasError('pattern')) {
-          errorMessage = 'Naziv drzave mora poceti velikim slovom!';
+          errorMessage = 'Naziv države mora početi velikim slovom!';
         }
         
         break;
@@ -209,5 +209,9 @@ export class CompanyProfileComponent implements OnInit {
     }
 
     return errorMessage;
+  }
+
+  scheduleTerm(): void {
+    this.snackBar.open('Zakazivanje termina će uskoro biti odrađeno.', 'Zatvori', { duration: 5000 });
   }
 }
