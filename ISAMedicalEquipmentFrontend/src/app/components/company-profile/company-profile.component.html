@@ -32,7 +32,7 @@
                         cdkAutosizeMinRows="1" [formControl]="form.get('workTime')"></textarea>
                         <mat-error *ngIf="form.get('workTime').invalid">{{ getErrorMessageFor('workTime') }}</mat-error>
                 </mat-form-field>
-                <div>
+                <div class="averageGradeDiv">
                     <label>Prosečna ocena: </label>
                     <p>{{ company.averageGrade }}</p>
                 </div>
