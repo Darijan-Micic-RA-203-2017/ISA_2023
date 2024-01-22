@@ -43,6 +43,7 @@ export class CompanyProfileComponent implements OnInit {
       new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
   
   formForTerm: any;
+  minDate: Date = new Date();
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder, 
@@ -52,6 +53,7 @@ export class CompanyProfileComponent implements OnInit {
     this.hideEditButtonIfUserIsAProcurementManager();
     
     this.fillFormForCompanyWithData();
+    this.initializeFormForTerm();
     
     let route: string = this.router.url;
     let routeParts: string[] = route.split('company');
@@ -81,8 +83,6 @@ export class CompanyProfileComponent implements OnInit {
             this.snackBar.open('Oprema kompanije nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
           }
         );
-        
-        this.initializeFormForTerm();
       },
       (errorResponse: HttpErrorResponse) => {
         console.log('Error on retrieving medical equipment company by id!', errorResponse.error.textMessage);
@@ -223,7 +223,11 @@ export class CompanyProfileComponent implements OnInit {
         break;
       case 'termDate':
         if (this.formForTerm.get('termDate').hasError('required')) {
-          errorMessage = 'Morate odabrati datum!';
+          errorMessage = 'Morate odabrati datum termina!';
+        }
+
+        if (this.formForTerm.get('termDate').hasError('matDatepickerMin')) {
+          errorMessage = 'Termin može biti zakazan samo u budućnosti!';
         }
 
         break;
