@@ -33,6 +33,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -44,7 +46,10 @@ const MaterialComponents = [
   MatProgressSpinnerModule,
   MatSnackBarModule,
   MatRadioModule,
-  MatTableModule
+  MatTableModule,
+  // REFERENCE: https://v12.material.angular.io/components/datepicker/overview#choosing-a-date-implementation-and-date-format-settings
+  MatLuxonDateModule,
+  MatDatepickerModule
 ];
 
 @NgModule({
