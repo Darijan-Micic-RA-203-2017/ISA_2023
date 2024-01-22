@@ -21,7 +21,7 @@ import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
   styleUrls: ['./company-profile.component.css']
 })
 export class CompanyProfileComponent implements OnInit {
-  form: any;
+  formForCompany: any;
   isHidden: boolean = false;
   isDisabled: boolean = true;
   isSubmitted: boolean = false;
@@ -42,6 +42,8 @@ export class CompanyProfileComponent implements OnInit {
   equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
       new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
   
+  formForTerm: any;
+  
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder, 
       private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
@@ -49,7 +51,7 @@ export class CompanyProfileComponent implements OnInit {
   ngOnInit(): void {
     this.hideEditButtonIfUserIsAProcurementManager();
     
-    this.fillFormWithCompanyData();
+    this.fillFormForCompanyWithData();
     
     let route: string = this.router.url;
     let routeParts: string[] = route.split('company');
@@ -65,7 +67,7 @@ export class CompanyProfileComponent implements OnInit {
         console.log('Retrieving medical equipment company by id response: ', data);
 
         this.company = data;
-        this.fillFormWithCompanyData();
+        this.fillFormForCompanyWithData();
 
         this.medicalEquipmentService.findAllOfCompany(companyId).subscribe(
           data => {
@@ -79,6 +81,8 @@ export class CompanyProfileComponent implements OnInit {
             this.snackBar.open('Oprema kompanije nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
           }
         );
+        
+        this.initializeFormForTerm();
       },
       (errorResponse: HttpErrorResponse) => {
         console.log('Error on retrieving medical equipment company by id!', errorResponse.error.textMessage);
@@ -93,9 +97,9 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
-  fillFormWithCompanyData(): void {
+  fillFormForCompanyWithData(): void {
     if (this.company.id == 0) {
-      this.form = this.formBuilder.group({
+      this.formForCompany = this.formBuilder.group({
         name: new FormControl({value: this.company.name, disabled: this.isDisabled}, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
@@ -123,7 +127,7 @@ export class CompanyProfileComponent implements OnInit {
       });
     } else {
       // REFERENCE: https://stackoverflow.com/a/55275042
-      this.form.setValue({
+      this.formForCompany.setValue({
         name: this.company.name,
         streetAndNumber: this.company.streetAndNumber,
         populatedPlace: this.company.populatedPlace,
@@ -147,71 +151,86 @@ export class CompanyProfileComponent implements OnInit {
 
   editCompany(): void { }
 
+  initializeFormForTerm(): void {
+    this.formForTerm = this.formBuilder.group({
+      termDate: new FormControl(null, {
+        validators: [Validators.required], 
+        updateOn: 'change'
+      })
+    });
+  }
+
+  scheduleTerm(): void {
+    this.snackBar.open('Zakazivanje termina će uskoro biti odrađeno.', 'Zatvori', { duration: 5000 });
+  }
+
   getErrorMessageFor(data: string): string {
     let errorMessage: string = '';
 
     switch (data) {
       case 'name':
-        if (this.form.get('name').hasError('required')) {
+        if (this.formForCompany.get('name').hasError('required')) {
           errorMessage = 'Morate uneti ime kompanije!';
         }
 
-        if (this.form.get('name').hasError('pattern')) {
+        if (this.formForCompany.get('name').hasError('pattern')) {
           errorMessage = 'Ime kompanije mora početi velikim slovom i završiti se slovom ili tačkom!\n' + 
               'Dozvoljeni su znakovi \'_\', \'-\' i \'.\'.';
         }
 
         break;
       case 'streetAndNumber':
-        if (this.form.get('streetAndNumber').hasError('required')) {
+        if (this.formForCompany.get('streetAndNumber').hasError('required')) {
           errorMessage = 'Morate uneti ulicu i broj!';
         }
         
-        if (this.form.get('streetAndNumber').hasError('pattern')) {
+        if (this.formForCompany.get('streetAndNumber').hasError('pattern')) {
           errorMessage = 'Naziv ulice mora početi velikim slovom!';
         }
         
         break;
       case 'populatedPlace':
-        if (this.form.get('populatedPlace').hasError('required')) {
+        if (this.formForCompany.get('populatedPlace').hasError('required')) {
           errorMessage = 'Morate uneti mesto!';
         }
         
-        if (this.form.get('populatedPlace').hasError('pattern')) {
+        if (this.formForCompany.get('populatedPlace').hasError('pattern')) {
           errorMessage = 'Naziv mesta mora početi velikim slovom!';
         }
         
         break;
       case 'country':
-        if (this.form.get('country').hasError('required')) {
+        if (this.formForCompany.get('country').hasError('required')) {
           errorMessage = 'Morate uneti državu!';
         }
         
-        if (this.form.get('country').hasError('pattern')) {
+        if (this.formForCompany.get('country').hasError('pattern')) {
           errorMessage = 'Naziv države mora početi velikim slovom!';
         }
         
         break;
       case 'workTime':
-        if (this.form.get('workTime').hasError('required')) {
+        if (this.formForCompany.get('workTime').hasError('required')) {
           errorMessage = 'Morate uneti radno vreme!';
         }
         
         break;
       case 'description':
-        if (this.form.get('description').hasError('required')) {
+        if (this.formForCompany.get('description').hasError('required')) {
           errorMessage = 'Morate uneti opis kompanije!';
         }
         
+        break;
+      case 'termDate':
+        if (this.formForTerm.get('termDate').hasError('required')) {
+          errorMessage = 'Morate odabrati datum!';
+        }
+
         break;
       default:
         errorMessage = '';
     }
 
     return errorMessage;
-  }
-
-  scheduleTerm(): void {
-    this.snackBar.open('Zakazivanje termina će uskoro biti odrađeno.', 'Zatvori', { duration: 5000 });
   }
 }

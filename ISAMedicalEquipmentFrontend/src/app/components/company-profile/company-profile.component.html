@@ -5,32 +5,32 @@
             <mat-card-title>Podaci kompanije</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isSubmitted" [formGroup]="form">
+            <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isSubmitted" [formGroup]="formForCompany">
                 <mat-form-field>
                     <mat-label>Naziv: </mat-label>
-                    <input matInput #nameInput type="text" [formControl]="form.get('name')">
-                    <mat-error *ngIf="form.get('name').invalid">{{ getErrorMessageFor('name') }}</mat-error>
+                    <input matInput #nameInput type="text" [formControl]="formForCompany.get('name')">
+                    <mat-error *ngIf="formForCompany.get('name').invalid">{{ getErrorMessageFor('name') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Ulica i broj: </mat-label>
-                    <input matInput #streetAndNumberInput type="text" [formControl]="form.get('streetAndNumber')">
-                    <mat-error *ngIf="form.get('streetAndNumber').invalid">{{ getErrorMessageFor('streetAndNumber') }}</mat-error>
+                    <input matInput #streetAndNumberInput type="text" [formControl]="formForCompany.get('streetAndNumber')">
+                    <mat-error *ngIf="formForCompany.get('streetAndNumber').invalid">{{ getErrorMessageFor('streetAndNumber') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Mesto: </mat-label>
-                    <input matInput #populatedPlaceInput type="text" [formControl]="form.get('populatedPlace')">
-                    <mat-error *ngIf="form.get('populatedPlace').invalid">{{ getErrorMessageFor('populatedPlace') }}</mat-error>
+                    <input matInput #populatedPlaceInput type="text" [formControl]="formForCompany.get('populatedPlace')">
+                    <mat-error *ngIf="formForCompany.get('populatedPlace').invalid">{{ getErrorMessageFor('populatedPlace') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Država: </mat-label>
-                    <input matInput #countryInput type="text" [formControl]="form.get('country')">
-                    <mat-error *ngIf="form.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
+                    <input matInput #countryInput type="text" [formControl]="formForCompany.get('country')">
+                    <mat-error *ngIf="formForCompany.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Radno vreme: </mat-label>
                     <textarea matInput cdkTextareaAutosize #workTimeInput="cdkTextareaAutosize" 
-                        cdkAutosizeMinRows="1" [formControl]="form.get('workTime')"></textarea>
-                        <mat-error *ngIf="form.get('workTime').invalid">{{ getErrorMessageFor('workTime') }}</mat-error>
+                        cdkAutosizeMinRows="1" [formControl]="formForCompany.get('workTime')"></textarea>
+                    <mat-error *ngIf="formForCompany.get('workTime').invalid">{{ getErrorMessageFor('workTime') }}</mat-error>
                 </mat-form-field>
                 <div class="averageGradeDiv">
                     <label>Prosečna ocena: </label>
@@ -40,8 +40,8 @@
                     <mat-label>Opis: </mat-label>
                     <!-- REFERENCE: https://v12.material.angular.io/cdk/text-field/overview -->
                     <textarea matInput cdkTextareaAutosize #descriptionInput="cdkTextareaAutosize" 
-                        cdkAutosizeMinRows="1" [formControl]="form.get('description')"></textarea>
-                    <mat-error *ngIf="form.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
+                        cdkAutosizeMinRows="1" [formControl]="formForCompany.get('description')"></textarea>
+                    <mat-error *ngIf="formForCompany.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
                 <div *ngIf="isHidden" class="buttonDiv">
                     <button [disabled]="isDisabled" color="accent" mat-raised-button type="submit">Izmeni</button>
@@ -99,7 +99,21 @@
                 <mat-card-title>Slobodni termini</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p>ZNJ</p>
+                <form #termForm="ngForm" (ngSubmit)="scheduleTerm()" [formGroup]="formForTerm">
+                    <!-- REFERENCE: https://v12.material.angular.io/components/datepicker/examples -->
+                    <mat-form-field>
+                        <mat-label>Odaberite datum: </mat-label>
+                        <input matInput [matDatepicker]="termDatePicker" [formControl]="formForTerm.get('termDate')">
+                        <mat-datepicker-toggle matSuffix [for]="termDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #termDatePicker>
+                            <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel type="button">Otkaži</button>
+                                <button mat-raised-button color="primary" matDatepickerApply type="button">Potvrdi</button>
+                            </mat-datepicker-actions>
+                        </mat-datepicker>
+                        <mat-error *ngIf="formForTerm.get('termDate').invalid">{{ getErrorMessageFor('termDate') }}</mat-error>
+                    </mat-form-field>
+                </form>
             </mat-card-content>
         </mat-card>
     </div>
