@@ -5,7 +5,8 @@
             <mat-card-title>Podaci kompanije</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isSubmitted" [formGroup]="formForCompany">
+            <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isFormForCompanySubmitted" 
+                [formGroup]="formForCompany">
                 <mat-form-field>
                     <mat-label>Naziv: </mat-label>
                     <input matInput #nameInput type="text" [formControl]="formForCompany.get('name')">
@@ -43,19 +44,20 @@
                         cdkAutosizeMinRows="1" [formControl]="formForCompany.get('description')"></textarea>
                     <mat-error *ngIf="formForCompany.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
-                <div *ngIf="isHidden" class="buttonDiv">
-                    <button [disabled]="isDisabled" color="accent" mat-raised-button type="submit">Izmeni</button>
+                <div *ngIf="isEditCompanyButtonHidden" class="buttonDiv">
+                    <button [disabled]="isFormForCompanyDisabled" color="accent" mat-raised-button 
+                        type="submit">Izmeni</button>
                 </div>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="buttonDiv">
-                <button [disabled]="isSubmitted" color="primary" mat-raised-button mat-button 
+                <button [disabled]="isFormForCompanySubmitted" color="primary" mat-raised-button mat-button 
                     type="button" routerLink="/">Početna stranica</button>
             </div>
         </mat-card-actions>
         <div class="spinnerDiv">
-            <mat-spinner *ngIf="isSubmitted" mode="indeterminate"></mat-spinner>
+            <mat-spinner *ngIf="isFormForCompanySubmitted" mode="indeterminate"></mat-spinner>
         </div>
     </mat-card>
     <button color="accent" mat-raised-button mat-button type="button" (click)="scheduleTerm()">
@@ -108,16 +110,12 @@
                         <mat-datepicker-toggle matSuffix [for]="termDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #termDatePicker>
                             <mat-datepicker-actions>
-                                <button mat-button matDatepickerCancel type="button">Otkaži</button>
                                 <button mat-raised-button color="primary" matDatepickerApply type="button">Potvrdi</button>
+                                <button mat-button matDatepickerCancel type="button">Otkaži</button>
                             </mat-datepicker-actions>
                         </mat-datepicker>
                         <mat-error *ngIf="formForTerm.get('termDate').invalid">{{ getErrorMessageFor('termDate') }}</mat-error>
                     </mat-form-field>
-                    <!--
-                    <p>Odabrani datum: </p>
-                    <p>{{ formForTerm.value.termDate }}</p>
-                    -->
                 </form>
             </mat-card-content>
         </mat-card>

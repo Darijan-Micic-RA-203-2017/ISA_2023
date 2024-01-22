@@ -22,9 +22,9 @@ import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
 })
 export class CompanyProfileComponent implements OnInit {
   formForCompany: any;
-  isHidden: boolean = false;
-  isDisabled: boolean = true;
-  isSubmitted: boolean = false;
+  isEditCompanyButtonHidden: boolean = false;
+  isFormForCompanyDisabled: boolean = true;
+  isFormForCompanySubmitted: boolean = false;
 
   company: MedicalEquipmentCompany = {
     id: 0,
@@ -50,7 +50,7 @@ export class CompanyProfileComponent implements OnInit {
       private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
-    this.hideEditButtonIfUserIsAProcurementManager();
+    this.hideEditCompanyButtonIfUserIsAProcurementManager();
     
     this.fillFormForCompanyWithData();
     this.initializeFormForTerm();
@@ -91,36 +91,36 @@ export class CompanyProfileComponent implements OnInit {
     );
   }
 
-  hideEditButtonIfUserIsAProcurementManager(): void {
-    if (this.authService.isUserACompanyAdministrator()) {
-      this.isHidden = true;
+  hideEditCompanyButtonIfUserIsAProcurementManager(): void {
+    if (this.authService.isUserAProcurementManager()) {
+      this.isEditCompanyButtonHidden = true;
     }
   }
 
   fillFormForCompanyWithData(): void {
     if (this.company.id == 0) {
       this.formForCompany = this.formBuilder.group({
-        name: new FormControl({value: this.company.name, disabled: this.isDisabled}, {
+        name: new FormControl({value: this.company.name, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        streetAndNumber: new FormControl({value: this.company.streetAndNumber, disabled: this.isDisabled}, {
+        streetAndNumber: new FormControl({value: this.company.streetAndNumber, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        populatedPlace: new FormControl({value: this.company.populatedPlace, disabled: this.isDisabled}, {
+        populatedPlace: new FormControl({value: this.company.populatedPlace, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        country: new FormControl({value: this.company.country, disabled: this.isDisabled}, {
+        country: new FormControl({value: this.company.country, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        workTime: new FormControl({value: this.company.workTime, disabled: this.isDisabled}, {
+        workTime: new FormControl({value: this.company.workTime, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required], 
           updateOn: 'change'
         }),
-        description: new FormControl({value: this.company.description, disabled: this.isDisabled}, {
+        description: new FormControl({value: this.company.description, disabled: this.isFormForCompanyDisabled}, {
           validators: [Validators.required], 
           updateOn: 'change'
         })
