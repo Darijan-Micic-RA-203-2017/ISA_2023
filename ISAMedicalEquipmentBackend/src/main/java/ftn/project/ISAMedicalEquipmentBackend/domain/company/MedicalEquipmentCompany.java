@@ -9,7 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
@@ -42,8 +44,9 @@ public class MedicalEquipmentCompany {
 	@Column(name = "average_grade", nullable = false)
 	private double averageGrade;
 	
-	@Column(name = "work_time", nullable = false)
-	private String workTime;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "work_time_id")
+	private WorkTime workTime;
 	
 	@OneToMany(mappedBy="company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<MedicalEquipment> equipment;
@@ -58,7 +61,7 @@ public class MedicalEquipmentCompany {
 	
 	public MedicalEquipmentCompany(long id, String name, String streetAndNumber, 
 			String populatedPlace, String country, String description, double averageGrade, 
-			String workTime, Set<MedicalEquipment> equipment, 
+			WorkTime workTime, Set<MedicalEquipment> equipment, 
 			Set<ExchangeTerm> unoccupiedExchangeTerms, Set<CompanyAdministrator> administrators) {
 		this.id = id;
 		this.name = name;
@@ -129,11 +132,11 @@ public class MedicalEquipmentCompany {
 		this.averageGrade = averageGrade;
 	}
 	
-	public String getWorkTime() {
+	public WorkTime getWorkTime() {
 		return workTime;
 	}
 	
-	public void setWorkTime(String workTime) {
+	public void setWorkTime(WorkTime workTime) {
 		this.workTime = workTime;
 	}
 	

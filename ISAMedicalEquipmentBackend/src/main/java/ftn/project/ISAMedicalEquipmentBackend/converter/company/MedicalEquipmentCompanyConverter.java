@@ -5,6 +5,7 @@ import java.util.List;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.dto.company.MedicalEquipmentCompanyDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.company.WorkTimeDTO;
 
 public class MedicalEquipmentCompanyConverter {
 	public MedicalEquipmentCompanyConverter() {}
@@ -35,7 +36,7 @@ public class MedicalEquipmentCompanyConverter {
 		String country = company.getCountry();
 		String description = company.getDescription();
 		double averageGrade = company.getAverageGrade();
-		String workTime = company.getWorkTime();
+		WorkTimeDTO workTime = WorkTimeConverter.convertToDTO(company.getWorkTime());
 		
 		MedicalEquipmentCompanyDTO dto = new MedicalEquipmentCompanyDTO(id, name, streetAndNumber, 
 				populatedPlace, country, description, averageGrade, workTime);

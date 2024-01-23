@@ -8,13 +8,13 @@ public class MedicalEquipmentCompanyDTO {
 	private String country;
 	private String description;
 	private double averageGrade;
-	private String workTime;
+	private WorkTimeDTO workTime;
 	
 	public MedicalEquipmentCompanyDTO() {}
 	
 	public MedicalEquipmentCompanyDTO(long id, String name, String streetAndNumber, 
 			String populatedPlace, String country, String description, double averageGrade, 
-			String workTime) {
+			WorkTimeDTO workTime) {
 		this.id = id;
 		this.name = name;
 		this.streetAndNumber = streetAndNumber;
@@ -81,11 +81,11 @@ public class MedicalEquipmentCompanyDTO {
 		this.averageGrade = averageGrade;
 	}
 	
-	public String getWorkTime() {
+	public WorkTimeDTO getWorkTime() {
 		return workTime;
 	}
 	
-	public void setWorkTime(String workTime) {
+	public void setWorkTime(WorkTimeDTO workTime) {
 		this.workTime = workTime;
 	}
 }

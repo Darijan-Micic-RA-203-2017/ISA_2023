@@ -4,18 +4,24 @@ INSERT INTO Loyalty_programs(id, name, necessary_points,
 INSERT INTO Loyalty_programs(id, name, necessary_points, 
 	points_gained_for_each_successful_exchange) VALUES (2, 'Srebrni', 6, 3);
 
+-- Work times:
+INSERT INTO Work_times(id, on_mondays_through_fridays, on_saturdays, on_sundays) VALUES (1, 
+	'08:00 – 17:00', null, null);
+INSERT INTO Work_times(id, on_mondays_through_fridays, on_saturdays, on_sundays) VALUES (2, 
+	'07:30 - 21:30', '07:30 - 21:30', '07:30 - 21:30');
+
 -- Medical equipment companies:
 -- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
 INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
-	description, average_grade, work_time) VALUES (1, 'Galenika', 'Batajnički drum b.b.', 'Zemun', 
-	'Srbija', 
+	description, average_grade, work_time_id) VALUES (1, 'Galenika', 'Batajnički drum b.b.', 
+	'Zemun', 'Srbija', 
 	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
 	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
 	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
 	'najvećih farmaceutskih kompanija u celoj Latinskoj Americi.', CHR(10), 
 	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
 	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
-	'medicinska sredstva.'), 0.0, 'Ponedeljak – petak: 08:00 – 17:00');
+	'medicinska sredstva.'), 0.0, 1);
 INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
 	description, average_grade, work_time) VALUES (2, 'Apotekarska ustanova Janković', 
 	'Dr. Ilije Đuričića 2A', 'Novi Sad', 'Srbija', 
@@ -32,9 +38,7 @@ INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_p
 	'Pored izuzetne snabdevenosti lekovima i medicinskim sredstvima, nudimo i širok asortiman ', 
 	'dijetetskih suplemenata, kozmetike, opreme za bebe. Izdajemo lekove na recept civilnim i ', 
 	'vojnim osiguranicima, izrađujemo magistralne lekove, podeljene praškove i galenske lekove. ', 
-	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 0.0, 
-	CONCAT('Ponedeljak - petak: 07:30 - 21:30;', CHR(10), 'Subota: 07:30 - 21:30;', CHR(10), 
-	'Nedelja: 07:30 - 21:30'));
+	'Svakodnevno Vam nudimo pregršt akcija, promocija i specijalnih ponuda.'), 0.0, 2);
 
 -- Procurement managers of hospitals:
 -- Password for this user is 'pBorisavljevic1999'.
