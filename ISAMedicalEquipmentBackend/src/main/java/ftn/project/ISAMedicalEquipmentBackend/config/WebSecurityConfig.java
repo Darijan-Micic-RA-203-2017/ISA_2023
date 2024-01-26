@@ -67,6 +67,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/medical-equipment/find-all-of-company/{companyId}").permitAll()
 				.antMatchers("/types-of-medical-equipment").permitAll()
 				.antMatchers("/types-of-medical-equipment/{id}").permitAll()
+				.antMatchers("/exchange-terms").authenticated()
+				.antMatchers("/exchange-terms/{id}").authenticated()
+				.antMatchers("/exchange-terms/on-specific-date").authenticated()
+				.antMatchers("/exchange-terms/on-specific-date-of-company/{companyId}").authenticated()
+				.antMatchers("/exchange-terms/of-company/{companyId}").authenticated()
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 
