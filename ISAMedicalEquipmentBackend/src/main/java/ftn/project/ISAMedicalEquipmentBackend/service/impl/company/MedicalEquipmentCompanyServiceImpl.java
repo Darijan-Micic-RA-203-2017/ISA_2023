@@ -24,7 +24,7 @@ public class MedicalEquipmentCompanyServiceImpl implements MedicalEquipmentCompa
 	
 	@Override
 	public MedicalEquipmentCompany findById(long id) throws AccessDeniedException {
-		return medicalEquipmentCompanyRepository.findById(id).orElse(null);
+		return medicalEquipmentCompanyRepository.getById(id);
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class MedicalEquipmentCompanyServiceImpl implements MedicalEquipmentCompa
 	
 	@Override
 	public List<MedicalEquipmentCompany> findAll() {
-		return medicalEquipmentCompanyRepository.findAll();
+		return medicalEquipmentCompanyRepository.getAll();
 	}
 	
 	@Override
