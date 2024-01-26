@@ -13,6 +13,7 @@ import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { MedicalEquipmentCompanyService } from './services/medical-equipment-company/medical-equipment-company.service';
 import { MedicalEquipmentService } from './services/medical-equipment/medical-equipment.service';
+import { ExchangeTermService } from './services/exchange-term/exchange-term.service';
 
 import { OnlyAuthenticatedUsersGuard } from './guards/only-authenticated-users/only-authenticated-users.guard';
 
@@ -79,6 +80,7 @@ const MaterialComponents = [
     UserService,
     MedicalEquipmentCompanyService,
     MedicalEquipmentService,
+    ExchangeTermService,
     OnlyAuthenticatedUsersGuard,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
   ],
