@@ -8,12 +8,16 @@ import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { MedicalEquipmentCompanyService } from 'src/app/services/medical-equipment-company/medical-equipment-company.service';
 import { MedicalEquipmentService } from 'src/app/services/medical-equipment/medical-equipment.service';
+import { ExchangeTermService } from 'src/app/services/exchange-term/exchange-term.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { DateTime } from 'luxon';
 import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipment-company';
 import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
+import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
+import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 
 @Component({
   selector: 'app-company-profile',
@@ -34,7 +38,12 @@ export class CompanyProfileComponent implements OnInit {
     country: '',
     description: '',
     averageGrade: 0.0,
-    workTime: ''
+    workTime: {
+      id: 0, 
+      onMondaysThroughFridays: '7:30 - 21:30', 
+      onSaturdays: '7:30 - 21:30', 
+      onSundays: null
+    }
   };
 
   displayedColumnsOfEquipment: string[] = ['name', 'type', 'price'];
@@ -43,11 +52,13 @@ export class CompanyProfileComponent implements OnInit {
       new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
   
   formForTerm: any;
-  minDate: Date = new Date();
+  minDate: DateTime = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+
+  occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
-      private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder, 
-      private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
+      private medicalEquipmentService: MedicalEquipmentService, private exchangeTermService: ExchangeTermService, 
+      private formBuilder: FormBuilder, private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
@@ -83,6 +94,8 @@ export class CompanyProfileComponent implements OnInit {
             this.snackBar.open('Oprema kompanije nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
           }
         );
+
+        this.determineFreeTermsOnSelectedTermDate();
       },
       (errorResponse: HttpErrorResponse) => {
         console.log('Error on retrieving medical equipment company by id!', errorResponse.error.textMessage);
@@ -153,11 +166,30 @@ export class CompanyProfileComponent implements OnInit {
 
   initializeFormForTerm(): void {
     this.formForTerm = this.formBuilder.group({
-      termDate: new FormControl(null, {
+      termDate: new FormControl(this.minDate, {
         validators: [Validators.required], 
         updateOn: 'change'
       })
     });
+  }
+
+  // KOD ZA ODREDJIVANJE KOJI 30-MINUTNI TERMINI CE BITI PRIKAZANI, NA OSNOVU RADNOG VREMENA
+  // KOMPANIJE NA TAJ DAN.
+  determineFreeTermsOnSelectedTermDate(): void {
+    this.exchangeTermService.findAllOnSpecificDateOfCompany(
+        new DateTimeWrapper(this.formForTerm.value.termDate), this.company.id).subscribe(
+      data => {
+        console.log('Retrieving all exchange terms on selected date of company response: ', data);
+
+        this.occupiedTermsOnSelectedDate = data;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        console.log('Error on retrieving all exchange terms on selected date of company!', 
+            errorResponse.error.textMessage);
+        this.snackBar.open('Termini kompanije zakazani odabranog datuma nisu mogli biti dobavljeni!', 'Zatvori', 
+            { duration: 5000 });
+      }
+    );
   }
 
   scheduleTerm(): void {
