@@ -23,7 +23,7 @@ INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_p
 	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
 	'medicinska sredstva.'), 0.0, 1);
 INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
-	description, average_grade, work_time) VALUES (2, 'Apotekarska ustanova Janković', 
+	description, average_grade, work_time_id) VALUES (2, 'Apotekarska ustanova Janković', 
 	'Dr. Ilije Đuričića 2A', 'Novi Sad', 'Srbija', 
 	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
 	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 
@@ -163,7 +163,7 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALU
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2023-11-15 08:00:00.508-07', '2023-11-15 08:30:00.508-07', 
+	administrator_id) VALUES (1, '2024-01-26 08:00:00.000+01', '2024-01-26 08:30:00.000+01', 
 	1, 1, 3);
 /*
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
