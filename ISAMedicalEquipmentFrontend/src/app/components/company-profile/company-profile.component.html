@@ -105,8 +105,9 @@
                     <!-- REFERENCE: https://v12.material.angular.io/components/datepicker/examples -->
                     <mat-form-field>
                         <mat-label>Odaberite datum: </mat-label>
-                        <input matInput #termDateInput type="text" [matDatepicker]="termDatePicker" [min]="minDate" 
-                            [formControl]="formForTerm.get('termDate')">
+                        <input matInput #termDateInput type="text" [matDatepicker]="termDatePicker" 
+                            [min]="minDate" [formControl]="formForTerm.get('termDate')" 
+                            (dateChange)="determineFreeTermsOnSelectedTermDate()">
                         <mat-datepicker-toggle matSuffix [for]="termDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #termDatePicker>
                             <mat-datepicker-actions>
