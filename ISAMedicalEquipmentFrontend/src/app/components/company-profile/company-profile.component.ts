@@ -229,7 +229,11 @@ export class CompanyProfileComponent implements OnInit {
 
         let startHourOfCurrentTerm: number = startHourOfWorkTime;
         let startMinuteOfCurrentTerm: number = startMinuteOfWorkTime;
-        while (startHourOfCurrentTerm < endHourOfWorkTime) {
+        while (startHourOfCurrentTerm <= endHourOfWorkTime) {
+          if (startHourOfCurrentTerm == endHourOfWorkTime && startMinuteOfCurrentTerm == endMinuteOfWorkTime) {
+            break;
+          }
+
           let endHourOfCurrentTerm: number = 0;
           let endMinuteOfCurrentTerm: number = 0;
           if (startMinuteOfCurrentTerm == 0) {
@@ -252,6 +256,7 @@ export class CompanyProfileComponent implements OnInit {
             if (occupiedTerm.startingTime.hour == startingTime.hour && 
                   occupiedTerm.startingTime.minute == startingTime.minute) {
               isTermOccupied = true;
+
               break;
             }
           }
@@ -262,11 +267,6 @@ export class CompanyProfileComponent implements OnInit {
 
           startHourOfCurrentTerm = endHourOfCurrentTerm;
           startMinuteOfCurrentTerm = endMinuteOfCurrentTerm;
-        }
-
-        console.log(`Free terms (there is ${this.freeTermsOnSelectedDate.length} of them):`);
-        for (let freeTerm of this.freeTermsOnSelectedDate) {
-          console.log(`${freeTerm.startingTime} - ${freeTerm.endingTime}`);
         }
       },
       (errorResponse: HttpErrorResponse) => {
