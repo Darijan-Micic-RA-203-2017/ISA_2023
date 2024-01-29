@@ -6,7 +6,7 @@ INSERT INTO Loyalty_programs(id, name, necessary_points,
 
 -- Work times:
 INSERT INTO Work_times(id, on_mondays_through_fridays, on_saturdays, on_sundays) VALUES (1, 
-	'08:00 – 17:00', null, null);
+	'08:00 - 17:00', null, null);
 INSERT INTO Work_times(id, on_mondays_through_fridays, on_saturdays, on_sundays) VALUES (2, 
 	'07:30 - 21:30', '07:30 - 21:30', '07:30 - 21:30');
 
@@ -163,7 +163,7 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALU
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2024-01-26 08:00:00.000+01', '2024-01-26 08:30:00.000+01', 
+	administrator_id) VALUES (1, '2024-01-30 08:00:00.000+01', '2024-01-30 08:30:00.000+01', 
 	1, 1, 3);
 /*
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
