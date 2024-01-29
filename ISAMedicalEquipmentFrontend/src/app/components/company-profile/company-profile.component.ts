@@ -184,7 +184,14 @@ export class CompanyProfileComponent implements OnInit {
         new DateTimeWrapper(selectedTermDate), this.company.id).subscribe(
       data => {
         console.log('Retrieving all exchange terms on selected date of company response: ', data);
-        this.occupiedTermsOnSelectedDate = data;
+        for (let unconvertedOccupiedTerm of data) {
+          let convertedOccupiedTerm: ExchangeTerm = new ExchangeTerm(unconvertedOccupiedTerm.id, 
+              DateTime.fromMillis(unconvertedOccupiedTerm.startingTime), 
+              DateTime.fromMillis(unconvertedOccupiedTerm.endingTime), unconvertedOccupiedTerm.procurementManagerId, 
+              unconvertedOccupiedTerm.companyId, unconvertedOccupiedTerm.administratorId);
+          
+          this.occupiedTermsOnSelectedDate.push(convertedOccupiedTerm);
+        }
 
         let workTime: string[] = [];
         switch (selectedTermDate.weekday) {
