@@ -46,6 +46,15 @@ export class AuthService {
     return true;
   }
 
+  getUserId(): number {
+    let userIdAsString: string | null = localStorage.getItem('userId');
+    if (!userIdAsString) {
+      return 0;
+    }
+
+    return Number.parseInt(userIdAsString);
+  }
+
   getRole(): string | null {
     return localStorage.getItem('role');
   }

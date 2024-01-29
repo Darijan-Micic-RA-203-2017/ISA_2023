@@ -40,8 +40,8 @@ export class CompanyProfileComponent implements OnInit {
     averageGrade: 0.0,
     workTime: {
       id: 0, 
-      onMondaysThroughFridays: '7:30 - 21:30', 
-      onSaturdays: '7:30 - 21:30', 
+      onMondaysThroughFridays: '07:30 - 21:30', 
+      onSaturdays: '07:30 - 21:30', 
       onSundays: null
     }
   };
@@ -55,6 +55,8 @@ export class CompanyProfileComponent implements OnInit {
   minDate: DateTime = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
   occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
+  freeTermsOnSelectedDate: ExchangeTerm[] = [];
+  userId: number = 0;
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private exchangeTermService: ExchangeTermService, 
@@ -74,7 +76,8 @@ export class CompanyProfileComponent implements OnInit {
       
       return;
     }
-    
+
+    this.userId = this.authService.getUserId();
     this.medicalEquipmentCompanyService.findById(companyId).subscribe(
       data => {
         console.log('Retrieving medical equipment company by id response: ', data);
@@ -173,15 +176,91 @@ export class CompanyProfileComponent implements OnInit {
     });
   }
 
-  // KOD ZA ODREDJIVANJE KOJI 30-MINUTNI TERMINI CE BITI PRIKAZANI, NA OSNOVU RADNOG VREMENA
-  // KOMPANIJE NA TAJ DAN.
   determineFreeTermsOnSelectedTermDate(): void {
+    this.freeTermsOnSelectedDate = [];
+    let selectedTermDate: DateTime = this.formForTerm.value.termDate;
+
     this.exchangeTermService.findAllOnSpecificDateOfCompany(
-        new DateTimeWrapper(this.formForTerm.value.termDate), this.company.id).subscribe(
+        new DateTimeWrapper(selectedTermDate), this.company.id).subscribe(
       data => {
         console.log('Retrieving all exchange terms on selected date of company response: ', data);
-
         this.occupiedTermsOnSelectedDate = data;
+
+        let workTime: string[] = [];
+        switch (selectedTermDate.weekday) {
+          case 1: case 2: case 3: case 4: case 5:
+            workTime = this.company.workTime.onMondaysThroughFridays.split(' - ');
+
+            break;
+          case 6:
+            if (!this.company.workTime.onSaturdays) {
+              break;
+            }
+            workTime = this.company.workTime.onSaturdays.split(' - ');
+
+            break;
+          case 7:
+            if (!this.company.workTime.onSundays) {
+              break;
+            }
+            workTime = this.company.workTime.onSundays.split(' - ');
+
+            break;
+          default:
+            break;
+        }
+        if (workTime.length == 0) {
+          return;
+        }
+
+        let startOfWorkTime: string[] = workTime[0].split(':');
+        let startHourOfWorkTime: number = Number.parseInt(startOfWorkTime[0]);
+        let startMinuteOfWorkTime: number = Number.parseInt(startOfWorkTime[1]);
+        let endOfWorkTime: string[] = workTime[1].split(':');
+        let endHourOfWorkTime: number = Number.parseInt(endOfWorkTime[0]);
+        let endMinuteOfWorkTime: number = Number.parseInt(endOfWorkTime[1]);
+
+        let startHourOfCurrentTerm: number = startHourOfWorkTime;
+        let startMinuteOfCurrentTerm: number = startMinuteOfWorkTime;
+        while (startHourOfCurrentTerm < endHourOfWorkTime) {
+          let endHourOfCurrentTerm: number = 0;
+          let endMinuteOfCurrentTerm: number = 0;
+          if (startMinuteOfCurrentTerm == 0) {
+            endHourOfCurrentTerm = startHourOfCurrentTerm;
+            endMinuteOfCurrentTerm = 30;
+          } else {
+            endHourOfCurrentTerm = startHourOfCurrentTerm + 1;
+            endMinuteOfCurrentTerm = 0;
+          }
+
+          let startingTimeAsJSDate: Date = new Date(selectedTermDate.year, selectedTermDate.month - 1, 
+              selectedTermDate.day, startHourOfCurrentTerm, startMinuteOfCurrentTerm, 0, 0);
+          let startingTime: DateTime = DateTime.fromJSDate(startingTimeAsJSDate);
+          let endingTimeAsJSDate: Date = new Date(selectedTermDate.year, selectedTermDate.month - 1, 
+              selectedTermDate.day, endHourOfCurrentTerm, endMinuteOfCurrentTerm, 0, 0);
+          let endingTime: DateTime = DateTime.fromJSDate(endingTimeAsJSDate);
+
+          let isTermOccupied: boolean = false;
+          for (let occupiedTerm of this.occupiedTermsOnSelectedDate) {
+            if (occupiedTerm.startingTime.hour == startingTime.hour && 
+                  occupiedTerm.startingTime.minute == startingTime.minute) {
+              isTermOccupied = true;
+              break;
+            }
+          }
+          if (!isTermOccupied) {
+            this.freeTermsOnSelectedDate.push(new ExchangeTerm(0, startingTime, endingTime, 
+                this.userId, this.company.id, 0));
+          }
+
+          startHourOfCurrentTerm = endHourOfCurrentTerm;
+          startMinuteOfCurrentTerm = endMinuteOfCurrentTerm;
+        }
+
+        console.log(`Free terms (there is ${this.freeTermsOnSelectedDate.length} of them):`);
+        for (let freeTerm of this.freeTermsOnSelectedDate) {
+          console.log(`${freeTerm.startingTime} - ${freeTerm.endingTime}`);
+        }
       },
       (errorResponse: HttpErrorResponse) => {
         console.log('Error on retrieving all exchange terms on selected date of company!', 
