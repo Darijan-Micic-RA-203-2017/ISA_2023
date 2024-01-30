@@ -172,6 +172,10 @@ export class CompanyProfileComponent implements OnInit {
       termDate: new FormControl(this.minDate, {
         validators: [Validators.required], 
         updateOn: 'change'
+      }),
+      term: new FormControl(null, {
+        validators: [Validators.required], 
+        updateOn: 'change'
       })
     });
   }
