@@ -118,6 +118,10 @@
                         <mat-error *ngIf="formForTerm.get('termDate').invalid">{{ getErrorMessageFor('termDate') }}</mat-error>
                     </mat-form-field>
                 </form>
+                <!-- REFERENCE: https://v12.material.angular.io/components/chips/examples -->
+                <mat-chip-list>
+                    <mat-chip *ngFor="let freeTerm of freeTermsOnSelectedDate">{{ showFreeTerm(freeTerm) }}</mat-chip>
+                </mat-chip-list>
             </mat-card-content>
         </mat-card>
     </div>

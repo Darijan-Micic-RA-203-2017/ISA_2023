@@ -355,4 +355,27 @@ export class CompanyProfileComponent implements OnInit {
 
     return errorMessage;
   }
+
+  showFreeTerm(freeTerm: ExchangeTerm): string {
+    let startHour: string = freeTerm.startingTime.hour.toString();
+    if (startHour == '0') {
+      startHour = startHour.concat('0');
+    }
+    let startMinute: string = freeTerm.startingTime.minute.toString();
+    if (startMinute == '0') {
+      startMinute = startMinute.concat('0');
+    }
+    let endHour: string = freeTerm.endingTime.hour.toString();
+    if (endHour == '0') {
+      endHour = endHour.concat('0');
+    }
+    let endMinute: string = freeTerm.endingTime.minute.toString();
+    if (endMinute == '0') {
+      endMinute = endMinute.concat('0');
+    }
+    
+    let freeTermAsString: string = startHour.concat(':', startMinute, ' - ', endHour, ':', endMinute);
+
+    return freeTermAsString;
+  }
 }

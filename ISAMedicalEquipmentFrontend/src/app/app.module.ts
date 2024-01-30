@@ -36,6 +36,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -50,7 +51,8 @@ const MaterialComponents = [
   MatTableModule,
   // REFERENCE: https://v12.material.angular.io/components/datepicker/overview#choosing-a-date-implementation-and-date-format-settings
   MatLuxonDateModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatChipsModule
 ];
 
 @NgModule({
