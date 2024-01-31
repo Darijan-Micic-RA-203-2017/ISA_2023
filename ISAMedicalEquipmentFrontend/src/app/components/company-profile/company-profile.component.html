@@ -28,10 +28,28 @@
                     <mat-error *ngIf="formForCompany.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>Radno vreme: </mat-label>
-                    <textarea matInput cdkTextareaAutosize #workTimeInput="cdkTextareaAutosize" 
-                        cdkAutosizeMinRows="1" [formControl]="formForCompany.get('workTime')"></textarea>
-                    <mat-error *ngIf="formForCompany.get('workTime').invalid">{{ getErrorMessageFor('workTime') }}</mat-error>
+                    <mat-label>Radno vreme - od ponedeljka do petka: </mat-label>
+                    <input matInput #workTimeOnMondaysThroughFridaysInput type="text" 
+                        [formControl]="formForCompany.get('workTimeOnMondaysThroughFridays')">
+                    <mat-error *ngIf="formForCompany.get('workTimeOnMondaysThroughFridays').invalid">
+                        {{ getErrorMessageFor('workTimeOnMondaysThroughFridays') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Radno vreme - subotom: </mat-label>
+                    <input matInput #workTimeOnSaturdaysInput type="text" 
+                        [formControl]="formForCompany.get('workTimeOnSaturdays')">
+                    <mat-error *ngIf="formForCompany.get('workTimeOnSaturdays').invalid">
+                        {{ getErrorMessageFor('workTimeOnSaturdays') }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Radno vreme - nedeljom: </mat-label>
+                    <input matInput #workTimeOnSundaysInput type="text" 
+                        [formControl]="formForCompany.get('workTimeOnSundays')">
+                    <mat-error *ngIf="formForCompany.get('workTimeOnSundays').invalid">
+                        {{ getErrorMessageFor('workTimeOnSundays') }}
+                    </mat-error>
                 </mat-form-field>
                 <div class="averageGradeDiv">
                     <label>Prosečna ocena: </label>

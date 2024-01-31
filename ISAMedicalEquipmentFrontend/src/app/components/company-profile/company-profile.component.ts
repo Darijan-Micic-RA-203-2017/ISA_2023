@@ -27,7 +27,7 @@ import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 export class CompanyProfileComponent implements OnInit {
   formForCompany: any;
   isEditCompanyButtonHidden: boolean = false;
-  isFormForCompanyDisabled: boolean = true;
+  isFormForCompanyDisabled: boolean = false;
   isFormForCompanySubmitted: boolean = false;
 
   company: MedicalEquipmentCompany = {
@@ -132,8 +132,19 @@ export class CompanyProfileComponent implements OnInit {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        workTime: new FormControl({value: this.company.workTime, disabled: this.isFormForCompanyDisabled}, {
-          validators: [Validators.required], 
+        workTimeOnMondaysThroughFridays: new FormControl(
+              { value: this.company.workTime.onMondaysThroughFridays, disabled: this.isFormForCompanyDisabled }, {
+          validators: [Validators.required, Validators.pattern(/^[0-2][0-9]:[0-5][0-9] - [0-2][0-9]:[0-5][0-9]$/)], 
+          updateOn: 'change'
+        }),
+        workTimeOnSaturdays: new FormControl(
+            { value: this.company.workTime.onSaturdays || 'Ne radimo', disabled: this.isFormForCompanyDisabled }, {
+          validators: [Validators.pattern(/^$|^Ne radimo$|^[0-2][0-9]:[0-5][0-9] - [0-2][0-9]:[0-5][0-9]$/)], 
+          updateOn: 'change'
+        }),
+        workTimeOnSundays: new FormControl(
+            { value: this.company.workTime.onSundays || 'Ne radimo', disabled: this.isFormForCompanyDisabled }, {
+          validators: [Validators.pattern(/^$|^Ne radimo$|^[0-2][0-9]:[0-5][0-9] - [0-2][0-9]:[0-5][0-9]$/)], 
           updateOn: 'change'
         }),
         description: new FormControl({value: this.company.description, disabled: this.isFormForCompanyDisabled}, {
@@ -148,19 +159,19 @@ export class CompanyProfileComponent implements OnInit {
         streetAndNumber: this.company.streetAndNumber,
         populatedPlace: this.company.populatedPlace,
         country: this.company.country,
-        workTime: this.company.workTime,
+        workTimeOnMondaysThroughFridays: this.company.workTime.onMondaysThroughFridays,
+        workTimeOnSaturdays: this.company.workTime.onSaturdays,
+        workTimeOnSundays: this.company.workTime.onSundays,
         description: this.company.description
       });
     }
   }
 
   // REFERENCE: https://v12.material.angular.io/cdk/text-field/overview
-  @ViewChild('workTimeInput') workTimeInput = CdkTextareaAutosize;
   @ViewChild('descriptionInput') descriptionInput = CdkTextareaAutosize;
 
   autoResizeTextAreas(): void {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      this.workTimeInput.prototype.resizeToFitContent(true);
       this.descriptionInput.prototype.resizeToFitContent(true);
     });
   }
@@ -331,9 +342,25 @@ export class CompanyProfileComponent implements OnInit {
         }
         
         break;
-      case 'workTime':
-        if (this.formForCompany.get('workTime').hasError('required')) {
-          errorMessage = 'Morate uneti radno vreme!';
+      case 'workTimeOnMondaysThroughFridays':
+        if (this.formForCompany.get('workTimeOnMondaysThroughFridays').hasError('required')) {
+          errorMessage = 'Morate uneti radno vreme od ponedeljka do petka!';
+        }
+
+        if (this.formForCompany.get('workTimeOnMondaysThroughFridays').hasError('pattern')) {
+          errorMessage = 'Radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
+        }
+        
+        break;
+      case 'workTimeOnSaturdays':
+        if (this.formForCompany.get('workTimeOnSaturdays').hasError('pattern')) {
+          errorMessage = 'Mora biti napisano "Ne radimo" ili radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
+        }
+        
+        break;
+      case 'workTimeOnSundays':
+        if (this.formForCompany.get('workTimeOnSundays').hasError('pattern')) {
+          errorMessage = 'Mora biti napisano "Ne radimo" ili radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
         }
         
         break;
