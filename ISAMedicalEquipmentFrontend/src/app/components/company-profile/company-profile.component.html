@@ -5,7 +5,7 @@
             <mat-card-title>Podaci kompanije</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isFormForCompanySubmitted" 
+            <form id="companyForm" #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isFormForCompanySubmitted" 
                 [formGroup]="formForCompany">
                 <mat-form-field>
                     <mat-label>Naziv: </mat-label>
@@ -87,6 +87,19 @@
                 <mat-card-title>Medicinska oprema kompanije</mat-card-title>
             </mat-card-header>
             <mat-card-content>
+                <div class="searchEquipmentFormDiv">
+                    <form id="searchEquipmentForm" #searchEquipmentForm="ngForm" 
+                        (ngSubmit)="searchEquipmentOfCompanyByName()" [formGroup]="formForEquipmentSearch">
+                        <mat-form-field>
+                            <mat-label>Unesite naziv: </mat-label>
+                            <input matInput #searchCriterionInput type="text" 
+                                [formControl]="formForEquipmentSearch.get('searchCriterion')">
+                        </mat-form-field>
+                        <button [disabled]="formForEquipmentSearch.invalid" color="accent" mat-raised-button type="submit">
+                            Pretraži
+                        </button>
+                    </form>
+                </div>
                 <table mat-table [dataSource]="equipmentDataSource" id="equipmentTable" class="mat-elevation-z8">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>
@@ -119,7 +132,7 @@
                 <mat-card-title>Slobodni termini</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <form #termForm="ngForm" (ngSubmit)="scheduleTerm()" [formGroup]="formForTerm">
+                <form id="termForm" #termForm="ngForm" (ngSubmit)="scheduleTerm()" [formGroup]="formForTerm">
                     <!-- REFERENCE: https://v12.material.angular.io/components/datepicker/examples -->
                     <mat-form-field>
                         <mat-label>Odaberite datum: </mat-label>

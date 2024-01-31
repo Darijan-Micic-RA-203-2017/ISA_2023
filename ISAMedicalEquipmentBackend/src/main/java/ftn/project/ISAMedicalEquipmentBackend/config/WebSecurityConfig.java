@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/medical-equipment").permitAll()
 				.antMatchers("/medical-equipment/{id}").permitAll()
 				.antMatchers("/medical-equipment/search-by-name").permitAll()
+				.antMatchers("/medical-equipment/search-by-name/{companyId}").authenticated()
 				.antMatchers("/medical-equipment/find-all-of-company/{companyId}").permitAll()
 				.antMatchers("/types-of-medical-equipment").permitAll()
 				.antMatchers("/types-of-medical-equipment/{id}").permitAll()

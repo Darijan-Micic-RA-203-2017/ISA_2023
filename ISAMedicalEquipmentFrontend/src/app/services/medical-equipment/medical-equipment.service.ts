@@ -16,39 +16,45 @@ export class MedicalEquipmentService {
   constructor(private httpClient: HttpClient) { }
   
   findAll(): Observable<any> {
-    const allMedicalEquipmentRetrievalHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.medicalEquipmentControllerURL, 
-        { headers: allMedicalEquipmentRetrievalHeaders });
+    return this.httpClient.get(this.medicalEquipmentControllerURL, { headers: headers });
   }
 
   findById(id: number): Observable<any> {
-    const medicalEquipmentRetrievalByIdHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.medicalEquipmentControllerURL.concat(`/${id}`), 
-        { headers: medicalEquipmentRetrievalByIdHeaders });
+    return this.httpClient.get(this.medicalEquipmentControllerURL.concat(`/${id}`), { headers: headers });
   }
 
-  searchByName(searchCriterion: SearchCriterion): Observable<any> {
-    const searchByNameHeaders = new HttpHeaders({
+  searchEquipmentByName(searchCriterion: SearchCriterion): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
-    return this.httpClient.post(this.searchEquipmentByNameURL, JSON.stringify(searchCriterion), 
-        { headers: searchByNameHeaders });
+    return this.httpClient.post(this.searchEquipmentByNameURL, JSON.stringify(searchCriterion), { headers: headers });
+  }
+
+  searchEquipmentOfCompanyByName(searchCriterion: SearchCriterion, companyId: number): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    return this.httpClient.post(this.searchEquipmentByNameURL.concat(`/${companyId}`), JSON.stringify(searchCriterion), 
+        { headers: headers });
   }
 
   findAllOfCompany(companyId: number): Observable<any> {
-    const medicalEquipmentRetrievalByCompanyIdHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.findAllEquipmentOfCompanyURL.concat(`/${companyId}`), 
-        { headers: medicalEquipmentRetrievalByCompanyIdHeaders });
+    return this.httpClient.get(this.findAllEquipmentOfCompanyURL.concat(`/${companyId}`), { headers: headers });
   }
 }

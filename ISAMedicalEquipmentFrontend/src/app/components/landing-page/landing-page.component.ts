@@ -106,7 +106,7 @@ export class LandingPageComponent implements OnInit {
 
     const searchCriterion = new SearchCriterion(this.equipmentForm.value.searchCriterion);
 
-    this.medicalEquipmentService.searchByName(searchCriterion).subscribe(
+    this.medicalEquipmentService.searchEquipmentByName(searchCriterion).subscribe(
       data => {
         console.log('Search medical equipment by name response: ', data);
 

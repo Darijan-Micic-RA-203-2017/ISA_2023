@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DateTime } from 'luxon';
 import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipment-company';
 import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
+import { SearchCriterion } from 'src/app/domain/search-criterion';
 import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
 import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 
@@ -29,7 +30,6 @@ export class CompanyProfileComponent implements OnInit {
   isEditCompanyButtonHidden: boolean = false;
   isFormForCompanyDisabled: boolean = true;
   isFormForCompanySubmitted: boolean = false;
-
   company: MedicalEquipmentCompany = {
     id: 0,
     name: '',
@@ -40,22 +40,24 @@ export class CompanyProfileComponent implements OnInit {
     averageGrade: 0.0,
     workTime: {
       id: 0, 
-      onMondaysThroughFridays: '07:30 - 21:30', 
-      onSaturdays: '07:30 - 21:30', 
+      onMondaysThroughFridays: '', 
+      onSaturdays: null, 
       onSundays: null
     }
   };
 
+  formForEquipmentSearch: any;
   displayedColumnsOfEquipment: string[] = ['name', 'type', 'price'];
-  medicalEquipmentOfCompany: MedicalEquipment[] = [];
+  allMedicalEquipmentOfCompany: MedicalEquipment[] = [];
+  shownMedicalEquipmentOfCompany: MedicalEquipment[] = [];
   equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
-      new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
+      new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
   
   formForTerm: any;
   minDate: DateTime = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-
   occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
   freeTermsOnSelectedDate: ExchangeTerm[] = [];
+  
   userId: number = 0;
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
@@ -66,6 +68,7 @@ export class CompanyProfileComponent implements OnInit {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
     
     this.fillFormForCompanyWithData();
+    this.initializeFormForEquipmentSearch();
     this.initializeFormForTerm();
     
     let route: string = this.router.url;
@@ -89,8 +92,9 @@ export class CompanyProfileComponent implements OnInit {
           data => {
             console.log('Retrieving all medical equipment of company response: ', data);
 
-            this.medicalEquipmentOfCompany = data;
-            this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.medicalEquipmentOfCompany);
+            this.allMedicalEquipmentOfCompany = data;
+            this.shownMedicalEquipmentOfCompany = data;
+            this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
           },
           (errorResponse: HttpErrorResponse) => {
             console.log('Error on retrieving all medical equipment of company!', errorResponse.error.textMessage);
@@ -177,6 +181,38 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   editCompany(): void { }
+
+  initializeFormForEquipmentSearch(): void {
+    this.formForEquipmentSearch = this.formBuilder.group({
+      searchCriterion: new FormControl('', {
+        validators: [Validators.pattern(/^$|^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
+        updateOn: 'change'
+      })
+    });
+  }
+
+  searchEquipmentOfCompanyByName(): void {
+    if (!this.formForEquipmentSearch.value.searchCriterion) {
+      this.shownMedicalEquipmentOfCompany = this.allMedicalEquipmentOfCompany;
+      this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+
+      return;
+    }
+
+    let searchCriterion: SearchCriterion = new SearchCriterion(this.formForEquipmentSearch.value.searchCriterion);
+
+    this.medicalEquipmentService.searchEquipmentOfCompanyByName(searchCriterion, this.company.id).subscribe(
+      data => {
+        console.log(`Search medical equipment of company ${this.company.name} by name response: `, data);
+
+        this.shownMedicalEquipmentOfCompany = data;
+        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+      },
+      error => {
+        console.log(`Error on search medical equipment of company ${this.company.name} by name!`, error);
+      }
+    );
+  }
 
   initializeFormForTerm(): void {
     this.formForTerm = this.formBuilder.group({
