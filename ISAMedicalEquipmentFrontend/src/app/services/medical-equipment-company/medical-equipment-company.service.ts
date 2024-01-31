@@ -16,30 +16,28 @@ export class MedicalEquipmentCompanyService {
   constructor(private httpClient: HttpClient) { }
   
   findAll(): Observable<any> {
-    const allMedicalEquipmentCompaniesRetrievalHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.medicalEquipmentCompaniesControllerURL, 
-        { headers: allMedicalEquipmentCompaniesRetrievalHeaders });
+    return this.httpClient.get(this.medicalEquipmentCompaniesControllerURL, { headers: headers });
   }
 
   findById(id: number): Observable<any> {
-    const medicalEquipmentCompanyRetrievalByIdHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.medicalEquipmentCompaniesControllerURL.concat(`/${id}`), 
-        { headers: medicalEquipmentCompanyRetrievalByIdHeaders });
+    return this.httpClient.get(this.medicalEquipmentCompaniesControllerURL.concat(`/${id}`), { headers: headers });
   }
 
   searchByNameOrPopulatedPlace(searchCriterion: SearchCriterion): Observable<any> {
-    const searchByNameOrPopulatedPlaceHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
     return this.httpClient.post(this.searchCompaniesByNameOrPopulatedPlaceURL, JSON.stringify(searchCriterion), 
-        { headers: searchByNameOrPopulatedPlaceHeaders });
+        { headers: headers });
   }
 }

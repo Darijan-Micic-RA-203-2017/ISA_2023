@@ -17,12 +17,12 @@ export class AuthService {
   constructor(private jwtHelper: JwtHelperService, private httpClient: HttpClient) { }
   
   loginWith(credentials: Credentials): Observable<any> {
-    const loginHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
-    return this.httpClient.post(this.loginURL, JSON.stringify(credentials), { headers: loginHeaders });
+    return this.httpClient.post(this.loginURL, JSON.stringify(credentials), { headers: headers });
   }
 
   getToken(): string | null {

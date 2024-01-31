@@ -19,22 +19,22 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
   
   registerAsAProcurementManager(procurementManagerRegistrationReq: ProcurementManagerRegistrationReq): Observable<any> {
-    const registrationHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
     return this.httpClient.post(this.procurementManagerRegistrationURL, 
-        JSON.stringify(procurementManagerRegistrationReq), { headers: registrationHeaders });
+        JSON.stringify(procurementManagerRegistrationReq), { headers: headers });
   }
 
   activateAccount(codeOfNewRegisteredUserWrapper: UserCodeWrapper): Observable<any> {
-    const accountActivationHeaders = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
     return this.httpClient.post(this.accountActivationURL, JSON.stringify(codeOfNewRegisteredUserWrapper), 
-        { headers: accountActivationHeaders });
+        { headers: headers });
   }
 }

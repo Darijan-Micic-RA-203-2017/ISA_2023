@@ -19,7 +19,7 @@ export class ExchangeTermService {
   constructor(private httpClient: HttpClient) { }
   
   findAll(): Observable<any> {
-    const headers = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
@@ -27,7 +27,7 @@ export class ExchangeTermService {
   }
 
   findById(id: number): Observable<any> {
-    const headers = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
@@ -35,7 +35,7 @@ export class ExchangeTermService {
   }
 
   findAllOnSpecificDate(dateWrapper: DateTimeWrapper): Observable<any> {
-    const headers = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
@@ -44,7 +44,7 @@ export class ExchangeTermService {
   }
 
   findAllOnSpecificDateOfCompany(dateWrapper: DateTimeWrapper, companyId: number): Observable<any> {
-    const headers = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
@@ -54,7 +54,7 @@ export class ExchangeTermService {
   }
 
   findAllOfCompany(companyId: number): Observable<any> {
-    const headers = new HttpHeaders({
+    let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json'
     });
 
