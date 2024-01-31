@@ -62,7 +62,7 @@
                         cdkAutosizeMinRows="1" [formControl]="formForCompany.get('description')"></textarea>
                     <mat-error *ngIf="formForCompany.get('description').invalid">{{ getErrorMessageFor('description') }}</mat-error>
                 </mat-form-field>
-                <div *ngIf="isEditCompanyButtonHidden" class="buttonDiv">
+                <div *ngIf="!isEditCompanyButtonHidden" class="buttonDiv">
                     <button [disabled]="isFormForCompanyDisabled" color="accent" mat-raised-button 
                         type="submit">Izmeni</button>
                 </div>

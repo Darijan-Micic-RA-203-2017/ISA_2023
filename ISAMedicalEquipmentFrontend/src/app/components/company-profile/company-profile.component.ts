@@ -27,7 +27,7 @@ import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 export class CompanyProfileComponent implements OnInit {
   formForCompany: any;
   isEditCompanyButtonHidden: boolean = false;
-  isFormForCompanyDisabled: boolean = false;
+  isFormForCompanyDisabled: boolean = true;
   isFormForCompanySubmitted: boolean = false;
 
   company: MedicalEquipmentCompany = {
