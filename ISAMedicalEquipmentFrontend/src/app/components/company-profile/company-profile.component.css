@@ -147,15 +147,23 @@ table td {
 }
 
 #equipmentTable .mat-column-name {
-    width: 45%;
+    width: 26%;
 }
 
 #equipmentTable .mat-column-type {
-    width: 35%;
+    width: 26%;
 }
 
 #equipmentTable .mat-column-price {
-    width: 20%;
+    width: 15%;
+}
+
+#equipmentTable .mat-column-amount {
+    width: 18%;
+}
+
+#equipmentTable .mat-column-subtotalPrice {
+    width: 15%;
 }
 
 mat-chip {

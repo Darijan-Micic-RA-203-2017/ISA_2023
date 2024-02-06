@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DateTime } from 'luxon';
 import { MedicalEquipmentCompany } from 'src/app/domain/company/medical-equipment-company';
 import { MedicalEquipment } from 'src/app/domain/equipment/medical-equipment';
+import { DetailsOfOrderWithEquipment } from 'src/app/domain/order/details-of-order-with-equipment';
 import { SearchCriterion } from 'src/app/domain/search-criterion';
 import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
 import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
@@ -47,11 +48,12 @@ export class CompanyProfileComponent implements OnInit {
   };
 
   formForEquipmentSearch: any;
-  displayedColumnsOfEquipment: string[] = ['name', 'type', 'price'];
+  displayedColumnsOfEquipment: string[] = ['name', 'type', 'price', 'amount', 'subtotalPrice'];
   allMedicalEquipmentOfCompany: MedicalEquipment[] = [];
   shownMedicalEquipmentOfCompany: MedicalEquipment[] = [];
-  equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
-      new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+  shownDetailsOfOrderWithEquipment: DetailsOfOrderWithEquipment[] = [];
+  equipmentDataSource: MatTableDataSource<DetailsOfOrderWithEquipment> = 
+      new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
   
   formForTerm: any;
   minDate: DateTime = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
@@ -94,7 +96,11 @@ export class CompanyProfileComponent implements OnInit {
 
             this.allMedicalEquipmentOfCompany = data;
             this.shownMedicalEquipmentOfCompany = data;
-            this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+            for (let equ of this.shownMedicalEquipmentOfCompany) {
+              this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
+            }
+            this.equipmentDataSource = 
+                new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
           },
           (errorResponse: HttpErrorResponse) => {
             console.log('Error on retrieving all medical equipment of company!', errorResponse.error.textMessage);
@@ -192,9 +198,15 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   searchEquipmentOfCompanyByName(): void {
+    this.shownDetailsOfOrderWithEquipment = [];
+
     if (!this.formForEquipmentSearch.value.searchCriterion) {
       this.shownMedicalEquipmentOfCompany = this.allMedicalEquipmentOfCompany;
-      this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+      for (let equ of this.shownMedicalEquipmentOfCompany) {
+        this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
+      }
+      this.equipmentDataSource = 
+          new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
 
       return;
     }
@@ -206,7 +218,11 @@ export class CompanyProfileComponent implements OnInit {
         console.log(`Search medical equipment of company ${this.company.name} by name response: `, data);
 
         this.shownMedicalEquipmentOfCompany = data;
-        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipmentOfCompany);
+        for (let equ of this.shownMedicalEquipmentOfCompany) {
+          this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
+        }
+        this.equipmentDataSource = 
+            new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
       },
       error => {
         console.log(`Error on search medical equipment of company ${this.company.name} by name!`, error);
