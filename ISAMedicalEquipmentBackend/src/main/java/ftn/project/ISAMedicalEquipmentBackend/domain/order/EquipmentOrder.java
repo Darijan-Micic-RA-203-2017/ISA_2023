@@ -43,9 +43,11 @@ public class EquipmentOrder {
 	public EquipmentOrder() {}
 	
 	public EquipmentOrder(long id, ExchangeTerm exchangeTerm, 
-			Set<DetailsOfEquipmentOrder> details, double totalPrice) {
+			ProcurementManagerOfHospital procurementManager, Set<DetailsOfEquipmentOrder> details, 
+			double totalPrice) {
 		this.id = id;
 		this.exchangeTerm = exchangeTerm;
+		this.procurementManager = procurementManager;
 		this.details = details;
 		this.totalPrice = totalPrice;
 	}
@@ -64,6 +66,14 @@ public class EquipmentOrder {
 	
 	public void setExchangeTerm(ExchangeTerm exchangeTerm) {
 		this.exchangeTerm = exchangeTerm;
+	}
+	
+	public ProcurementManagerOfHospital getProcurementManager() {
+		return procurementManager;
+	}
+	
+	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
+		this.procurementManager = procurementManager;
 	}
 	
 	public Set<DetailsOfEquipmentOrder> getDetails() {
