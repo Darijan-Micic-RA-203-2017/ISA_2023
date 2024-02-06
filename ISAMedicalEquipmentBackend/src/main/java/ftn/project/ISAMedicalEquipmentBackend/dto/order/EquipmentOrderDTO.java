@@ -1,0 +1,62 @@
+package ftn.project.ISAMedicalEquipmentBackend.dto.order;
+
+import java.util.Set;
+
+public class EquipmentOrderDTO {
+	private long id;
+	private long exchangeTermId;
+	private long procurementManagerId;
+	private Set<DetailsOfEquipmentOrderDTO> details;
+	private double totalPrice;
+	
+	public EquipmentOrderDTO() {}
+	
+	public EquipmentOrderDTO(long id, long exchangeTermId, long procurementManagerId, 
+			Set<DetailsOfEquipmentOrderDTO> details, double totalPrice) {
+		this.id = id;
+		this.exchangeTermId = exchangeTermId;
+		this.procurementManagerId = procurementManagerId;
+		this.details = details;
+		this.totalPrice = totalPrice;
+	}
+	
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public long getExchangeTermId() {
+		return exchangeTermId;
+	}
+	
+	public void setExchangeTermId(long exchangeTermId) {
+		this.exchangeTermId = exchangeTermId;
+	}
+	
+	public long getProcurementManagerId() {
+		return procurementManagerId;
+	}
+	
+	public void setProcurementManagerId(long procurementManagerId) {
+		this.procurementManagerId = procurementManagerId;
+	}
+	
+	public Set<DetailsOfEquipmentOrderDTO> getDetails() {
+		return details;
+	}
+	
+	public void setDetails(Set<DetailsOfEquipmentOrderDTO> details) {
+		this.details = details;
+	}
+	
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+}
