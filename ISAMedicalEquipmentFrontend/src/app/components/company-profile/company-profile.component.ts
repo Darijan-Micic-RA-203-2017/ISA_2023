@@ -230,24 +230,34 @@ export class CompanyProfileComponent implements OnInit {
     );
   }
 
+  // REFERENCE: https://stackoverflow.com/a/57262915
+  formatPrice(price: number): number {
+    return price % 1 === 0 ? price : Number.parseFloat(price.toFixed(2));
+  }
+
   increaseAmount(details: DetailsOfOrderWithEquipment): void {
     details.amount += 1;
-    details.subtotalPrice += details.equipment.price;
+
+    let newSubtotalPrice: number = details.subtotalPrice + details.equipment.price;
+    details.subtotalPrice = this.formatPrice(newSubtotalPrice);
   }
 
   decreaseAmount(details: DetailsOfOrderWithEquipment): void {
     if (details.amount > 0) {
       details.amount -= 1;
-      details.subtotalPrice -= details.equipment.price;
+
+      let newSubtotalPrice: number = details.subtotalPrice - details.equipment.price;
+      details.subtotalPrice = this.formatPrice(newSubtotalPrice);
     }
   }
 
   getTotalPriceOfEquipmentOrder(): number {
     let totalPrice: number = 0;
     for (let details of this.shownDetailsOfOrderWithEquipment) {
-      totalPrice += details.subtotalPrice;
+      let newTotalPrice: number = totalPrice + details.subtotalPrice;
+      totalPrice = this.formatPrice(newTotalPrice);
     }
-    
+
     return totalPrice;
   }
 
