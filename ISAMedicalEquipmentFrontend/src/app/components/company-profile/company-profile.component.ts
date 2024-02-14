@@ -242,6 +242,15 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
+  getTotalPriceOfEquipmentOrder(): number {
+    let totalPrice: number = 0;
+    for (let details of this.shownDetailsOfOrderWithEquipment) {
+      totalPrice += details.subtotalPrice;
+    }
+    
+    return totalPrice;
+  }
+
   initializeFormForTerm(): void {
     this.formForTerm = this.formBuilder.group({
       termDate: new FormControl(this.minDate, {

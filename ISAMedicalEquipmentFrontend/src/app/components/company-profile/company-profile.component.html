@@ -108,6 +108,7 @@
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
                             {{ detailOfOrderWithEquipment.equipment.name }}
                         </td>
+                        <td mat-footer-cell *matFooterCellDef>Ukupna cena:</td>
                     </ng-container>
                     
                     <ng-container matColumnDef="type">
@@ -117,6 +118,7 @@
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
                             {{ detailOfOrderWithEquipment.equipment.type.name }}
                         </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
                     
                     <ng-container matColumnDef="price">
@@ -126,6 +128,7 @@
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
                             {{ detailOfOrderWithEquipment.equipment.price }}
                         </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
 
                     <ng-container matColumnDef="amount">
@@ -143,19 +146,22 @@
                                 </button>
                             </div>
                         </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
 
                     <ng-container matColumnDef="subtotalPrice">
                         <th mat-header-cell *matHeaderCellDef>
-                            Ukupna cena
+                            Cena stavke
                         </th>
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
                             {{ detailOfOrderWithEquipment.subtotalPrice }}
                         </td>
+                        <td mat-footer-cell *matFooterCellDef>{{ getTotalPriceOfEquipmentOrder() }}</td>
                     </ng-container>
                     
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsOfEquipment"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumnsOfEquipment;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumnsOfEquipment"></tr>
                 </table>
             </mat-card-content>
         </mat-card>
