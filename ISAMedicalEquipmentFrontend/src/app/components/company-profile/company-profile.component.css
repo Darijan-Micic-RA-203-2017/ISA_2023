@@ -166,6 +166,13 @@ table td {
     width: 15%;
 }
 
+.amountTableDataDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 mat-chip {
     justify-content: center;
     width: 25%;

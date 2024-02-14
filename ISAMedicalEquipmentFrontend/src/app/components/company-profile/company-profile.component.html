@@ -133,7 +133,15 @@
                             Količina
                         </th>
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
-                            {{ detailOfOrderWithEquipment.amount }}
+                            <div class="amountTableDataDiv">
+                                <button type="button" (click)="increaseAmount(detailOfOrderWithEquipment)">
+                                    <mat-icon>arrow_upward</mat-icon>
+                                </button>
+                                {{ detailOfOrderWithEquipment.amount }}
+                                <button type="button" (click)="decreaseAmount(detailOfOrderWithEquipment)">
+                                    <mat-icon>arrow_downward</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
 

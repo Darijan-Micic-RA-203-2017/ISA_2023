@@ -230,6 +230,18 @@ export class CompanyProfileComponent implements OnInit {
     );
   }
 
+  increaseAmount(details: DetailsOfOrderWithEquipment): void {
+    details.amount += 1;
+    details.subtotalPrice += details.equipment.price;
+  }
+
+  decreaseAmount(details: DetailsOfOrderWithEquipment): void {
+    if (details.amount > 0) {
+      details.amount -= 1;
+      details.subtotalPrice -= details.equipment.price;
+    }
+  }
+
   initializeFormForTerm(): void {
     this.formForTerm = this.formBuilder.group({
       termDate: new FormControl(this.minDate, {
