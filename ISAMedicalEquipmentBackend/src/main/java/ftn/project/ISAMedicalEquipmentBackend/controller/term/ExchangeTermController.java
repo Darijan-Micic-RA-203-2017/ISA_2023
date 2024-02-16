@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.project.ISAMedicalEquipmentBackend.converter.term.ExchangeTermConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.dto.DateTimeWrapperDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.service.term.ExchangeTermService;
+import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
 @RestController
 @RequestMapping(path = "/exchange-terms", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -107,10 +109,20 @@ public class ExchangeTermController {
 	}
 	
 	@PostMapping(path = "/reserve", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExchangeTermDTO> reserveTerm(@RequestBody ExchangeTermDTO exchangeTermDTO) {
+	public ResponseEntity<ObjectAndTextResponseDTO> reserveTerm(
+			@RequestBody ExchangeTermDTO exchangeTermDTO) {
+		String validationMessages = ValidationPerformer.getValidationMessages(exchangeTermDTO);
+		if (validationMessages != null) {
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(null, validationMessages), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		ExchangeTermDTO reservedTerm = ExchangeTermConverter.convertToDTO(
 				exchangeTermService.reserveTerm(exchangeTermDTO));
 		
-		return new ResponseEntity<ExchangeTermDTO>(reservedTerm, HttpStatus.CREATED);
+		return new ResponseEntity<ObjectAndTextResponseDTO>(
+				new ObjectAndTextResponseDTO(reservedTerm, null), 
+				HttpStatus.CREATED);
 	}
 }

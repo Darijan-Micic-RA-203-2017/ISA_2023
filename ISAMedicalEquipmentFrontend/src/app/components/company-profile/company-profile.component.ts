@@ -391,10 +391,10 @@ export class CompanyProfileComponent implements OnInit {
     this.exchangeTermService.reserveTerm(selectedTerm).subscribe(
       data => {
         console.log('Reserving a selected term response: ', data);
-        reservedTerm = data;
+        reservedTerm = data.object;
       },
       (errorResponse: HttpErrorResponse) => {
-        console.log('Error on reserving a selected term!', errorResponse.error.textMessage);
+        console.log(`Error on reserving a selected term!\n\n${errorResponse.error.textMessage}`);
       }
     );
 
