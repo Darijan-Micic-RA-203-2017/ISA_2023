@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.access.AccessDeniedException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
+import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
 public interface ExchangeTermService {
 	ExchangeTerm findById(long id) throws AccessDeniedException;
@@ -17,4 +18,5 @@ public interface ExchangeTermService {
 	List<ExchangeTerm> findAllOfCompany(long companyId);
 	List<ExchangeTerm> findAllOfAdministrator(long administratorId);
 	List<ExchangeTerm> findAll();
+	ExchangeTerm reserveTerm(ExchangeTermDTO exchangeTermDTO);
 }

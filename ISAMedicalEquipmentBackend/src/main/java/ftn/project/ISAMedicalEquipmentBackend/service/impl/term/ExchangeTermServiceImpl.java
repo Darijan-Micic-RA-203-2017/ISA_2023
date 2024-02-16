@@ -8,17 +8,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.term.ExchangeTermRepository;
+import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
 import ftn.project.ISAMedicalEquipmentBackend.service.term.ExchangeTermService;
+import ftn.project.ISAMedicalEquipmentBackend.service.user.CompanyAdministratorService;
+import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
 
 @Service
 public class ExchangeTermServiceImpl implements ExchangeTermService {
 	private final ExchangeTermRepository exchangeTermRepository;
 	
+	private final ProcurementManagerService procurementManagerService;
+	
+	private final MedicalEquipmentCompanyService medicalEquipmentCompanyService;
+	
+	private final CompanyAdministratorService companyAdministratorService;
+	
 	@Autowired
-	public ExchangeTermServiceImpl(ExchangeTermRepository exchangeTermRepository) {
+	public ExchangeTermServiceImpl(ExchangeTermRepository exchangeTermRepository, 
+			ProcurementManagerService procurementManagerService, 
+			MedicalEquipmentCompanyService medicalEquipmentCompanyService, 
+			CompanyAdministratorService companyAdministratorService) {
 		this.exchangeTermRepository = exchangeTermRepository;
+		this.procurementManagerService = procurementManagerService;
+		this.medicalEquipmentCompanyService = medicalEquipmentCompanyService;
+		this.companyAdministratorService = companyAdministratorService;
 	}
 
 	@Override
@@ -76,5 +95,21 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 	@Override
 	public List<ExchangeTerm> findAll() {
 		return exchangeTermRepository.findAll();
+	}
+	
+	@Override
+	public ExchangeTerm reserveTerm(ExchangeTermDTO exchangeTermDTO) {
+		Timestamp startingTime = exchangeTermDTO.getStartingTime();
+		Timestamp endingTime = exchangeTermDTO.getEndingTime();
+		ProcurementManagerOfHospital procurementManager = 
+				procurementManagerService.findById(exchangeTermDTO.getProcurementManagerId());
+		MedicalEquipmentCompany company = 
+				medicalEquipmentCompanyService.findById(exchangeTermDTO.getCompanyId());
+		CompanyAdministrator companyAdministrator = companyAdministratorService.findById(3);
+		
+		ExchangeTerm newExchangeTerm = new ExchangeTerm(0, startingTime, endingTime, 
+				procurementManager, company, companyAdministrator);
+		
+		return exchangeTermRepository.save(newExchangeTerm);
 	}
 }

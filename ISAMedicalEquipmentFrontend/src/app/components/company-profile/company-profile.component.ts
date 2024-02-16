@@ -298,14 +298,14 @@ export class CompanyProfileComponent implements OnInit {
 
             break;
           case 6:
-            if (!this.company.workTime.onSaturdays) {
+            if (!this.company.workTime.onSaturdays || this.company.workTime.onSaturdays == 'Ne radimo') {
               break;
             }
             workTime = this.company.workTime.onSaturdays.split(' - ');
 
             break;
           case 7:
-            if (!this.company.workTime.onSundays) {
+            if (!this.company.workTime.onSundays || this.company.workTime.onSundays == 'Ne radimo') {
               break;
             }
             workTime = this.company.workTime.onSundays.split(' - ');
@@ -377,7 +377,28 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   scheduleTerm(): void {
-    this.snackBar.open('Zakazivanje termina će uskoro biti odrađeno.', 'Zatvori', { duration: 5000 });
+    this.snackBar.open('Zakazivanje termina JE U IZRADI!', 'Nastavi', { duration: 5000 });
+    let reservedTerm: ExchangeTerm | null = this.reserveSelectedTerm();
+    if (!reservedTerm) {
+      return;
+    }
+  }
+
+  reserveSelectedTerm(): ExchangeTerm | null {
+    let selectedTerm: ExchangeTerm = this.formForTerm.value.term;
+    let reservedTerm: ExchangeTerm | null = null;
+
+    this.exchangeTermService.reserveTerm(selectedTerm).subscribe(
+      data => {
+        console.log('Reserving a selected term response: ', data);
+        reservedTerm = data;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        console.log('Error on reserving a selected term!', errorResponse.error.textMessage);
+      }
+    );
+
+    return reservedTerm;
   }
 
   getErrorMessageFor(data: string): string {

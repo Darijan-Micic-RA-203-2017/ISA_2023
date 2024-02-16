@@ -163,7 +163,7 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_id) VALU
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2024-01-31 08:00:00.000+01', '2024-01-31 08:30:00.000+01', 
+	administrator_id) VALUES (1, '2024-02-19 08:00:00.000+01', '2024-02-19 08:30:00.000+01', 
 	1, 1, 3);
 
 -- Equipment orders:

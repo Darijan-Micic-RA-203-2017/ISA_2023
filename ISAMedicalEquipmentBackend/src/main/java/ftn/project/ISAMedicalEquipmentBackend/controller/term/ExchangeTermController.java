@@ -105,4 +105,12 @@ public class ExchangeTermController {
 		return new ResponseEntity<List<ExchangeTermDTO>>(termsOfCompany, 
 				HttpStatus.OK);
 	}
+	
+	@PostMapping(path = "/reserve", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ExchangeTermDTO> reserveTerm(@RequestBody ExchangeTermDTO exchangeTermDTO) {
+		ExchangeTermDTO reservedTerm = ExchangeTermConverter.convertToDTO(
+				exchangeTermService.reserveTerm(exchangeTermDTO));
+		
+		return new ResponseEntity<ExchangeTermDTO>(reservedTerm, HttpStatus.CREATED);
+	}
 }

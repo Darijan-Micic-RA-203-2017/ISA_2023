@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
+import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class ExchangeTermService {
   private findAllTermsOnSpecificDateOfCompanyURL: string = 
       this.exchangeTermsControllerURL.concat('/on-specific-date-of-company');
   private findAllTermsOfCompanyURL: string = this.exchangeTermsControllerURL.concat('/of-company');
+  private reserveTermURL: string = this.exchangeTermsControllerURL.concat('/reserve');
   
   constructor(private httpClient: HttpClient) { }
   
@@ -59,5 +61,14 @@ export class ExchangeTermService {
     });
 
     return this.httpClient.get(this.findAllTermsOfCompanyURL.concat(`/${companyId}`), { headers: headers });
+  }
+
+  reserveTerm(term: ExchangeTerm): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    return this.httpClient.post(this.reserveTermURL, JSON.stringify(term), { headers: headers });
   }
 }
