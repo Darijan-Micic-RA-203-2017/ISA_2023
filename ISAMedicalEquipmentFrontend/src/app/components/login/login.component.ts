@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       (errorResponse: HttpErrorResponse) => {
         this.isSubmitted = false;
 
-        console.log('Error on login!', errorResponse.error.textMessage);
+        console.log(`Error on login!\n\n${errorResponse.error.textMessage}`);
         if (errorResponse.status == 409) {
           this.snackBar.open('Korisnikov nalog je deaktiviran!', 'Zatvori', { duration: 5000 });
         }

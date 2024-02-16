@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
@@ -55,8 +56,8 @@ export class LandingPageComponent implements OnInit {
         this.shownMedicalEquipmentCompanies = data;
         this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
       },
-      error => {
-        console.log('Error on retrieving all medical equipment companies!', error);
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on retrieving all medical equipment companies!\n\n${errorResponse.error.textMessage}`);
       }
     );
     this.medicalEquipmentService.findAll().subscribe(
@@ -67,8 +68,8 @@ export class LandingPageComponent implements OnInit {
         this.shownMedicalEquipment = data;
         this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
       },
-      error => {
-        console.log('Error on retrieving all medical equipment!', error);
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on retrieving all medical equipment!\n\n${errorResponse.error.textMessage}`);
       }
     );
   }
@@ -90,8 +91,8 @@ export class LandingPageComponent implements OnInit {
         this.shownMedicalEquipmentCompanies = data;
         this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
       },
-      error => {
-        console.log('Error on search medical equipment companies by name or populated place!', error);
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on search medical equipment companies by name or populated place!\n\n${errorResponse.error.textMessage}`);
       }
     );
   }
@@ -113,8 +114,8 @@ export class LandingPageComponent implements OnInit {
         this.shownMedicalEquipment = data;
         this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
       },
-      error => {
-        console.log('Error on search medical equipment by name!', error);
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on search medical equipment by name!\n\n${errorResponse.error.textMessage}`);
       }
     );
   }

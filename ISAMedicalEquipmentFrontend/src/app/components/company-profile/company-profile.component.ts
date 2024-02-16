@@ -103,7 +103,7 @@ export class CompanyProfileComponent implements OnInit {
                 new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
           },
           (errorResponse: HttpErrorResponse) => {
-            console.log('Error on retrieving all medical equipment of company!', errorResponse.error.textMessage);
+            console.log(`Error on retrieving all medical equipment of company!\n\n${errorResponse.error.textMessage}`);
             this.snackBar.open('Oprema kompanije nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
           }
         );
@@ -111,7 +111,7 @@ export class CompanyProfileComponent implements OnInit {
         this.determineFreeTermsOnSelectedTermDate();
       },
       (errorResponse: HttpErrorResponse) => {
-        console.log('Error on retrieving medical equipment company by id!', errorResponse.error.textMessage);
+        console.log(`Error on retrieving medical equipment company by id!\n\n${errorResponse.error.textMessage}`);
         this.snackBar.open('Kompanija nije mogla biti dobavljena!', 'Zatvori', { duration: 5000 });
       }
     );
@@ -224,8 +224,8 @@ export class CompanyProfileComponent implements OnInit {
         this.equipmentDataSource = 
             new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
       },
-      error => {
-        console.log(`Error on search medical equipment of company ${this.company.name} by name!`, error);
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on search medical equipment of company ${this.company.name} by name!\n\n${errorResponse.error.textMessage}`);
       }
     );
   }
@@ -368,8 +368,7 @@ export class CompanyProfileComponent implements OnInit {
         }
       },
       (errorResponse: HttpErrorResponse) => {
-        console.log('Error on retrieving all exchange terms on selected date of company!', 
-            errorResponse.error.textMessage);
+        console.log(`Error on retrieving all exchange terms on selected date of company!\n\n${errorResponse.error.textMessage}`);
         this.snackBar.open('Termini kompanije zakazani odabranog datuma nisu mogli biti dobavljeni!', 'Zatvori', 
             { duration: 5000 });
       }

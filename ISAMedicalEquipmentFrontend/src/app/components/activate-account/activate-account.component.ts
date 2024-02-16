@@ -30,7 +30,7 @@ export class ActivateAccountComponent implements OnInit {
             'Zatvori', { duration: 10000 });
       },
       (errorResponse: HttpErrorResponse) => {
-        console.log('Error on activating account!', errorResponse.error.textMessage);
+        console.log(`Error on activating account!\n\n${errorResponse.error.textMessage}`);
         if (errorResponse.status == 400) {
           this.snackBar.open('Korisnički nalog je već aktiviran!', 'Zatvori', { duration: 5000 });
         }

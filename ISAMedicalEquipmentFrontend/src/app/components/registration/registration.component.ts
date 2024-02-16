@@ -109,7 +109,7 @@ export class RegistrationComponent implements OnInit {
       (errorResponse: HttpErrorResponse) => {
         this.isSubmitted = false;
 
-        console.log('Error on registration as a procurement manager!', errorResponse.error.textMessage);
+        console.log(`Error on registration as a procurement manager!\n\n${errorResponse.error.textMessage}`);
         if (errorResponse.status == 400) {
           if (errorResponse.error.textMessage.includes('username')) {
             this.snackBar.open('Već postoji korisnik sa istim korisničkom imenom!', 'Zatvori', { duration: 5000 });
