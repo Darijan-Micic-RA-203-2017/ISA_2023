@@ -43,7 +43,7 @@ export class LandingPageComponent implements OnInit {
     });
     this.equipmentForm = this.formBuilder.group({
       searchCriterion: new FormControl('', {
-        validators: [Validators.pattern(/^$|^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
+        validators: [Validators.pattern(/^$|^[A-Za-z0-9\p{L}][A-Za-z0-9%\p{L}]+([ -][A-Za-z0-9\p{L}][A-Za-z0-9%\p{L}]+)*$/u)], 
         updateOn: 'change'
       })
     });
