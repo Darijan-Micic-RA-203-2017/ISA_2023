@@ -2,8 +2,8 @@ package ftn.project.ISAMedicalEquipmentBackend.converter.order;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.order.DetailsOfEquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
@@ -32,8 +32,10 @@ public class EquipmentOrderConverter {
 		long id = equipmentOrder.getId();
 		long exchangeTermId = equipmentOrder.getExchangeTerm().getId();
 		long procurementManagerId = equipmentOrder.getProcurementManager().getId();
-		Set<DetailsOfEquipmentOrderDTO> details = null;
-		//Set<DetailsOfEquipmentOrderDTO> details = equipmentOrder.getDetails();
+		List<DetailsOfEquipmentOrderDTO> details = new ArrayList<DetailsOfEquipmentOrderDTO>();
+		for (DetailsOfEquipmentOrder d: equipmentOrder.getDetails()) {
+			details.add(DetailsOfEquipmentOrderConverter.convertToDTO(d));
+		}
 		double totalPrice = equipmentOrder.getTotalPrice();
 		
 		EquipmentOrderDTO dto = new EquipmentOrderDTO(id, exchangeTermId, procurementManagerId, 

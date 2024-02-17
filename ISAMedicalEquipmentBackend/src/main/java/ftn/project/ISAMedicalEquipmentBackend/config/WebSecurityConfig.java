@@ -76,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/exchange-terms/reserve").authenticated()
 				.antMatchers("/equipment-orders").permitAll()
 				.antMatchers("/equipment-orders/{id}").permitAll()
+				.antMatchers("/details-of-equipment-orders").permitAll()
+				.antMatchers("/details-of-equipment-orders/{id}").permitAll()
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 

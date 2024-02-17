@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class EquipmentOrderService {
-  private equipmentOrdersControllerURL: string = 'http://localhost:8080/equipment-orders';
+export class DetailsOfEquipmentOrderService {
+  private detailsOfEquipmentOrdersControllerURL: string = 'http://localhost:8080/details-of-equipment-orders';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class EquipmentOrderService {
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.equipmentOrdersControllerURL, { headers: headers });
+    return this.httpClient.get(this.detailsOfEquipmentOrdersControllerURL, { headers: headers });
   }
 
   findById(id: number): Observable<any> {
@@ -24,6 +24,6 @@ export class EquipmentOrderService {
       'Accept': 'application/json'
     });
 
-    return this.httpClient.get(this.equipmentOrdersControllerURL.concat(`/${id}`), { headers: headers });
+    return this.httpClient.get(this.detailsOfEquipmentOrdersControllerURL.concat(`/${id}`), { headers: headers });
   }
 }

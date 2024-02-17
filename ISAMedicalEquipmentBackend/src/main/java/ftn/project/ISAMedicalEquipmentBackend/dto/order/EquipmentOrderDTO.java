@@ -1,18 +1,18 @@
 package ftn.project.ISAMedicalEquipmentBackend.dto.order;
 
-import java.util.Set;
+import java.util.List;
 
 public class EquipmentOrderDTO {
 	private long id;
 	private long exchangeTermId;
 	private long procurementManagerId;
-	private Set<DetailsOfEquipmentOrderDTO> details;
+	private List<DetailsOfEquipmentOrderDTO> details;
 	private double totalPrice;
 	
 	public EquipmentOrderDTO() {}
 	
 	public EquipmentOrderDTO(long id, long exchangeTermId, long procurementManagerId, 
-			Set<DetailsOfEquipmentOrderDTO> details, double totalPrice) {
+			List<DetailsOfEquipmentOrderDTO> details, double totalPrice) {
 		this.id = id;
 		this.exchangeTermId = exchangeTermId;
 		this.procurementManagerId = procurementManagerId;
@@ -44,11 +44,11 @@ public class EquipmentOrderDTO {
 		this.procurementManagerId = procurementManagerId;
 	}
 	
-	public Set<DetailsOfEquipmentOrderDTO> getDetails() {
+	public List<DetailsOfEquipmentOrderDTO> getDetails() {
 		return details;
 	}
 	
-	public void setDetails(Set<DetailsOfEquipmentOrderDTO> details) {
+	public void setDetails(List<DetailsOfEquipmentOrderDTO> details) {
 		this.details = details;
 	}
 	

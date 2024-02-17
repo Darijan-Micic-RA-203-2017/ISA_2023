@@ -21,11 +21,11 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 	
 	@Override
 	public EquipmentOrder findById(long id) throws AccessDeniedException {
-		return equipmentOrderRepository.findById(id).orElse(null);
+		return equipmentOrderRepository.getById(id);
 	}
 	
 	@Override
 	public List<EquipmentOrder> findAll() {
-		return equipmentOrderRepository.findAll();
+		return equipmentOrderRepository.getAll();
 	}
 }
