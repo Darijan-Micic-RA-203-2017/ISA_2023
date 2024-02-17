@@ -278,6 +278,33 @@ export class CompanyProfileComponent implements OnInit {
     this.freeTermsOnSelectedDate = [];
     let selectedTermDate: DateTime = this.formForTerm.value.termDate;
 
+    let workTime: string[] = [];
+    switch (selectedTermDate.weekday) {
+      case 1: case 2: case 3: case 4: case 5:
+        workTime = this.company.workTime.onMondaysThroughFridays.split(' - ');
+
+        break;
+      case 6:
+        if (!this.company.workTime.onSaturdays || this.company.workTime.onSaturdays == 'Ne radimo') {
+          break;
+        }
+        workTime = this.company.workTime.onSaturdays.split(' - ');
+
+        break;
+      case 7:
+        if (!this.company.workTime.onSundays || this.company.workTime.onSundays == 'Ne radimo') {
+          break;
+        }
+        workTime = this.company.workTime.onSundays.split(' - ');
+
+        break;
+      default:
+        break;
+    }
+    if (workTime.length == 0) {
+      return;
+    }
+
     this.exchangeTermService.findAllOnSpecificDateOfCompany(
         new DateTimeWrapper(selectedTermDate), this.company.id).subscribe(
       data => {
@@ -289,33 +316,6 @@ export class CompanyProfileComponent implements OnInit {
               unconvertedOccupiedTerm.companyId, unconvertedOccupiedTerm.administratorId);
           
           this.occupiedTermsOnSelectedDate.push(convertedOccupiedTerm);
-        }
-
-        let workTime: string[] = [];
-        switch (selectedTermDate.weekday) {
-          case 1: case 2: case 3: case 4: case 5:
-            workTime = this.company.workTime.onMondaysThroughFridays.split(' - ');
-
-            break;
-          case 6:
-            if (!this.company.workTime.onSaturdays || this.company.workTime.onSaturdays == 'Ne radimo') {
-              break;
-            }
-            workTime = this.company.workTime.onSaturdays.split(' - ');
-
-            break;
-          case 7:
-            if (!this.company.workTime.onSundays || this.company.workTime.onSundays == 'Ne radimo') {
-              break;
-            }
-            workTime = this.company.workTime.onSundays.split(' - ');
-
-            break;
-          default:
-            break;
-        }
-        if (workTime.length == 0) {
-          return;
         }
 
         let startOfWorkTime: string[] = workTime[0].split(':');
