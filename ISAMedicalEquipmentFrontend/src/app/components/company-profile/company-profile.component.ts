@@ -483,6 +483,12 @@ export class CompanyProfileComponent implements OnInit {
         }
 
         break;
+      case 'term':
+        if (this.formForTerm.get('term').hasError('required')) {
+          errorMessage = 'Morate odabrati termin (pritiskom tastera "SPACE")!';
+        }
+        
+        break;
       default:
         errorMessage = '';
     }

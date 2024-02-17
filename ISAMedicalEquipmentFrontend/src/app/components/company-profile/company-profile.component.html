@@ -194,6 +194,7 @@
                                 {{ showFreeTerm(freeTerm) }}
                             </mat-chip>
                         </mat-chip-list>
+                        <mat-error *ngIf="formForTerm.get('term').invalid">{{ getErrorMessageFor('term') }}</mat-error>
                     </mat-form-field>
                 </form>
             </mat-card-content>
