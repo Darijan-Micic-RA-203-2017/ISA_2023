@@ -57,6 +57,23 @@ public class MedicalEquipmentController {
 		return new ResponseEntity<MedicalEquipmentDTO>(equipment, HttpStatus.OK);
 	}
 	
+	@GetMapping(path = "/of-company/{companyName}")
+	public ResponseEntity<List<MedicalEquipmentDTO>> findByCompanyName(
+			@PathVariable(name = "companyName") String companyName) {
+		List<MedicalEquipmentDTO> allEquipmentOfSpecifiedCompany = null;
+		
+		if (companyName.isEmpty()) {
+			return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		allEquipmentOfSpecifiedCompany = MedicalEquipmentConverter.convertToDTOsList(
+				medicalEquipmentService.findByCompanyName(companyName));
+		
+		return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
+				HttpStatus.OK);
+	}
+	
 	@PostMapping(path = "/search-by-name", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicalEquipmentDTO>> searchEquipmentByName(
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
@@ -73,18 +90,15 @@ public class MedicalEquipmentController {
 		return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.OK);
 	}
 	
-	@PostMapping(path = "/search-by-name/{companyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/search-by-name/of-company/{companyName}", 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicalEquipmentDTO>> searchEquipmentOfCompanyByName(
-			@PathVariable(name = "companyId") String companyId, 
+			@PathVariable(name = "companyName") String companyName, 
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
 		List<MedicalEquipmentDTO> equipment = null;
 		
-		long companyIdAsLong = 0;
-		try {
-			companyIdAsLong = Long.parseLong(companyId);
-		} catch (NumberFormatException nFE) {
-			return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, 
-					HttpStatus.BAD_REQUEST);
+		if (companyName.isEmpty()) {
+			return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.BAD_REQUEST);
 		}
 		
 		String validationMessages = ValidationPerformer.getValidationMessages(searchCriterionDTO);
@@ -94,28 +108,8 @@ public class MedicalEquipmentController {
 		
 		equipment = MedicalEquipmentConverter.convertToDTOsList(
 				medicalEquipmentService.searchEquipmentOfCompanyByName(searchCriterionDTO, 
-						companyIdAsLong));
+						companyName));
 		
 		return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.OK);
-	}
-	
-	@GetMapping(path = "/find-all-of-company/{companyId}")
-	public ResponseEntity<List<MedicalEquipmentDTO>> findAllOfCompany(
-			@PathVariable(name = "companyId") String companyId) {
-		List<MedicalEquipmentDTO> allEquipmentOfSpecifiedCompany = null;
-		
-		long companyIdAsLong = 0;
-		try {
-			companyIdAsLong = Long.parseLong(companyId);
-		} catch (NumberFormatException nFE) {
-			return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
-					HttpStatus.BAD_REQUEST);
-		}
-		
-		allEquipmentOfSpecifiedCompany = MedicalEquipmentConverter.convertToDTOsList(
-				medicalEquipmentService.findAllOfCompany(companyIdAsLong));
-		
-		return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
-				HttpStatus.OK);
 	}
 }

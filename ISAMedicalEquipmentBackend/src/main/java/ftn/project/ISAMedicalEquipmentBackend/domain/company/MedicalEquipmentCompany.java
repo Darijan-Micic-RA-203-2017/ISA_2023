@@ -48,7 +48,7 @@ public class MedicalEquipmentCompany {
 	@JoinColumn(name = "work_time_id")
 	private WorkTime workTime;
 	
-	@OneToMany(mappedBy="company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<MedicalEquipment> equipment;
 	
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

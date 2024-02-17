@@ -3,9 +3,7 @@ package ftn.project.ISAMedicalEquipmentBackend.converter.equipment;
 import java.util.ArrayList;
 import java.util.List;
 
-import ftn.project.ISAMedicalEquipmentBackend.converter.company.MedicalEquipmentCompanyConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
-import ftn.project.ISAMedicalEquipmentBackend.dto.company.MedicalEquipmentCompanyDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.MedicalEquipmentDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.TypeOfMedicalEquipmentDTO;
 
@@ -36,10 +34,10 @@ public class MedicalEquipmentConverter {
 		String name = equipment.getName();
 		double price = equipment.getPrice();
 		int amount = equipment.getAmount();
-		MedicalEquipmentCompanyDTO company = 
-				MedicalEquipmentCompanyConverter.convertToDTO(equipment.getCompany());
+		String companyName = equipment.getCompanyName();
 		
-		MedicalEquipmentDTO dto = new MedicalEquipmentDTO(id, type, name, price, amount, company);
+		MedicalEquipmentDTO dto = new MedicalEquipmentDTO(id, type, name, price, amount, 
+				companyName);
 		
 		return dto;
 	}

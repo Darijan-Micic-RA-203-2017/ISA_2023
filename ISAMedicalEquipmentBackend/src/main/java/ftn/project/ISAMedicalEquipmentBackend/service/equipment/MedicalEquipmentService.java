@@ -10,9 +10,9 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 public interface MedicalEquipmentService {
 	MedicalEquipment findById(long id) throws AccessDeniedException;
 	MedicalEquipment findByName(String name);
+	List<MedicalEquipment> findByCompanyName(String companyName);
 	List<MedicalEquipment> findAll();
 	List<MedicalEquipment> searchEquipmentByName(SearchCriterionDTO searchCriterionDTO);
 	List<MedicalEquipment> searchEquipmentOfCompanyByName(SearchCriterionDTO searchCriterionDTO, 
-			long companyId);
-	List<MedicalEquipment> findAllOfCompany(long companyId);
+			String companyName);
 }

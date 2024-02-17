@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.DetailsOfEquipmentOrder;
 
 @Entity
@@ -38,9 +37,8 @@ public class MedicalEquipment {
 	@Column(name = "amount", nullable = false)
 	private int amount;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "company_id")
-	private MedicalEquipmentCompany company;
+	@Column(name = "company_name", nullable = false)
+	private String companyName;
 	
 	@OneToMany(mappedBy = "equipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<DetailsOfEquipmentOrder> details;
@@ -48,13 +46,13 @@ public class MedicalEquipment {
 	public MedicalEquipment() {}
 	
 	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, 
-			int amount, MedicalEquipmentCompany company, Set<DetailsOfEquipmentOrder> details) {
+			int amount, String companyName, Set<DetailsOfEquipmentOrder> details) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
-		this.company = company;
+		this.companyName = companyName;
 		this.details = details;
 	}
 	
@@ -98,12 +96,12 @@ public class MedicalEquipment {
 		this.amount = amount;
 	}
 	
-	public MedicalEquipmentCompany getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
 	
-	public void setCompany(MedicalEquipmentCompany company) {
-		this.company = company;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	
 	public Set<DetailsOfEquipmentOrder> getDetails() {
@@ -123,6 +121,7 @@ public class MedicalEquipment {
 		long temp = Double.doubleToLongBits(getPrice());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + getAmount();
+		result = prime * result + ((getCompanyName() == null) ? 0 : getCompanyName().hashCode());
 		
 		return result;
 	}
@@ -156,6 +155,14 @@ public class MedicalEquipment {
 		}
 		
 		if (getAmount() != other.getAmount()) {
+			return false;
+		}
+		
+		if (getCompanyName() == null) {
+			if (other.getCompanyName() != null) {
+				return false;
+			}
+		} else if (!getCompanyName().equals(other.getCompanyName())) {
 			return false;
 		}
 		

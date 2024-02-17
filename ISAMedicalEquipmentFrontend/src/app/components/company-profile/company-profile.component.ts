@@ -90,7 +90,7 @@ export class CompanyProfileComponent implements OnInit {
         this.company = data;
         this.fillFormForCompanyWithData();
 
-        this.medicalEquipmentService.findAllOfCompany(companyId).subscribe(
+        this.medicalEquipmentService.findByCompanyName(this.company.name).subscribe(
           data => {
             console.log('Retrieving all medical equipment of company response: ', data);
 
@@ -213,7 +213,7 @@ export class CompanyProfileComponent implements OnInit {
 
     let searchCriterion: SearchCriterion = new SearchCriterion(this.formForEquipmentSearch.value.searchCriterion);
 
-    this.medicalEquipmentService.searchEquipmentOfCompanyByName(searchCriterion, this.company.id).subscribe(
+    this.medicalEquipmentService.searchEquipmentOfCompanyByName(searchCriterion, this.company.name).subscribe(
       data => {
         console.log(`Search medical equipment of company ${this.company.name} by name response: `, data);
 

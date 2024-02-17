@@ -1,25 +1,23 @@
 package ftn.project.ISAMedicalEquipmentBackend.dto.equipment;
 
-import ftn.project.ISAMedicalEquipmentBackend.dto.company.MedicalEquipmentCompanyDTO;
-
 public class MedicalEquipmentDTO {
 	private long id;
 	private TypeOfMedicalEquipmentDTO type;
 	private String name;
 	private double price;
 	private int amount;
-	private MedicalEquipmentCompanyDTO company;
+	private String companyName;
 	
 	public MedicalEquipmentDTO() {}
 	
 	public MedicalEquipmentDTO(long id, TypeOfMedicalEquipmentDTO type, String name, double price, 
-			int amount, MedicalEquipmentCompanyDTO company) {
+			int amount, String companyName) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
-		this.company = company;
+		this.companyName = companyName;
 	}
 	
 	public long getId() {
@@ -62,11 +60,11 @@ public class MedicalEquipmentDTO {
 		this.amount = amount;
 	}
 	
-	public MedicalEquipmentCompanyDTO getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
 	
-	public void setCompany(MedicalEquipmentCompanyDTO company) {
-		this.company = company;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 }

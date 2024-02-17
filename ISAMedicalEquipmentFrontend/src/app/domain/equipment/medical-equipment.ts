@@ -1,4 +1,3 @@
-import { MedicalEquipmentCompany } from "../company/medical-equipment-company";
 import { TypeOfMedicalEquipment } from "./type-of-medical-equipment";
 
 export class MedicalEquipment {
@@ -7,15 +6,15 @@ export class MedicalEquipment {
     name: string;
     price: number;
     amount: number;
-    company: MedicalEquipmentCompany;
+    companyName: string;
 
     constructor(id: number, type: TypeOfMedicalEquipment, name: string, price: number, amount: number, 
-            company: MedicalEquipmentCompany) {
+            companyName: string) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.price = price;
         this.amount = amount;
-        this.company = company;
+        this.companyName = companyName;
     }
 }

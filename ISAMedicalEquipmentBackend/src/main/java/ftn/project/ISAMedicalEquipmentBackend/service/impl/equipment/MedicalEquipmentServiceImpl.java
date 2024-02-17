@@ -32,6 +32,11 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	}
 	
 	@Override
+	public List<MedicalEquipment> findByCompanyName(String companyName) {
+		return medicalEquipmentRepository.findByCompanyName(companyName);
+	}
+	
+	@Override
 	public List<MedicalEquipment> findAll() {
 		return medicalEquipmentRepository.getAll();
 	}
@@ -54,12 +59,12 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	
 	@Override
 	public List<MedicalEquipment> searchEquipmentOfCompanyByName(
-			SearchCriterionDTO searchCriterionDTO, long companyId) {
+			SearchCriterionDTO searchCriterionDTO, String companyName) {
 		List<MedicalEquipment> equipmentOfCompany = new ArrayList<MedicalEquipment>();
 		
 		String criterion = searchCriterionDTO.getCriterion().toUpperCase();
 		String name;
-		for (MedicalEquipment equ: findAllOfCompany(companyId)) {
+		for (MedicalEquipment equ: findByCompanyName(companyName)) {
 			name = equ.getName().toUpperCase();
 			if (name.contains(criterion)) {
 				equipmentOfCompany.add(equ);
@@ -67,10 +72,5 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 		}
 		
 		return equipmentOfCompany;
-	}
-	
-	@Override
-	public List<MedicalEquipment> findAllOfCompany(long companyId) {
-		return medicalEquipmentRepository.getAllOfCompany(companyId);
 	}
 }
