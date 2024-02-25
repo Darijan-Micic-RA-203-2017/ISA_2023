@@ -78,7 +78,7 @@
             <mat-spinner *ngIf="isFormForCompanySubmitted" mode="indeterminate"></mat-spinner>
         </div>
     </mat-card>
-    <button color="accent" mat-raised-button mat-button type="button" (click)="scheduleTerm()">
+    <button color="accent" mat-raised-button mat-button type="button" (click)="scheduleTermForEquipmentOrder()">
         Zakaži termin za preuzimanje opreme
     </button>
     <div class="equipmentAndTermsDiv">
@@ -156,7 +156,7 @@
                         <td mat-cell *matCellDef="let detailOfOrderWithEquipment">
                             {{ detailOfOrderWithEquipment.subtotalPrice }}
                         </td>
-                        <td mat-footer-cell *matFooterCellDef>{{ getTotalPriceOfEquipmentOrder() }}</td>
+                        <td mat-footer-cell *matFooterCellDef>{{ newEquipmentOrder.totalPrice }}</td>
                     </ng-container>
                     
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsOfEquipment"></tr>
@@ -170,7 +170,7 @@
                 <mat-card-title>Slobodni termini</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <form id="termForm" #termForm="ngForm" (ngSubmit)="scheduleTerm()" [formGroup]="formForTerm">
+                <form id="termForm" #termForm="ngForm" [formGroup]="formForTerm">
                     <!-- REFERENCE: https://v12.material.angular.io/components/datepicker/examples -->
                     <mat-form-field>
                         <mat-label>Odaberite datum: </mat-label>

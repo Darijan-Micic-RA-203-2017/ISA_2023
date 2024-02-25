@@ -6,6 +6,7 @@ import org.springframework.security.access.AccessDeniedException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.MedicalEquipmentDTO;
 
 public interface MedicalEquipmentService {
 	MedicalEquipment findById(long id) throws AccessDeniedException;
@@ -15,4 +16,6 @@ public interface MedicalEquipmentService {
 	List<MedicalEquipment> searchEquipmentByName(SearchCriterionDTO searchCriterionDTO);
 	List<MedicalEquipment> searchEquipmentOfCompanyByName(SearchCriterionDTO searchCriterionDTO, 
 			String companyName);
+	boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, int requestedAmountInOrder);
+	MedicalEquipment save(MedicalEquipmentDTO medicalEquipmentDTO);
 }

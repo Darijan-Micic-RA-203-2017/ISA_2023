@@ -16,6 +16,7 @@ import { MedicalEquipmentService } from './services/medical-equipment/medical-eq
 import { ExchangeTermService } from './services/exchange-term/exchange-term.service';
 import { EquipmentOrderService } from './services/equipment-order/equipment-order.service';
 import { DetailsOfEquipmentOrderService } from './services/details-of-equipment-order/details-of-equipment-order.service';
+import { OrderingService } from './services/ordering/ordering.service';
 
 import { OnlyAuthenticatedUsersGuard } from './guards/only-authenticated-users/only-authenticated-users.guard';
 
@@ -87,6 +88,7 @@ const MaterialComponents = [
     ExchangeTermService,
     EquipmentOrderService,
     DetailsOfEquipmentOrderService,
+    OrderingService,
     OnlyAuthenticatedUsersGuard,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
   ],

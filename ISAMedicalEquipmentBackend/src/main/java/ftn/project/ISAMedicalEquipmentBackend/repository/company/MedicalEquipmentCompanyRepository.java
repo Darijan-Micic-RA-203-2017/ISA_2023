@@ -15,7 +15,7 @@ public interface MedicalEquipmentCompanyRepository extends
 	List<MedicalEquipmentCompany> getAll();
 	
 	@Query(value = "SELECT c FROM MedicalEquipmentCompany c JOIN FETCH c.workTime wt " 
-			+ "WHERE c.id = ?1")
+			+ "JOIN FETCH c.administrators admins WHERE c.id = ?1")
 	MedicalEquipmentCompany getById(long id);
 	
 	@Query(value = "SELECT c FROM MedicalEquipmentCompany c JOIN FETCH c.workTime wt " 

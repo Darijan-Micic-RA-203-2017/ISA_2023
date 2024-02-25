@@ -8,17 +8,23 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
+import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.TypeOfMedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.MedicalEquipmentDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.equipment.MedicalEquipmentRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipmentService;
+import ftn.project.ISAMedicalEquipmentBackend.service.equipment.TypeOfMedicalEquipmentService;
 
 @Service
 public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	private final MedicalEquipmentRepository medicalEquipmentRepository;
+	private final TypeOfMedicalEquipmentService typeOfMedicalEquipmentService;
 	
 	@Autowired
-	public MedicalEquipmentServiceImpl(MedicalEquipmentRepository medicalEquipmentRepository) {
+	public MedicalEquipmentServiceImpl(MedicalEquipmentRepository medicalEquipmentRepository, 
+			TypeOfMedicalEquipmentService typeOfMedicalEquipmentService) {
 		this.medicalEquipmentRepository = medicalEquipmentRepository;
+		this.typeOfMedicalEquipmentService = typeOfMedicalEquipmentService;
 	}
 	
 	@Override
@@ -72,5 +78,33 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 		}
 		
 		return equipmentOfCompany;
+	}
+	
+	@Override
+	public boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, 
+			int requestedAmountInOrder) {
+		boolean isThereEnough = true;
+		
+		if (equipment.getAmount() < requestedAmountInOrder) {
+			isThereEnough = false;
+		}
+		
+		return isThereEnough;
+	}
+	
+	@Override
+	public MedicalEquipment save(MedicalEquipmentDTO medicalEquipmentDTO) {
+		long id = medicalEquipmentDTO.getId();
+		TypeOfMedicalEquipment type = 
+				typeOfMedicalEquipmentService.findById(medicalEquipmentDTO.getType().getId());
+		String name = medicalEquipmentDTO.getName();
+		double price = medicalEquipmentDTO.getPrice();
+		int amount = medicalEquipmentDTO.getAmount();
+		String companyName = medicalEquipmentDTO.getCompanyName();
+		
+		MedicalEquipment medicalEquipment = new MedicalEquipment(id, type, name, price, amount, 
+				companyName);
+		
+		return medicalEquipmentRepository.saveAndFlush(medicalEquipment);
 	}
 }

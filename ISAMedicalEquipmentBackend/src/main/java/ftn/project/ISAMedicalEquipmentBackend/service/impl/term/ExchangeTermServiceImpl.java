@@ -105,11 +105,12 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 				procurementManagerService.findById(exchangeTermDTO.getProcurementManagerId());
 		MedicalEquipmentCompany company = 
 				medicalEquipmentCompanyService.findById(exchangeTermDTO.getCompanyId());
-		CompanyAdministrator companyAdministrator = companyAdministratorService.findById(3);
+		CompanyAdministrator companyAdministrator = 
+				companyAdministratorService.findById(exchangeTermDTO.getAdministratorId());
 		
 		ExchangeTerm newExchangeTerm = new ExchangeTerm(0, startingTime, endingTime, 
 				procurementManager, company, companyAdministrator);
 		
-		return exchangeTermRepository.save(newExchangeTerm);
+		return exchangeTermRepository.saveAndFlush(newExchangeTerm);
 	}
 }

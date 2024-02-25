@@ -14,7 +14,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 
 @Entity
 @Table(name = "details_of_equipment_orders")
-public class DetailsOfEquipmentOrder {
+public class DetailsOfEquipmentOrder implements Comparable<DetailsOfEquipmentOrder> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
@@ -121,6 +121,46 @@ public class DetailsOfEquipmentOrder {
 				Double.doubleToLongBits(other.getSubtotalPrice())) {
 			return false;
 		}
+		
 		return true;
+	}
+	
+	@Override
+	public int compareTo(DetailsOfEquipmentOrder o) {
+		if (o == null) {
+			throw new NullPointerException();
+		}
+		
+		if (this == o) {
+			return 0;
+		}
+		
+		if (!(o instanceof DetailsOfEquipmentOrder)) {
+			throw new ClassCastException();
+		}
+		
+		DetailsOfEquipmentOrder other = (DetailsOfEquipmentOrder) o;
+		
+		if (getId() < o.getId()) {
+			return -1;
+		} else if (getId() > o.getId()) {
+			return 1;
+		}
+		
+		if (getAmount() < other.getAmount()) {
+			return -1;
+		} else if (getAmount() > o.getAmount()) {
+			return 1;
+		}
+		
+		if (Double.doubleToLongBits(getSubtotalPrice()) < 
+				Double.doubleToLongBits(other.getSubtotalPrice())) {
+			return -1;
+		} else if (Double.doubleToLongBits(getSubtotalPrice()) > 
+				Double.doubleToLongBits(o.getSubtotalPrice())) {
+			return 1;
+		}
+		
+		return 0;
 	}
 }

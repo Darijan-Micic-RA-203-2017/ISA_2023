@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { MedicalEquipmentCompanyService } from 'src/app/services/medical-equipment-company/medical-equipment-company.service';
 import { MedicalEquipmentService } from 'src/app/services/medical-equipment/medical-equipment.service';
 import { ExchangeTermService } from 'src/app/services/exchange-term/exchange-term.service';
+import { OrderingService } from 'src/app/services/ordering/ordering.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,6 +21,9 @@ import { DetailsOfOrderWithEquipment } from 'src/app/domain/order/details-of-ord
 import { SearchCriterion } from 'src/app/domain/search-criterion';
 import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
 import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
+import { OrderCreation } from 'src/app/domain/order/order-creation';
+import { EquipmentOrder } from 'src/app/domain/order/equipment-order';
+import { DetailsOfEquipmentOrder } from 'src/app/domain/order/details-of-equipment-order';
 
 @Component({
   selector: 'app-company-profile',
@@ -60,11 +64,20 @@ export class CompanyProfileComponent implements OnInit {
   occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
   freeTermsOnSelectedDate: ExchangeTerm[] = [];
   
+  newEquipmentOrder: EquipmentOrder = {
+    id: 0, 
+    exchangeTermId: 0, 
+    procurementManagerId: 0, 
+    details: [], 
+    totalPrice: 0
+  };
+  
   userId: number = 0;
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private exchangeTermService: ExchangeTermService, 
-      private formBuilder: FormBuilder, private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
+      private orderingService: OrderingService, private formBuilder: FormBuilder, private ngZone: NgZone, 
+      private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
@@ -237,28 +250,32 @@ export class CompanyProfileComponent implements OnInit {
 
   increaseAmount(details: DetailsOfOrderWithEquipment): void {
     details.amount += 1;
-
     let newSubtotalPrice: number = details.subtotalPrice + details.equipment.price;
     details.subtotalPrice = this.formatPrice(newSubtotalPrice);
+
+    this.calculateTotalPriceOfNewEquipmentOrder();
   }
 
   decreaseAmount(details: DetailsOfOrderWithEquipment): void {
-    if (details.amount > 0) {
-      details.amount -= 1;
-
-      let newSubtotalPrice: number = details.subtotalPrice - details.equipment.price;
-      details.subtotalPrice = this.formatPrice(newSubtotalPrice);
+    if (details.amount == 0) {
+      return;
     }
+    
+    details.amount -= 1;
+    let newSubtotalPrice: number = details.subtotalPrice - details.equipment.price;
+    details.subtotalPrice = this.formatPrice(newSubtotalPrice);
+
+    this.calculateTotalPriceOfNewEquipmentOrder();
   }
 
-  getTotalPriceOfEquipmentOrder(): number {
+  calculateTotalPriceOfNewEquipmentOrder(): void {
     let totalPrice: number = 0;
     for (let details of this.shownDetailsOfOrderWithEquipment) {
       let newTotalPrice: number = totalPrice + details.subtotalPrice;
       totalPrice = this.formatPrice(newTotalPrice);
     }
 
-    return totalPrice;
+    this.newEquipmentOrder.totalPrice = totalPrice;
   }
 
   initializeFormForTerm(): void {
@@ -375,29 +392,36 @@ export class CompanyProfileComponent implements OnInit {
     );
   }
 
-  scheduleTerm(): void {
-    this.snackBar.open('Zakazivanje termina JE U IZRADI!', 'Nastavi', { duration: 5000 });
-    let reservedTerm: ExchangeTerm | null = this.reserveSelectedTerm();
-    if (!reservedTerm) {
-      return;
-    }
-  }
+  scheduleTermForEquipmentOrder(): void {
+    let orderCreation: OrderCreation = {
+      exchangeTerm: this.formForTerm.value.term,
+      order: this.fillOutNewEquipmentOrder()
+    };
 
-  reserveSelectedTerm(): ExchangeTerm | null {
-    let selectedTerm: ExchangeTerm = this.formForTerm.value.term;
-    let reservedTerm: ExchangeTerm | null = null;
-
-    this.exchangeTermService.reserveTerm(selectedTerm).subscribe(
+    this.orderingService.createOrder(orderCreation).subscribe(
       data => {
-        console.log('Reserving a selected term response: ', data);
-        reservedTerm = data.object;
+        console.log('Creating the specified order response: ', data);
       },
       (errorResponse: HttpErrorResponse) => {
-        console.log(`Error on reserving a selected term!\n\n${errorResponse.error.textMessage}`);
+        console.log(`Error on creating the specified order!\n\n${errorResponse.error.textMessage}`);
       }
     );
+  }
 
-    return reservedTerm;
+  fillOutNewEquipmentOrder(): EquipmentOrder {
+    this.newEquipmentOrder.procurementManagerId = this.userId;
+
+    this.newEquipmentOrder.details = [];
+    for (let dWithEquipment of this.shownDetailsOfOrderWithEquipment) {
+      if (dWithEquipment.amount == 0) {
+        continue;
+      }
+
+      this.newEquipmentOrder.details.push(new DetailsOfEquipmentOrder(0, 0, dWithEquipment.equipment.id, 
+          dWithEquipment.amount, dWithEquipment.subtotalPrice));
+    }
+
+    return this.newEquipmentOrder;
   }
 
   getErrorMessageFor(data: string): string {

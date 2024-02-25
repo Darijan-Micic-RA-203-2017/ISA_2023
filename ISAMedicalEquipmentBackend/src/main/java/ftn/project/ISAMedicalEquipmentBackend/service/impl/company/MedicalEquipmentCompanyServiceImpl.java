@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.company.MedicalEquipmentCompanyRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
@@ -64,5 +65,17 @@ public class MedicalEquipmentCompanyServiceImpl implements MedicalEquipmentCompa
 		}
 		
 		return companies;
+	}
+
+	@Override
+	public CompanyAdministrator findAvailableCompanyAdministrator(long companyId) {
+		MedicalEquipmentCompany company = findById(companyId);
+		
+		CompanyAdministrator availableCompanyAdministrator = null;
+		for (CompanyAdministrator cAdmin: company.getAdministrators()) {
+			availableCompanyAdministrator = cAdmin;
+		}
+		
+		return availableCompanyAdministrator;
 	}
 }

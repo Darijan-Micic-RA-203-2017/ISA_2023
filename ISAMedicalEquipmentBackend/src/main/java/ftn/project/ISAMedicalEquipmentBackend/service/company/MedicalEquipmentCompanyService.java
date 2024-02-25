@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.access.AccessDeniedException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 
 public interface MedicalEquipmentCompanyService {
@@ -14,4 +15,5 @@ public interface MedicalEquipmentCompanyService {
 	MedicalEquipmentCompany findByCountry(String country);
 	List<MedicalEquipmentCompany> findAll();
 	List<MedicalEquipmentCompany> searchByNameOrPopulatedPlace(SearchCriterionDTO searchCriterionDTO);
+	CompanyAdministrator findAvailableCompanyAdministrator(long companyId);
 }
