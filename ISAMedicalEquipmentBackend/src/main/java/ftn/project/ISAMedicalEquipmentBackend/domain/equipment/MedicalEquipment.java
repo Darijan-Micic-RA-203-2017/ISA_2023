@@ -8,13 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "medical_equipment")
 public class MedicalEquipment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "medical_equipment_id_generator", 
+		sequenceName = "medical_equipment_ids_sequence", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medical_equipment_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

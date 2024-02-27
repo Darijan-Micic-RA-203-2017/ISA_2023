@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
@@ -18,7 +19,9 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHo
 @Table(name = "complaints")
 public class Complaint {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "complaint_id_generator", sequenceName = "complaint_ids_sequence", 
+		initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "complaint_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

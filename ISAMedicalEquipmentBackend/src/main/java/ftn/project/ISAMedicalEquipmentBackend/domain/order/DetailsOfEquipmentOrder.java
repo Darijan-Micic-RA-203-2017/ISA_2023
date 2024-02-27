@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
@@ -16,7 +17,11 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 @Table(name = "details_of_equipment_orders")
 public class DetailsOfEquipmentOrder implements Comparable<DetailsOfEquipmentOrder> {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "details_of_equipment_order_id_generator", 
+		sequenceName = "details_of_equipment_order_ids_sequence", 
+		initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, 
+		generator = "details_of_equipment_order_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

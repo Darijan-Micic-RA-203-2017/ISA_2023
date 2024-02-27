@@ -109,19 +109,6 @@ INSERT INTO User_roles_join_table(user_id, role_id) VALUES (3, 2);
 INSERT INTO User_roles_join_table(user_id, role_id) VALUES (4, 2);
 INSERT INTO User_roles_join_table(user_id, role_id) VALUES (5, 3);
 
--- REFERENCE: https://dba.stackexchange.com/questions/46125/why-does-postgres-generate-an-already-used-pk-value
--- REFERENCE: https://dba.stackexchange.com/a/90522
--- REFERENCE: https://commandprompt.com/education/is-nvl-function-same-as-coalesce-in-postgresql/
-SELECT SETVAL('user_ids_sequence', (
-		SELECT MAX(id) FROM (
-				SELECT COALESCE(MAX(PM.id), 1) AS id FROM Procurement_managers PM
-				UNION ALL
-				SELECT COALESCE(MAX(CA.id), 1) AS id FROM Company_administrators CA
-				UNION ALL
-				SELECT COALESCE(MAX(SA.id), 1) AS id FROM System_administrators SA
-		) AS max_id
-));
-
 -- Complaints:
 INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
 	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 
@@ -163,7 +150,7 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VA
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2024-02-27 08:00:00.000+01', '2024-02-27 08:30:00.000+01', 
+	administrator_id) VALUES (1, '2024-02-28 08:00:00.000+01', '2024-02-28 08:30:00.000+01', 
 	1, 1, 3);
 
 -- Equipment orders:
@@ -175,3 +162,32 @@ INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subt
 	(1, 1, 1, 50, 9999.5);
 INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
 	(2, 1, 2, 200, 29998.0);
+
+-- REFERENCE: https://dba.stackexchange.com/questions/46125/why-does-postgres-generate-an-already-used-pk-value
+-- REFERENCE: https://dba.stackexchange.com/a/90522
+-- REFERENCE: https://commandprompt.com/education/is-nvl-function-same-as-coalesce-in-postgresql/
+SELECT SETVAL('loyalty_program_ids_sequence', (SELECT MAX(id) FROM Loyalty_programs));
+SELECT SETVAL('work_time_ids_sequence', (SELECT MAX(id) FROM Work_times));
+SELECT SETVAL('medical_equipment_company_ids_sequence', (
+		SELECT MAX(id) FROM Medical_equipment_companies
+));
+SELECT SETVAL('user_ids_sequence', (
+		SELECT MAX(id) FROM (
+				SELECT COALESCE(MAX(PM.id), 1) AS id FROM Procurement_managers PM
+				UNION ALL
+				SELECT COALESCE(MAX(CA.id), 1) AS id FROM Company_administrators CA
+				UNION ALL
+				SELECT COALESCE(MAX(SA.id), 1) AS id FROM System_administrators SA
+		) AS max_id
+));
+SELECT SETVAL('user_role_ids_sequence', (SELECT MAX(id) FROM User_roles));
+SELECT SETVAL('complaint_ids_sequence', (SELECT MAX(id) FROM Complaints));
+SELECT SETVAL('type_of_medical_equipment_ids_sequence', (
+		SELECT MAX(id) FROM Types_of_medical_equipment
+));
+SELECT SETVAL('medical_equipment_ids_sequence', (SELECT MAX(id) FROM Medical_equipment));
+SELECT SETVAL('exchange_term_ids_sequence', (SELECT MAX(id) FROM Exchange_terms));
+SELECT SETVAL('equipment_order_ids_sequence', (SELECT MAX(id) FROM Equipment_orders));
+SELECT SETVAL('details_of_equipment_order_ids_sequence', (
+		SELECT MAX(id) FROM Details_of_equipment_orders
+));

@@ -5,13 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "loyalty_programs")
 public class LoyaltyProgram {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "loyalty_program_id_generator", 
+		sequenceName = "loyalty_program_ids_sequence", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loyalty_program_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

@@ -22,11 +22,8 @@ import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerSer
 @Service
 public class ExchangeTermServiceImpl implements ExchangeTermService {
 	private final ExchangeTermRepository exchangeTermRepository;
-	
 	private final ProcurementManagerService procurementManagerService;
-	
 	private final MedicalEquipmentCompanyService medicalEquipmentCompanyService;
-	
 	private final CompanyAdministratorService companyAdministratorService;
 	
 	@Autowired

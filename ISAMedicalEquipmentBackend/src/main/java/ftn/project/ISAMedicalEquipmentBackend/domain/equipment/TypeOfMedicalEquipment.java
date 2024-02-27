@@ -5,13 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "types_of_medical_equipment")
 public class TypeOfMedicalEquipment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "type_of_medical_equipment_id_generator", 
+		sequenceName = "type_of_medical_equipment_ids_sequence", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, 
+		generator = "type_of_medical_equipment_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

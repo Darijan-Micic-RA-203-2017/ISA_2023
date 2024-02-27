@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
@@ -22,7 +23,11 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 @Table(name = "medical_equipment_companies")
 public class MedicalEquipmentCompany {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "medical_equipment_company_id_generator", 
+		sequenceName = "medical_equipment_company_ids_sequence", 
+		initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, 
+		generator = "medical_equipment_company_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	

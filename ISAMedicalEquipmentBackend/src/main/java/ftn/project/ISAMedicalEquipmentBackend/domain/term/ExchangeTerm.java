@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
@@ -20,7 +21,9 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHo
 @Table(name = "exchange_terms")
 public class ExchangeTerm {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "exchange_term_id_generator", 
+		sequenceName = "exchange_term_ids_sequence", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exchange_term_id_generator")
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	
