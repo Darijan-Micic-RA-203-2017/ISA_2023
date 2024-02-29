@@ -84,7 +84,6 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	public boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, 
 			int requestedAmountInOrder) {
 		boolean isThereEnough = true;
-		
 		if (equipment.getAmount() < requestedAmountInOrder) {
 			isThereEnough = false;
 		}

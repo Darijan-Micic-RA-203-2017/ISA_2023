@@ -42,6 +42,8 @@ public class OrderingController {
 			createdEquipmentOrder = EquipmentOrderConverter.convertToDTO(
 					orderingService.createOrder(orderCreationDTO));
 		} catch (NotEnoughEquipmentForOrderException nEEFOE) {
+			System.out.println("\n" + nEEFOE.getMessage());
+			
 			return new ResponseEntity<ObjectAndTextResponseDTO>(
 					new ObjectAndTextResponseDTO(createdEquipmentOrder, 
 							"There is not enough equipment for order!"), 

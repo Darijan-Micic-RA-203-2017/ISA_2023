@@ -41,18 +41,25 @@ public class OrderingServiceImpl implements OrderingService {
 	public EquipmentOrder createOrder(OrderCreationDTO orderCreationDTO) 
 			throws NotEnoughEquipmentForOrderException {
 		List<MedicalEquipment> equipmentInOrder = new ArrayList<MedicalEquipment>();
+		List<Integer> amountsOfEquipmentInOrder = new ArrayList<Integer>();
 		for (DetailsOfEquipmentOrderDTO dDTO: orderCreationDTO.getOrder().getDetails()) {
 			MedicalEquipment equipment = medicalEquipmentService.findById(dDTO.getEquipmentId());
 			int amount = dDTO.getAmount();
 			
 			if (!medicalEquipmentService.isThereEnoughEquipmentForOrder(equipment, amount)) {
 				throw new NotEnoughEquipmentForOrderException();
-			} else {
-				equipment.setAmount(equipment.getAmount() - amount);
-				medicalEquipmentService.save(MedicalEquipmentConverter.convertToDTO(equipment));
 			}
 			
 			equipmentInOrder.add(equipment);
+			amountsOfEquipmentInOrder.add(amount);
+		}
+		
+		for (int i = 0; i < equipmentInOrder.size(); i++) {
+			MedicalEquipment medEqu = equipmentInOrder.get(i);
+			int amount = amountsOfEquipmentInOrder.get(i);
+			
+			medEqu.setAmount(medEqu.getAmount() - amount);
+			medicalEquipmentService.save(MedicalEquipmentConverter.convertToDTO(medEqu));
 		}
 		
 		CompanyAdministrator availableCompanyAdministrator = 
