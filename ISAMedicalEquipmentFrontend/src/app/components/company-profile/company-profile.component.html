@@ -174,17 +174,17 @@
                     <!-- REFERENCE: https://v12.material.angular.io/components/datepicker/examples -->
                     <mat-form-field>
                         <mat-label>Odaberite datum: </mat-label>
-                        <input matInput #termDateInput type="text" [matDatepicker]="termDatePicker" 
-                            [min]="minDate" [formControl]="formForTerm.get('termDate')" 
-                            (dateChange)="determineFreeTermsOnSelectedTermDate()">
-                        <mat-datepicker-toggle matSuffix [for]="termDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #termDatePicker>
+                        <input matInput #dateOfTermInput type="text" [matDatepicker]="dateOfTermPicker" 
+                            [min]="minDate" [formControl]="formForTerm.get('dateOfTerm')" 
+                            (dateChange)="determineFreeTermsOnSelectedDate()">
+                        <mat-datepicker-toggle matSuffix [for]="dateOfTermPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dateOfTermPicker>
                             <mat-datepicker-actions>
                                 <button mat-raised-button color="primary" matDatepickerApply type="button">Potvrdi</button>
                                 <button mat-button matDatepickerCancel type="button">Otkaži</button>
                             </mat-datepicker-actions>
                         </mat-datepicker>
-                        <mat-error *ngIf="formForTerm.get('termDate').invalid">{{ getErrorMessageFor('termDate') }}</mat-error>
+                        <mat-error *ngIf="formForTerm.get('dateOfTerm').invalid">{{ getErrorMessageFor('dateOfTerm') }}</mat-error>
                     </mat-form-field>
                     <!-- REFERENCE: https://v12.material.angular.io/components/chips/examples -->
                     <mat-form-field>

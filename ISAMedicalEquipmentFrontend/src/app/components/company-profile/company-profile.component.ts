@@ -60,7 +60,7 @@ export class CompanyProfileComponent implements OnInit {
       new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
   
   formForTerm: any;
-  minDate: DateTime = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+  minDate: DateTime = DateTime.now().plus({ days: 1 }).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
   occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
   freeTermsOnSelectedDate: ExchangeTerm[] = [];
   
@@ -69,7 +69,7 @@ export class CompanyProfileComponent implements OnInit {
     exchangeTermId: 0, 
     procurementManagerId: 0, 
     details: [], 
-    totalPrice: 0
+    totalPrice: 0.0
   };
   
   userId: number = 0;
@@ -121,7 +121,7 @@ export class CompanyProfileComponent implements OnInit {
           }
         );
 
-        this.determineFreeTermsOnSelectedTermDate();
+        this.determineFreeTermsOnSelectedDate();
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on retrieving medical equipment company by id!\n\n${errorResponse.error.textMessage}`);
@@ -280,7 +280,7 @@ export class CompanyProfileComponent implements OnInit {
 
   initializeFormForTerm(): void {
     this.formForTerm = this.formBuilder.group({
-      termDate: new FormControl(this.minDate, {
+      dateOfTerm: new FormControl(this.minDate, {
         validators: [Validators.required], 
         updateOn: 'change'
       }),
@@ -291,12 +291,16 @@ export class CompanyProfileComponent implements OnInit {
     });
   }
 
-  determineFreeTermsOnSelectedTermDate(): void {
+  determineFreeTermsOnSelectedDate(): void {
+    this.occupiedTermsOnSelectedDate = [];
     this.freeTermsOnSelectedDate = [];
-    let selectedTermDate: DateTime = this.formForTerm.value.termDate;
+    let selectedDateOfTerm: DateTime = this.formForTerm.value.dateOfTerm;
+    if (selectedDateOfTerm.diff(this.minDate, ['days']).days < 0) {
+      return;
+    }
 
     let workTime: string[] = [];
-    switch (selectedTermDate.weekday) {
+    switch (selectedDateOfTerm.weekday) {
       case 1: case 2: case 3: case 4: case 5:
         workTime = this.company.workTime.onMondaysThroughFridays.split(' - ');
 
@@ -323,7 +327,7 @@ export class CompanyProfileComponent implements OnInit {
     }
 
     this.exchangeTermService.findAllOnSpecificDateOfCompany(
-        new DateTimeWrapper(selectedTermDate), this.company.id).subscribe(
+        new DateTimeWrapper(selectedDateOfTerm), this.company.id).subscribe(
       data => {
         console.log('Retrieving all exchange terms on selected date of company response: ', data);
         for (let unconvertedOccupiedTerm of data) {
@@ -359,11 +363,11 @@ export class CompanyProfileComponent implements OnInit {
             endMinuteOfCurrentTerm = 0;
           }
 
-          let startingTimeAsJSDate: Date = new Date(selectedTermDate.year, selectedTermDate.month - 1, 
-              selectedTermDate.day, startHourOfCurrentTerm, startMinuteOfCurrentTerm, 0, 0);
+          let startingTimeAsJSDate: Date = new Date(selectedDateOfTerm.year, selectedDateOfTerm.month - 1, 
+              selectedDateOfTerm.day, startHourOfCurrentTerm, startMinuteOfCurrentTerm, 0, 0);
           let startingTime: DateTime = DateTime.fromJSDate(startingTimeAsJSDate);
-          let endingTimeAsJSDate: Date = new Date(selectedTermDate.year, selectedTermDate.month - 1, 
-              selectedTermDate.day, endHourOfCurrentTerm, endMinuteOfCurrentTerm, 0, 0);
+          let endingTimeAsJSDate: Date = new Date(selectedDateOfTerm.year, selectedDateOfTerm.month - 1, 
+              selectedDateOfTerm.day, endHourOfCurrentTerm, endMinuteOfCurrentTerm, 0, 0);
           let endingTime: DateTime = DateTime.fromJSDate(endingTimeAsJSDate);
 
           let isTermOccupied: boolean = false;
@@ -394,13 +398,14 @@ export class CompanyProfileComponent implements OnInit {
 
   scheduleTermForEquipmentOrder(): void {
     let orderCreation: OrderCreation = {
-      exchangeTerm: this.formForTerm.value.term,
+      term: this.formForTerm.value.term, 
       order: this.fillOutNewEquipmentOrder()
     };
 
     this.orderingService.createOrder(orderCreation).subscribe(
       data => {
-        console.log('Creating the specified order response: ', data);
+        console.log('Creating the specified order response: ', data.textMessage);
+        this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan.', 'Zatvori', { duration: 10000 });
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on creating the specified order!\n\n${errorResponse.error.textMessage}`);
@@ -497,12 +502,12 @@ export class CompanyProfileComponent implements OnInit {
         }
         
         break;
-      case 'termDate':
-        if (this.formForTerm.get('termDate').hasError('required')) {
+      case 'dateOfTerm':
+        if (this.formForTerm.get('dateOfTerm').hasError('required')) {
           errorMessage = 'Morate odabrati datum termina!';
         }
 
-        if (this.formForTerm.get('termDate').hasError('matDatepickerMin')) {
+        if (this.formForTerm.get('dateOfTerm').hasError('matDatepickerMin')) {
           errorMessage = 'Termin može biti zakazan samo u budućnosti!';
         }
 

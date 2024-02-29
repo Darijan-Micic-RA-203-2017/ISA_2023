@@ -20,6 +20,12 @@ public class ValidatorForExchangeTermDTO implements Validator {
 	public void validate(Object target, Errors errors) {
 		ExchangeTermDTO exchangeTermDTO = (ExchangeTermDTO) target;
 		
+		long id = exchangeTermDTO.getId();
+		if (id < 0) {
+			errors.rejectValue("id", "field.min", null, 
+					"Id is not nonnegative!");
+		}
+		
 		ValidationUtils.rejectIfEmpty(errors, "startingTime", 
 				"field.required", "Starting time is empty!");
 		Timestamp startingTime = exchangeTermDTO.getStartingTime();
@@ -30,9 +36,6 @@ public class ValidatorForExchangeTermDTO implements Validator {
 			if (startingTime.compareTo(endingTime) >= 0) {
 				errors.rejectValue("startingTime", "field.max", null, 
 						"Starting time is set after ending time!");
-			}
-			
-			if (endingTime.compareTo(startingTime) <= 0) {
 				errors.rejectValue("endingTime", "field.min", null, 
 						"Ending time is set before starting time!");
 			}

@@ -3,22 +3,22 @@ package ftn.project.ISAMedicalEquipmentBackend.dto.order;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
 public class OrderCreationDTO {
-	private ExchangeTermDTO exchangeTerm;
+	private ExchangeTermDTO term;
 	private EquipmentOrderDTO order;
 	
 	public OrderCreationDTO() {}
 	
-	public OrderCreationDTO(ExchangeTermDTO exchangeTerm, EquipmentOrderDTO order) {
-		this.exchangeTerm = exchangeTerm;
+	public OrderCreationDTO(ExchangeTermDTO term, EquipmentOrderDTO order) {
+		this.term = term;
 		this.order = order;
 	}
 	
-	public ExchangeTermDTO getExchangeTerm() {
-		return exchangeTerm;
+	public ExchangeTermDTO getTerm() {
+		return term;
 	}
 	
-	public void setExchangeTerm(ExchangeTermDTO exchangeTerm) {
-		this.exchangeTerm = exchangeTerm;
+	public void setTerm(ExchangeTermDTO term) {
+		this.term = term;
 	}
 	
 	public EquipmentOrderDTO getOrder() {

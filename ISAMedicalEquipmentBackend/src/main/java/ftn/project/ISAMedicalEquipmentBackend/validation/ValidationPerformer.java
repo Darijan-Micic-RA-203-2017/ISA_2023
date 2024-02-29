@@ -8,8 +8,10 @@ import org.springframework.validation.ValidationUtils;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForExchangeTermDTO;
+import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForOrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForSearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserCodeWrapperDTO;
@@ -58,6 +60,9 @@ public class ValidationPerformer {
 					target, bindingResult);
 		} else if (target.getClass().isAssignableFrom(ExchangeTermDTO.class)) {
 			ValidationUtils.invokeValidator(new ValidatorForExchangeTermDTO(), 
+					target, bindingResult);
+		} else if (target.getClass().isAssignableFrom(OrderCreationDTO.class)) {
+			ValidationUtils.invokeValidator(new ValidatorForOrderCreationDTO(), 
 					target, bindingResult);
 		}
 	}

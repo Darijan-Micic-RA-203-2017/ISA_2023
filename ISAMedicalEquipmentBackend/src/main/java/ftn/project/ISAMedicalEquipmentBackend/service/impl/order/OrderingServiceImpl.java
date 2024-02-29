@@ -57,11 +57,11 @@ public class OrderingServiceImpl implements OrderingService {
 		
 		CompanyAdministrator availableCompanyAdministrator = 
 				medicalEquipmentCompanyService.findAvailableCompanyAdministrator(
-						orderCreationDTO.getExchangeTerm().getCompanyId());
-		orderCreationDTO.getExchangeTerm().setAdministratorId(availableCompanyAdministrator.getId());
+						orderCreationDTO.getTerm().getCompanyId());
+		orderCreationDTO.getTerm().setAdministratorId(availableCompanyAdministrator.getId());
 		
 		ExchangeTerm exchangeTerm = 
-				exchangeTermService.reserveTerm(orderCreationDTO.getExchangeTerm());
+				exchangeTermService.reserveTerm(orderCreationDTO.getTerm());
 		orderCreationDTO.getOrder().setExchangeTermId(exchangeTerm.getId());
 		
 		EquipmentOrder order = 

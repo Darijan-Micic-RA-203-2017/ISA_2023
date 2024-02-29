@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.project.ISAMedicalEquipmentBackend.converter.order.EquipmentOrderConverter;
+import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.OrderingService;
+import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
 @RestController
 @RequestMapping(path = "/ordering", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -26,17 +28,29 @@ public class OrderingController {
 	}
 	
 	@PostMapping(path = "/create-order", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EquipmentOrderDTO> createOrder(
+	public ResponseEntity<ObjectAndTextResponseDTO> createOrder(
 			@RequestBody OrderCreationDTO orderCreationDTO) {
 		EquipmentOrderDTO createdEquipmentOrder = null;
+		String validationMessages = ValidationPerformer.getValidationMessages(orderCreationDTO);
+		if (validationMessages != null) {
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(createdEquipmentOrder, validationMessages), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		try {
 			createdEquipmentOrder = EquipmentOrderConverter.convertToDTO(
 					orderingService.createOrder(orderCreationDTO));
 		} catch (NotEnoughEquipmentForOrderException nEEFOE) {
-			return new ResponseEntity<EquipmentOrderDTO>(createdEquipmentOrder, 
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(createdEquipmentOrder, 
+							"There is not enough equipment for order!"), 
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<EquipmentOrderDTO>(createdEquipmentOrder, HttpStatus.CREATED);
+		return new ResponseEntity<ObjectAndTextResponseDTO>(
+				new ObjectAndTextResponseDTO(createdEquipmentOrder, 
+						"New equipment order has been successfully created!"), 
+				HttpStatus.CREATED);
 	}
 }

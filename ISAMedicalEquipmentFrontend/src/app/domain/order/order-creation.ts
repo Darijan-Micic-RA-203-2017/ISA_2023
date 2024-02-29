@@ -2,11 +2,11 @@ import { ExchangeTerm } from "../term/exchange-term";
 import { EquipmentOrder } from "./equipment-order";
 
 export class OrderCreation {
-    exchangeTerm: ExchangeTerm;
+    term: ExchangeTerm;
     order: EquipmentOrder;
 
-    constructor(exchangeTerm: ExchangeTerm, order: EquipmentOrder) {
-        this.exchangeTerm = exchangeTerm;
+    constructor(term: ExchangeTerm, order: EquipmentOrder) {
+        this.term = term;
         this.order = order;
     }
 }
