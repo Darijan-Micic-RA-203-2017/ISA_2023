@@ -16,6 +16,5 @@ public interface MedicalEquipmentService {
 	List<MedicalEquipment> searchEquipmentByName(SearchCriterionDTO searchCriterionDTO);
 	List<MedicalEquipment> searchEquipmentOfCompanyByName(SearchCriterionDTO searchCriterionDTO, 
 			String companyName);
-	boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, int requestedAmountInOrder);
 	MedicalEquipment save(MedicalEquipmentDTO medicalEquipmentDTO);
 }

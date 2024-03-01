@@ -13,6 +13,7 @@ import ftn.project.ISAMedicalEquipmentBackend.converter.order.EquipmentOrderConv
 import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.OrderingService;
 import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
@@ -41,12 +42,11 @@ public class OrderingController {
 		try {
 			createdEquipmentOrder = EquipmentOrderConverter.convertToDTO(
 					orderingService.createOrder(orderCreationDTO));
-		} catch (NotEnoughEquipmentForOrderException nEEFOE) {
-			System.out.println("\n" + nEEFOE.getMessage());
+		} catch (NotEnoughEquipmentForOrderException | IncorrectSubtotalPriceOfOrderDetailsException e) {
+			System.out.println("\n" + e.getMessage());
 			
 			return new ResponseEntity<ObjectAndTextResponseDTO>(
-					new ObjectAndTextResponseDTO(createdEquipmentOrder, 
-							"There is not enough equipment for order!"), 
+					new ObjectAndTextResponseDTO(createdEquipmentOrder, e.getMessage()), 
 					HttpStatus.BAD_REQUEST);
 		}
 		

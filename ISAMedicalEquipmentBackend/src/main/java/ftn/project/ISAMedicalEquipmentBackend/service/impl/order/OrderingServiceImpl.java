@@ -13,6 +13,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
 import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
 import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipmentService;
@@ -38,16 +39,19 @@ public class OrderingServiceImpl implements OrderingService {
 	}
 
 	@Override
-	public EquipmentOrder createOrder(OrderCreationDTO orderCreationDTO) 
-			throws NotEnoughEquipmentForOrderException {
+	public EquipmentOrder createOrder(OrderCreationDTO orderCreationDTO) throws 
+			NotEnoughEquipmentForOrderException, IncorrectSubtotalPriceOfOrderDetailsException {
 		List<MedicalEquipment> equipmentInOrder = new ArrayList<MedicalEquipment>();
 		List<Integer> amountsOfEquipmentInOrder = new ArrayList<Integer>();
 		for (DetailsOfEquipmentOrderDTO dDTO: orderCreationDTO.getOrder().getDetails()) {
 			MedicalEquipment equipment = medicalEquipmentService.findById(dDTO.getEquipmentId());
 			int amount = dDTO.getAmount();
 			
-			if (!medicalEquipmentService.isThereEnoughEquipmentForOrder(equipment, amount)) {
+			if (!isThereEnoughEquipmentForOrder(equipment, amount)) {
 				throw new NotEnoughEquipmentForOrderException();
+			}
+			if (!doesSpecifiedSubtotalPriceMatchTheExactOne(dDTO, equipment.getPrice())) {
+				throw new IncorrectSubtotalPriceOfOrderDetailsException();
 			}
 			
 			equipmentInOrder.add(equipment);
@@ -75,5 +79,30 @@ public class OrderingServiceImpl implements OrderingService {
 				equipmentOrderService.create(orderCreationDTO.getOrder(), equipmentInOrder);
 		
 		return order;
+	}
+	
+	@Override
+	public boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, 
+			int requestedAmountInOrder) {
+		boolean isThereEnough = true;
+		if (equipment.getAmount() < requestedAmountInOrder) {
+			isThereEnough = false;
+		}
+		
+		return isThereEnough;
+	}
+	
+	@Override
+	public boolean doesSpecifiedSubtotalPriceMatchTheExactOne(
+			DetailsOfEquipmentOrderDTO detailsOfOrder, double priceOfEquipment) {
+		boolean doesItMatch = true;
+		
+		double exactSubtotalPrice = detailsOfOrder.getAmount() * priceOfEquipment;
+		if (Double.doubleToLongBits(detailsOfOrder.getSubtotalPrice()) != 
+				Double.doubleToLongBits(exactSubtotalPrice)) {
+			doesItMatch = false;
+		}
+		
+		return doesItMatch;
 	}
 }

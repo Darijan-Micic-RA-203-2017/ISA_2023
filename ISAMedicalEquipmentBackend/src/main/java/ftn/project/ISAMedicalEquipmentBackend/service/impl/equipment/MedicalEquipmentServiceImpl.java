@@ -81,17 +81,6 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	}
 	
 	@Override
-	public boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, 
-			int requestedAmountInOrder) {
-		boolean isThereEnough = true;
-		if (equipment.getAmount() < requestedAmountInOrder) {
-			isThereEnough = false;
-		}
-		
-		return isThereEnough;
-	}
-	
-	@Override
 	public MedicalEquipment save(MedicalEquipmentDTO medicalEquipmentDTO) {
 		long id = medicalEquipmentDTO.getId();
 		TypeOfMedicalEquipment type = 
