@@ -409,6 +409,9 @@ export class CompanyProfileComponent implements OnInit {
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on creating the specified order!\n\n${errorResponse.error.textMessage}`);
+        if (errorResponse.error.textMessage.includes('Order does not contain any equipment!')) {
+          this.snackBar.open('Niste odabrali nijednu opremu za rezervaciju!', 'Zatvori', { duration: 5000 });
+        }
       }
     );
   }

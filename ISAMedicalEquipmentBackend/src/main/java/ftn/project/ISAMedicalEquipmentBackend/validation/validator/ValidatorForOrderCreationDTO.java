@@ -130,6 +130,13 @@ public class ValidatorForOrderCreationDTO implements Validator {
 			Errors errors) {
 		double totalPriceOfAllOrderDetails = 0.0;
 		
+		ValidationUtils.rejectIfEmpty(errors, "order.details", 
+				"field.required", "Details of order are null!");
+		if (detailsOfOrder.isEmpty()) {
+			errors.rejectValue("order.details", "field.empty", null, 
+					"Order does not contain any equipment!");
+		}
+		
 		for (int i = 0; i < detailsOfOrder.size(); i++) {
 			long idOfOrderDetails = detailsOfOrder.get(i).getId();
 			if (idOfOrderDetails != 0) {

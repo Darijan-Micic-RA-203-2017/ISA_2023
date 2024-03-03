@@ -78,9 +78,8 @@
             <mat-spinner *ngIf="isFormForCompanySubmitted" mode="indeterminate"></mat-spinner>
         </div>
     </mat-card>
-    <button color="accent" mat-raised-button mat-button type="button" (click)="scheduleTermForEquipmentOrder()">
-        Zakaži termin za preuzimanje opreme
-    </button>
+    <button [disabled]="formForTerm.invalid" color="accent" mat-raised-button mat-button 
+        type="button" (click)="scheduleTermForEquipmentOrder()">Zakaži termin za preuzimanje opreme</button>
     <div class="equipmentAndTermsDiv">
         <mat-card>
             <mat-card-header>
