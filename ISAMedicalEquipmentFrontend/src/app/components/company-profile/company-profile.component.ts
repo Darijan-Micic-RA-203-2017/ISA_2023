@@ -249,6 +249,10 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   increaseAmount(details: DetailsOfOrderWithEquipment): void {
+    if (details.amount == details.equipment.amount) {
+      return;
+    }
+
     details.amount += 1;
     let newSubtotalPrice: number = details.subtotalPrice + details.equipment.price;
     details.subtotalPrice = this.formatPrice(newSubtotalPrice);
