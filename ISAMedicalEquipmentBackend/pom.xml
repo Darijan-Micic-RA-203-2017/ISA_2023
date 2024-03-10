@@ -25,6 +25,7 @@
 	</properties>
 	
 	<dependencies>
+		<!-- REFERENCE: https://github.com/ivana-k/isa-vezbe/blob/main/Vezbe05/spring-security-example -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -64,6 +65,19 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+		</dependency>
+		
+		<!-- REFERENCE: https://www.baeldung.com/java-generating-barcodes-qr-codes -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.3.0</version>
 		</dependency>
 		
 		<dependency>

@@ -57,4 +57,15 @@ public class DetailsOfEquipmentOrderDTO {
 	public void setSubtotalPrice(double subtotalPrice) {
 		this.subtotalPrice = subtotalPrice;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("DetailsOfEquipmentOrderDTO [id=").append(id).append(", orderId=")
+				.append(orderId).append(", equipmentId=").append(equipmentId).append(", amount=")
+				.append(amount).append(", subtotalPrice=").append(subtotalPrice).append("]");
+		
+		return builder.toString();
+	}
 }

@@ -1,10 +1,21 @@
 package ftn.project.ISAMedicalEquipmentBackend.service.impl.order;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import ftn.project.ISAMedicalEquipmentBackend.converter.equipment.MedicalEquipmentConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
@@ -12,6 +23,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
@@ -104,5 +116,28 @@ public class OrderingServiceImpl implements OrderingService {
 		}
 		
 		return doesItMatch;
+	}
+	
+	@Override
+	public byte[] generateQRCodeOfNewEquipmentOrder(EquipmentOrderDTO newEquipmentOrder) 
+			throws WriterException, IOException {
+		BufferedImage imageOfQRCode = generateImageOfQRCode(newEquipmentOrder.toString());
+		
+		// REFERENCE: https://stackoverflow.com/questions/59786720/spring-convert-buffered-image-into-response-entity/59787932#59787932
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		ImageIO.write(imageOfQRCode, "png", byteArrayOutputStream);
+		byte[] imageOfQRCodeAsByteArray = byteArrayOutputStream.toByteArray();
+		byteArrayOutputStream.close();
+		
+		return imageOfQRCodeAsByteArray;
+	}
+	
+	@Override
+	public BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException {
+		// REFERENCE: https://www.baeldung.com/java-generating-barcodes-qr-codes
+		QRCodeWriter barcodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 256, 256);
+		
+		return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
 }

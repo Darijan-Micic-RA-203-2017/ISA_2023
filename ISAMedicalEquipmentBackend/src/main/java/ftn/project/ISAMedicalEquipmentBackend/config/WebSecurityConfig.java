@@ -23,16 +23,14 @@ import ftn.project.ISAMedicalEquipmentBackend.util.TokenUtils;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	private CustomUserDetailsService customUserDetailsService;
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	private TokenUtils tokenUtils;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
-	
-	@Autowired
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 	
 	@Bean
 	@Override
@@ -41,7 +39,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Autowired
-	private TokenUtils tokenUtils;
+	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, 
+			RestAuthenticationEntryPoint restAuthenticationEntryPoint, TokenUtils tokenUtils) {
+		super();
+		
+		this.customUserDetailsService = customUserDetailsService;
+		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+		this.tokenUtils = tokenUtils;
+	}
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) 
@@ -51,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	public void configure(HttpSecurity http) throws Exception {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 				.authorizeRequests()
@@ -79,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/details-of-equipment-orders").authenticated()
 				.antMatchers("/details-of-equipment-orders/{id}").authenticated()
 				.antMatchers("/ordering/create-order").authenticated()
+				.antMatchers("/ordering/generate-qr-code").authenticated()
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 

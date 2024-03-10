@@ -1,5 +1,7 @@
 package ftn.project.ISAMedicalEquipmentBackend.controller.order;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.zxing.WriterException;
 
 import ftn.project.ISAMedicalEquipmentBackend.converter.order.EquipmentOrderConverter;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
@@ -54,5 +58,23 @@ public class OrderingController {
 				new ObjectAndTextResponseDTO(createdEquipmentOrder, 
 						"New equipment order has been successfully created!"), 
 				HttpStatus.CREATED);
+	}
+	
+	// REFERENCE: https://stackoverflow.com/questions/59786720/spring-convert-buffered-image-into-response-entity/59787932#59787932
+	@PostMapping(path = "/generate-qr-code", consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> generateQRCode(@RequestBody EquipmentOrderDTO newEquipmentOrder) {
+		byte[] imageOfQRCodeAsByteArray = null;
+		try {
+			imageOfQRCodeAsByteArray = 
+					orderingService.generateQRCodeOfNewEquipmentOrder(newEquipmentOrder);
+		} catch (WriterException | IOException e) {
+			e.printStackTrace();
+			
+			return new ResponseEntity<byte[]>(imageOfQRCodeAsByteArray, 
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<byte[]>(imageOfQRCodeAsByteArray, HttpStatus.OK);
 	}
 }

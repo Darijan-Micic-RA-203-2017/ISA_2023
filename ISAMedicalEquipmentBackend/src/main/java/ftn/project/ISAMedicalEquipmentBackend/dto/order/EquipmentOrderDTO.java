@@ -59,4 +59,16 @@ public class EquipmentOrderDTO {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("EquipmentOrderDTO [id=").append(id).append(", exchangeTermId=")
+				.append(exchangeTermId).append(", procurementManagerId=")
+				.append(procurementManagerId).append(", details=").append(details)
+				.append(", totalPrice=").append(totalPrice).append("]");
+		
+		return builder.toString();
+	}
 }
