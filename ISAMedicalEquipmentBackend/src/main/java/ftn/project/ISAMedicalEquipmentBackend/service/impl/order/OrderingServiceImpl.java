@@ -7,8 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.zxing.BarcodeFormat;
@@ -22,6 +31,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
@@ -32,6 +42,7 @@ import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipment
 import ftn.project.ISAMedicalEquipmentBackend.service.order.EquipmentOrderService;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.OrderingService;
 import ftn.project.ISAMedicalEquipmentBackend.service.term.ExchangeTermService;
+import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
 
 @Service
 public class OrderingServiceImpl implements OrderingService {
@@ -39,15 +50,24 @@ public class OrderingServiceImpl implements OrderingService {
 	private final EquipmentOrderService equipmentOrderService;
 	private final ExchangeTermService exchangeTermService;
 	private final MedicalEquipmentCompanyService medicalEquipmentCompanyService;
+	private final ProcurementManagerService procurementManagerService;
+	
+	private final JavaMailSender javaMailSender;
+	private final Environment environment;
 	
 	@Autowired
 	public OrderingServiceImpl(MedicalEquipmentService medicalEquipmentService, 
 			EquipmentOrderService equipmentOrderService, ExchangeTermService exchangeTermService, 
-			MedicalEquipmentCompanyService medicalEquipmentCompanyService) {
+			MedicalEquipmentCompanyService medicalEquipmentCompanyService, 
+			ProcurementManagerService procurementManagerService, JavaMailSender javaMailSender, 
+			Environment environment) {
 		this.medicalEquipmentService = medicalEquipmentService;
 		this.equipmentOrderService = equipmentOrderService;
 		this.exchangeTermService = exchangeTermService;
 		this.medicalEquipmentCompanyService = medicalEquipmentCompanyService;
+		this.procurementManagerService = procurementManagerService;
+		this.javaMailSender = javaMailSender;
+		this.environment = environment;
 	}
 
 	@Override
@@ -136,8 +156,43 @@ public class OrderingServiceImpl implements OrderingService {
 	public BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException {
 		// REFERENCE: https://www.baeldung.com/java-generating-barcodes-qr-codes
 		QRCodeWriter barcodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 256, 256);
+		BitMatrix bitMatrix = barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 176, 176);
 		
 		return MatrixToImageWriter.toBufferedImage(bitMatrix);
+	}
+	
+	@Async
+	@Override
+	public void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
+			byte[] imageOfQRCodeAsByteArray) throws MailException {
+		// REFERENCE: https://docs.spring.io/spring-framework/docs/1.0.1/javadoc-api/org/springframework/mail/javamail/MimeMessageHelper.html
+		ByteArrayResource byteArrayResource = new ByteArrayResource(imageOfQRCodeAsByteArray);
+		
+		javaMailSender.send(new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws MessagingException {
+				MimeMessageHelper emailMessageWithQRCodeOfNewOrder = 
+						new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				
+				ProcurementManagerOfHospital procurementManager = procurementManagerService
+						.findById(newEquipmentOrder.getProcurementManagerId());
+				emailMessageWithQRCodeOfNewOrder.setTo(procurementManager.getEmailAddress());
+				emailMessageWithQRCodeOfNewOrder.setFrom(
+						environment.getProperty("spring.mail.username"));
+				emailMessageWithQRCodeOfNewOrder.setSubject(
+						"ISAMedicalEquipment - potvrda zakazivanja termina za preuzimanje opreme");
+				
+				StringBuilder emailMessageTextBuilder = new StringBuilder("<div>Poštovani/a ");
+				emailMessageTextBuilder.append(procurementManager.getFirstName()).append(",<br><br>");
+				emailMessageTextBuilder.append("Uspešno je zakazan termin za preuzimanje opreme. ");
+				emailMessageTextBuilder.append("QR kod narudžbine:<br><br>");
+				emailMessageTextBuilder.append("<img src='cid:imageOfQRCode'><br><br>");
+				emailMessageTextBuilder.append("Srdačan pozdrav!<br></div>");
+				
+				emailMessageWithQRCodeOfNewOrder.setText(emailMessageTextBuilder.toString(), true);
+				emailMessageWithQRCodeOfNewOrder.addInline("imageOfQRCode", byteArrayResource, 
+						"image/png");
+			}
+		});
 	}
 }

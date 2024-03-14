@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.google.zxing.WriterException;
 
 import ftn.project.ISAMedicalEquipmentBackend.converter.order.EquipmentOrderConverter;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.SimpleTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
@@ -54,16 +56,17 @@ public class OrderingController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
+		System.out.println("\nNew equipment order and its associations (exchange term and details)" 
+				+ " were successfully created.\n");
+		
 		return new ResponseEntity<ObjectAndTextResponseDTO>(
-				new ObjectAndTextResponseDTO(createdEquipmentOrder, 
-						"New equipment order has been successfully created!"), 
+				new ObjectAndTextResponseDTO(createdEquipmentOrder, "New equipment order was successfully created"), 
 				HttpStatus.CREATED);
 	}
 	
-	// REFERENCE: https://stackoverflow.com/questions/59786720/spring-convert-buffered-image-into-response-entity/59787932#59787932
-	@PostMapping(path = "/generate-qr-code", consumes = MediaType.APPLICATION_JSON_VALUE, 
-			produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<byte[]> generateQRCode(@RequestBody EquipmentOrderDTO newEquipmentOrder) {
+	@PostMapping(path = "/generate-qr-code", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SimpleTextResponseDTO> generateQRCode(
+			@RequestBody EquipmentOrderDTO newEquipmentOrder) {
 		byte[] imageOfQRCodeAsByteArray = null;
 		try {
 			imageOfQRCodeAsByteArray = 
@@ -71,10 +74,26 @@ public class OrderingController {
 		} catch (WriterException | IOException e) {
 			e.printStackTrace();
 			
-			return new ResponseEntity<byte[]>(imageOfQRCodeAsByteArray, 
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO("QR code of new equipment order was not generated due to an error!"), 
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<byte[]>(imageOfQRCodeAsByteArray, HttpStatus.OK);
+		try {
+			orderingService.sendEmailWithQRCodeOfNewOrder(newEquipmentOrder, imageOfQRCodeAsByteArray);
+		} catch (MailException mE) {
+			System.out.println("\nEmail message was not sent!\n");
+			mE.printStackTrace();
+			
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO("Email message was not sent due to an error!"), 
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		System.out.println("\nEmail message with QR code of new order was successfully sent.\n");
+		
+		return new ResponseEntity<SimpleTextResponseDTO>(
+				new SimpleTextResponseDTO("QR code of new equipment order was successfully generated and sent to your email address."), 
+				HttpStatus.OK);
 	}
 }

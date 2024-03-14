@@ -3,6 +3,8 @@ package ftn.project.ISAMedicalEquipmentBackend.service.order;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import org.springframework.mail.MailException;
+
 import com.google.zxing.WriterException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
@@ -22,4 +24,6 @@ public interface OrderingService {
 	byte[] generateQRCodeOfNewEquipmentOrder(EquipmentOrderDTO newEquipmentOrder) 
 			throws WriterException, IOException;
 	BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException;
+	void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
+			byte[] imageOfQRCodeAsByteArray) throws MailException;
 }

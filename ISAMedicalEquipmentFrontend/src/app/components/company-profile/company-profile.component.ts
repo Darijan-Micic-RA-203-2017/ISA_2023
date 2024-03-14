@@ -2,7 +2,6 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
@@ -74,12 +73,11 @@ export class CompanyProfileComponent implements OnInit {
   };
   
   userId: number = 0;
-  qrCode: any;
   
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private exchangeTermService: ExchangeTermService, 
-      private orderingService: OrderingService, private sanitizer: DomSanitizer, private formBuilder: FormBuilder, 
-      private ngZone: NgZone, private router: Router, private snackBar: MatSnackBar) { }
+      private orderingService: OrderingService, private formBuilder: FormBuilder, private ngZone: NgZone, 
+      private router: Router, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
@@ -411,24 +409,17 @@ export class CompanyProfileComponent implements OnInit {
     this.orderingService.createOrder(orderCreation).subscribe(
       data => {
         console.log('Creating the specified order response: ', data.textMessage);
-        this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan.', 'Zatvori', { duration: 10000 });
 
         this.orderingService.generateQRCode(data.object).subscribe(
           data => {
-            // REFERENCE: https://stackoverflow.com/questions/55967908/angular-display-byte-array-as-image
-            let fileReader: FileReader = new FileReader();
-            fileReader.onload = (ev) => {
-              let objectURL: string | ArrayBuffer | null | undefined = ev.target?.result;
-              if (typeof objectURL !== 'string') {
-                return;
-              }
-
-              this.qrCode = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-            };
-            fileReader.readAsDataURL(new Blob([data]));
+            console.log('Generating the QR code of new order response: ', data.textMessage);
+            this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan. Na vašu adresu elektronske pošte poslat je QR kod narudžbine.', 
+                'Zatvori', { duration: 10000 });
           },
           (errorResponse: HttpErrorResponse) => {
             console.log(`Error on getting the QR code of new equipment order!\n\n${errorResponse.error.textMessage}`);
+            this.snackBar.open('Elektronska poruka sa QR kodom narudžbine nije poslata zbog greške na serveru!', 
+                'Zatvori', { duration: 10000 });
           }
         );
       },

@@ -27,12 +27,10 @@ export class OrderingService {
 
   generateQRCode(newEquipmentOrder: EquipmentOrder): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders({
-      'Accept': 'image/png',
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
 
-    // REFERENCE: https://stackoverflow.com/questions/55967908/angular-display-byte-array-as-image
-    return this.httpClient.post(this.generateQRCodeURL, JSON.stringify(newEquipmentOrder), 
-        { headers: headers, responseType: 'arraybuffer' });
+    return this.httpClient.post(this.generateQRCodeURL, JSON.stringify(newEquipmentOrder), { headers: headers });
   }
 }
