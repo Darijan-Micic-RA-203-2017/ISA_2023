@@ -60,13 +60,20 @@ public class OrderingController {
 				+ " were successfully created.\n");
 		
 		return new ResponseEntity<ObjectAndTextResponseDTO>(
-				new ObjectAndTextResponseDTO(createdEquipmentOrder, "New equipment order was successfully created"), 
+				new ObjectAndTextResponseDTO(createdEquipmentOrder, "New equipment order was successfully created."), 
 				HttpStatus.CREATED);
 	}
 	
 	@PostMapping(path = "/generate-qr-code", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SimpleTextResponseDTO> generateQRCode(
 			@RequestBody EquipmentOrderDTO newEquipmentOrder) {
+		String validationMessages = ValidationPerformer.getValidationMessages(newEquipmentOrder);
+		if (validationMessages != null) {
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO(validationMessages), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		byte[] imageOfQRCodeAsByteArray = null;
 		try {
 			imageOfQRCodeAsByteArray = 

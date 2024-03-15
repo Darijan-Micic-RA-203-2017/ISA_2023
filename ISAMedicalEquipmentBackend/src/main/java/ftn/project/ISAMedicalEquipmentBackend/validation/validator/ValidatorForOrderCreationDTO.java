@@ -141,31 +141,31 @@ public class ValidatorForOrderCreationDTO implements Validator {
 			long idOfOrderDetails = detailsOfOrder.get(i).getId();
 			if (idOfOrderDetails != 0) {
 				errors.rejectValue("order.details[" + i + "].id", "field.value", null, 
-						"Id of order details is not 0!");
+						"Id of order's details is not 0!");
 			}
 			
 			long orderIdOfOrderDetails = detailsOfOrder.get(i).getOrderId();
 			if (orderIdOfOrderDetails != 0) {
 				errors.rejectValue("order.details[" + i + "].orderId", "field.value", null, 
-						"Order id of order details is not 0!");
+						"Order id of order's details is not 0!");
 			}
 			
 			long equipmentIdOfOrderDetails = detailsOfOrder.get(i).getEquipmentId();
 			if (equipmentIdOfOrderDetails <= 0) {
 				errors.rejectValue("order.details[" + i + "].equipmentId", "field.min", null, 
-						"Equipment id of order details is not specified!");
+						"Equipment id of order's details is not specified!");
 			}
 			
 			int amountOfOrderDetails = detailsOfOrder.get(i).getAmount();
 			if (amountOfOrderDetails <= 0) {
 				errors.rejectValue("order.details[" + i + "].amount", "field.min", null, 
-						"Amount of order details is not specified!");
+						"Amount of order's details is not specified!");
 			}
 			
 			double subtotalPriceOfOrderDetails = detailsOfOrder.get(i).getSubtotalPrice();
 			if (Double.doubleToLongBits(subtotalPriceOfOrderDetails) <= 0) {
 				errors.rejectValue("order.details[" + i + "].subtotalPrice", "field.min", null, 
-						"Subtotal price of order details is not positive!");
+						"Subtotal price of order's details is not positive!");
 			}
 			
 			totalPriceOfAllOrderDetails += subtotalPriceOfOrderDetails;
