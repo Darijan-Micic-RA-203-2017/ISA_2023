@@ -182,12 +182,12 @@ public class OrderingServiceImpl implements OrderingService {
 				emailMessageWithQRCodeOfNewOrder.setSubject(
 						"ISAMedicalEquipment - potvrda zakazivanja termina za preuzimanje opreme");
 				
-				StringBuilder emailMessageTextBuilder = new StringBuilder("<div>Poštovani/a ");
-				emailMessageTextBuilder.append(procurementManager.getFirstName()).append(",<br><br>");
-				emailMessageTextBuilder.append("Uspešno je zakazan termin za preuzimanje opreme. ");
-				emailMessageTextBuilder.append("QR kod narudžbine:<br><br>");
-				emailMessageTextBuilder.append("<img src='cid:imageOfQRCode'><br><br>");
-				emailMessageTextBuilder.append("Srdačan pozdrav!<br></div>");
+				StringBuilder emailMessageTextBuilder = new StringBuilder("<p>Poštovani/a ");
+				emailMessageTextBuilder.append(procurementManager.getFirstName()).append(",</p>");
+				emailMessageTextBuilder.append("<p>Uspešno je zakazan termin za preuzimanje opreme.");
+				emailMessageTextBuilder.append(" QR kod narudžbine:</p>");
+				emailMessageTextBuilder.append("<p><img src='cid:imageOfQRCode'></p>");
+				emailMessageTextBuilder.append("<p>Srdačan pozdrav!</p>");
 				
 				emailMessageWithQRCodeOfNewOrder.setText(emailMessageTextBuilder.toString(), true);
 				emailMessageWithQRCodeOfNewOrder.addInline("imageOfQRCode", byteArrayResource, 

@@ -75,11 +75,16 @@
             </div>
         </mat-card-actions>
         <div class="spinnerDiv">
-            <mat-spinner *ngIf="isFormForCompanySubmitted" mode="indeterminate"></mat-spinner>
+            <mat-progress-spinner *ngIf="isFormForCompanySubmitted" mode="indeterminate"></mat-progress-spinner>
         </div>
     </mat-card>
-    <button [disabled]="formForTerm.invalid" color="accent" mat-raised-button mat-button 
-        type="button" (click)="scheduleTermForEquipmentOrder()">Zakaži termin za preuzimanje opreme</button>
+    <div class="spinnerDiv">
+        <div *ngIf="!isScheduleTermButtonHidden" class="scheduleButtonDiv">
+            <button [disabled]="formForTerm.invalid" color="accent" mat-raised-button mat-button 
+                type="button" (click)="scheduleTermForEquipmentOrder()">Zakaži termin za preuzimanje opreme</button>
+        </div>
+        <mat-progress-spinner *ngIf="isScheduleTermButtonHidden" mode="indeterminate"></mat-progress-spinner>
+    </div>
     <div class="equipmentAndTermsDiv">
         <mat-card>
             <mat-card-header>

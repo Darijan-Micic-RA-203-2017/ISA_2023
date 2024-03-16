@@ -53,7 +53,7 @@ textarea {
     margin-bottom: 0px;
 }
 
-.buttonDiv, .spinnerDiv {
+.buttonDiv, .spinnerDiv, .scheduleButtonDiv {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -68,7 +68,7 @@ mat-card-actions > div.buttonDiv > button {
     width: 100%;
 }
 
-.companyProfileDiv > button {
+.scheduleButtonDiv > button {
     font-size: 18px;
     width: 30%;
     margin-top: 25px;

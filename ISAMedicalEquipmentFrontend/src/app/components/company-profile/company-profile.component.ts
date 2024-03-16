@@ -51,6 +51,8 @@ export class CompanyProfileComponent implements OnInit {
     }
   };
 
+  isScheduleTermButtonHidden: boolean = false;
+
   formForEquipmentSearch: any;
   displayedColumnsOfEquipment: string[] = ['name', 'type', 'price', 'amount', 'subtotalPrice'];
   allMedicalEquipmentOfCompany: MedicalEquipment[] = [];
@@ -58,12 +60,12 @@ export class CompanyProfileComponent implements OnInit {
   shownDetailsOfOrderWithEquipment: DetailsOfOrderWithEquipment[] = [];
   equipmentDataSource: MatTableDataSource<DetailsOfOrderWithEquipment> = 
       new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
-  
+
   formForTerm: any;
   minDate: DateTime = DateTime.now().plus({ days: 1 }).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
   occupiedTermsOnSelectedDate: ExchangeTerm[] = [];
   freeTermsOnSelectedDate: ExchangeTerm[] = [];
-  
+
   newEquipmentOrder: EquipmentOrder = {
     id: 0, 
     exchangeTermId: 0, 
@@ -71,14 +73,14 @@ export class CompanyProfileComponent implements OnInit {
     details: [], 
     totalPrice: 0.0
   };
-  
+
   userId: number = 0;
-  
+
   constructor(private authService: AuthService, private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private exchangeTermService: ExchangeTermService, 
       private orderingService: OrderingService, private formBuilder: FormBuilder, private ngZone: NgZone, 
       private router: Router, private snackBar: MatSnackBar) { }
-  
+
   ngOnInit(): void {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
     
@@ -401,6 +403,8 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   scheduleTermForEquipmentOrder(): void {
+    this.isScheduleTermButtonHidden = true;
+
     let orderCreation: OrderCreation = {
       term: this.formForTerm.value.term, 
       order: this.fillOutNewEquipmentOrder()
@@ -412,6 +416,8 @@ export class CompanyProfileComponent implements OnInit {
 
         this.orderingService.generateQRCode(data.object).subscribe(
           data => {
+            this.router.navigateByUrl('/');
+
             console.log('Generating the QR code of new order response: ', data.textMessage);
             this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan. Na vašu adresu elektronske pošte poslat je QR kod narudžbine.', 
                 'Zatvori', { duration: 10000 });
@@ -424,6 +430,8 @@ export class CompanyProfileComponent implements OnInit {
         );
       },
       (errorResponse: HttpErrorResponse) => {
+        this.isScheduleTermButtonHidden = false;
+
         console.log(`Error on creating the specified order!\n\n${errorResponse.error.textMessage}`);
         if (errorResponse.error.textMessage.includes('Order does not contain any equipment!')) {
           this.snackBar.open('Niste odabrali nijednu opremu za rezervaciju!', 'Zatvori', { duration: 5000 });
