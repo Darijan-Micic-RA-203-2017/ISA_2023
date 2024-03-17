@@ -1,99 +1,34 @@
-package ftn.project.ISAMedicalEquipmentBackend.domain.user;
+package ftn.project.ISAMedicalEquipmentBackend.dto.user;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User implements UserDetails {
-	@Id
-	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_ids_sequence", 
-		initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
+public abstract class UserDTO {
 	protected long id;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_roles_join_table", 
-		joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
-		inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-	protected Set<UserRole> roles;
-	
-	@Column(name = "is_enabled", nullable = false)
+	protected List<UserRoleDTO> roles;
 	protected boolean isEnabled;
-	
-	@Column(name = "user_code", nullable = false, columnDefinition = "text")
 	protected String userCode;
-	
-	@Column(name = "email_address", nullable = false)
 	protected String emailAddress;
-	
-	@Column(name = "username", nullable = false)
 	protected String username;
-	
-	@JsonIgnore
-	@Column(name = "password", nullable = false)
 	protected String password;
-	
-	@Column(name = "last_password_reset_date")
 	protected Timestamp lastPasswordResetDate;
-	
-	@Column(name = "first_name", nullable = false)
 	protected String firstName;
-	
-	@Column(name = "last_name", nullable = false)
 	protected String lastName;
-	
-	@Column(name = "residence", nullable = false)
 	protected String residence;
-	
-	@Column(name = "populated_place", nullable = false)
 	protected String populatedPlace;
-	
-	@Column(name = "country", nullable = false)
 	protected String country;
-	
-	@Column(name = "phone_number", nullable = false)
 	protected String phoneNumber;
-	
-	@Column(name = "personal_identity_number", nullable = false)
 	protected String personalIdentityNumber;
-	
-	@Column(name = "gender", nullable = false)
-	@Enumerated(value = EnumType.STRING)
 	protected Gender gender;
-	
-	@Column(name = "profession")
 	protected String profession;
-	
-	@Column(name = "company_name")
 	protected String companyName;
 	
-	public User() {}
+	public UserDTO() {}
 	
-	public User(long id, Set<UserRole> roles, boolean isEnabled, String userCode, 
+	public UserDTO(long id, List<UserRoleDTO> roles, boolean isEnabled, String userCode, 
 			String emailAddress, String username, String password, Timestamp lastPasswordResetDate, 
 			String firstName, String lastName, String residence, String populatedPlace, 
 			String country, String phoneNumber, String personalIdentityNumber, Gender gender, 
@@ -126,15 +61,14 @@ public abstract class User implements UserDetails {
 		this.id = id;
 	}
 	
-	public Set<UserRole> getRoles() {
+	public List<UserRoleDTO> getRoles() {
 		return roles;
 	}
 	
-	public void setRoles(Set<UserRole> roles) {
+	public void setRoles(List<UserRoleDTO> roles) {
 		this.roles = roles;
 	}
 	
-	@Override
 	public boolean isEnabled() {
 		return isEnabled;
 	}
@@ -159,7 +93,6 @@ public abstract class User implements UserDetails {
 		this.emailAddress = emailAddress;
 	}
 	
-	@Override
 	public String getUsername() {
 		return username;
 	}
@@ -168,7 +101,6 @@ public abstract class User implements UserDetails {
 		this.username = username;
 	}
 	
-	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -266,75 +198,5 @@ public abstract class User implements UserDetails {
 	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-	
-	@JsonIgnore
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles;
-	}
-	
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-	
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-	
-	@JsonIgnore
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 29;
-		int result = 1;
-		
-		result = prime * result + ((getEmailAddress() == null) ? 0 : getEmailAddress().hashCode());
-		result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
-		
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		
-		if (!(obj instanceof User)) {
-			return false;
-		}
-		
-		User other = (User) obj;
-		
-		if (getId() != other.getId()) {
-			return false;
-		}
-		
-		if (getEmailAddress() == null) {
-			if (other.getEmailAddress() != null) {
-				return false;
-			}
-		} else if (!getEmailAddress().equals(other.getEmailAddress())) {
-			return false;
-		}
-		
-		if (getUsername() == null) {
-			if (other.getUsername() != null) {
-				return false;
-			}
-		} else if (!getUsername().equals(other.getUsername())) {
-			return false;
-		}
-		
-		return true;
 	}
 }

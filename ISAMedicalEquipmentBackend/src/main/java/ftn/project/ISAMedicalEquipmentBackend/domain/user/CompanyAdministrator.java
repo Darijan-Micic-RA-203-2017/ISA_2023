@@ -37,13 +37,13 @@ public class CompanyAdministrator extends User {
 	
 	public CompanyAdministrator() {}
 	
-	public CompanyAdministrator(long id, Set<UserRole> roles, boolean isEnabled, 
-			String userCode, String emailAddress, String username, String password, 
-			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
-			String populatedPlace, String country, String phoneNumber, 
-			String personalIdentityNumber, Gender gender, String profession, String companyName, 
-			MedicalEquipmentCompany company, int penaltyPoints, int loyaltyPoints, 
-			LoyaltyProgram loyaltyProgram, Set<ExchangeTerm> exchangeTerms) {
+	public CompanyAdministrator(long id, Set<UserRole> roles, boolean isEnabled, String userCode, 
+			String emailAddress, String username, String password, Timestamp lastPasswordResetDate, 
+			String firstName, String lastName, String residence, String populatedPlace, 
+			String country, String phoneNumber, String personalIdentityNumber, Gender gender, 
+			String profession, String companyName, MedicalEquipmentCompany company, 
+			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram, 
+			Set<ExchangeTerm> exchangeTerms) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
