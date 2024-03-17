@@ -4,16 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
 
 @Entity
 @Table(name = "complaints")
@@ -35,9 +30,8 @@ public class Complaint {
 	@Column(name = "answer", columnDefinition = "text")
 	private String answer;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "procurement_manager_id")
-	private ProcurementManagerOfHospital procurementManager;
+	@Column(name = "procurement_manager_id", nullable = false)
+	private long procurementManagerId;
 	
 	@Column(name = "company_id", nullable = false)
 	private long companyId;
@@ -48,13 +42,12 @@ public class Complaint {
 	public Complaint() {}
 	
 	public Complaint(long id, String content, ComplaintStatus status, String answer, 
-			ProcurementManagerOfHospital procurementManager, long companyId, 
-			long companyAdministratorId) {
+			long procurementManagerId, long companyId, long companyAdministratorId) {
 		this.id = id;
 		this.content = content;
 		this.status = status;
 		this.answer = answer;
-		this.procurementManager = procurementManager;
+		this.procurementManagerId = procurementManagerId;
 		this.companyId = companyId;
 		this.companyAdministratorId = companyAdministratorId;
 	}
@@ -91,12 +84,12 @@ public class Complaint {
 		this.answer = answer;
 	}
 	
-	public ProcurementManagerOfHospital getProcurementManager() {
-		return procurementManager;
+	public long getProcurementManagerId() {
+		return procurementManagerId;
 	}
 	
-	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
-		this.procurementManager = procurementManager;
+	public void setProcurementManagerId(long procurementManagerId) {
+		this.procurementManagerId = procurementManagerId;
 	}
 	
 	public long getCompanyId() {
