@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 
 @Entity
@@ -35,6 +36,9 @@ public class CompanyAdministrator extends User {
 	@OneToMany(mappedBy = "companyAdministrator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<ExchangeTerm> exchangeTerms;
 	
+	@OneToMany(mappedBy = "companyAdministrator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Complaint> complaints;
+	
 	public CompanyAdministrator() {}
 	
 	public CompanyAdministrator(long id, Set<UserRole> roles, boolean isEnabled, String userCode, 
@@ -43,7 +47,7 @@ public class CompanyAdministrator extends User {
 			String country, String phoneNumber, String personalIdentityNumber, Gender gender, 
 			String profession, String companyName, MedicalEquipmentCompany company, 
 			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram, 
-			Set<ExchangeTerm> exchangeTerms) {
+			Set<ExchangeTerm> exchangeTerms, Set<Complaint> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
@@ -53,6 +57,7 @@ public class CompanyAdministrator extends User {
 		this.loyaltyPoints = loyaltyPoints;
 		this.loyaltyProgram = loyaltyProgram;
 		this.exchangeTerms = exchangeTerms;
+		this.complaints = complaints;
 	}
 	
 	public MedicalEquipmentCompany getCompany() {
@@ -93,5 +98,13 @@ public class CompanyAdministrator extends User {
 	
 	public void setExchangeTerms(Set<ExchangeTerm> exchangeTerms) {
 		this.exchangeTerms = exchangeTerms;
+	}
+	
+	public Set<Complaint> getComplaints() {
+		return complaints;
+	}
+	
+	public void setComplaints(Set<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 }

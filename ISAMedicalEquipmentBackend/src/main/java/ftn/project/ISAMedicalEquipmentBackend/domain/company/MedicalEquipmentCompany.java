@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
@@ -57,6 +58,9 @@ public class MedicalEquipmentCompany {
 	private Set<MedicalEquipment> equipment;
 	
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Complaint> complaints;
+	
+	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<ExchangeTerm> unoccupiedExchangeTerms;
 	
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -66,7 +70,7 @@ public class MedicalEquipmentCompany {
 	
 	public MedicalEquipmentCompany(long id, String name, String streetAndNumber, 
 			String populatedPlace, String country, String description, double averageGrade, 
-			WorkTime workTime, Set<MedicalEquipment> equipment, 
+			WorkTime workTime, Set<MedicalEquipment> equipment, Set<Complaint> complaints, 
 			Set<ExchangeTerm> unoccupiedExchangeTerms, Set<CompanyAdministrator> administrators) {
 		this.id = id;
 		this.name = name;
@@ -77,6 +81,7 @@ public class MedicalEquipmentCompany {
 		this.averageGrade = averageGrade;
 		this.workTime = workTime;
 		this.equipment = equipment;
+		this.complaints = complaints;
 		this.unoccupiedExchangeTerms = unoccupiedExchangeTerms;
 		this.administrators = administrators;
 	}
@@ -151,6 +156,14 @@ public class MedicalEquipmentCompany {
 	
 	public void setEquipment(Set<MedicalEquipment> equipment) {
 		this.equipment = equipment;
+	}
+	
+	public Set<Complaint> getComplaints() {
+		return complaints;
+	}
+	
+	public void setComplaints(Set<Complaint> complaints) {
+		this.complaints = complaints;
 	}
 	
 	public Set<ExchangeTerm> getUnoccupiedExchangeTerms() {

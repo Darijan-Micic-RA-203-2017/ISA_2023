@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
+import ftn.project.ISAMedicalEquipmentBackend.dto.complaint.ComplaintDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
 public class CompanyAdministratorDTO extends UserDTO {
@@ -12,6 +13,7 @@ public class CompanyAdministratorDTO extends UserDTO {
 	private int loyaltyPoints;
 	private LoyaltyProgramDTO loyaltyProgram;
 	private List<ExchangeTermDTO> exchangeTerms;
+	private List<ComplaintDTO> complaints;
 	
 	public CompanyAdministratorDTO() {}
 	
@@ -20,7 +22,8 @@ public class CompanyAdministratorDTO extends UserDTO {
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, String personalIdentityNumber, 
 			Gender gender, String profession, String companyName, long companyId, int penaltyPoints, 
-			int loyaltyPoints, LoyaltyProgramDTO loyaltyProgram, List<ExchangeTermDTO> exchangeTerms) {
+			int loyaltyPoints, LoyaltyProgramDTO loyaltyProgram, List<ExchangeTermDTO> exchangeTerms, 
+			List<ComplaintDTO> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
 				phoneNumber, personalIdentityNumber, gender, profession, companyName);
@@ -30,6 +33,7 @@ public class CompanyAdministratorDTO extends UserDTO {
 		this.loyaltyPoints = loyaltyPoints;
 		this.loyaltyProgram = loyaltyProgram;
 		this.exchangeTerms = exchangeTerms;
+		this.complaints = complaints;
 	}
 	
 	public long getCompanyId() {
@@ -70,5 +74,13 @@ public class CompanyAdministratorDTO extends UserDTO {
 	
 	public void setExchangeTerms(List<ExchangeTermDTO> exchangeTerms) {
 		this.exchangeTerms = exchangeTerms;
+	}
+	
+	public List<ComplaintDTO> getComplaints() {
+		return complaints;
+	}
+	
+	public void setComplaints(List<ComplaintDTO> complaints) {
+		this.complaints = complaints;
 	}
 }

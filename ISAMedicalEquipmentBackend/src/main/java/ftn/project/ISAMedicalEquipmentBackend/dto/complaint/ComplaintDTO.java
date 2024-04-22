@@ -1,10 +1,12 @@
 package ftn.project.ISAMedicalEquipmentBackend.dto.complaint;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.ComplaintStatus;
+import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.ComplaintSubject;
 
 public class ComplaintDTO {
 	private long id;
 	private String content;
+	private ComplaintSubject subject;
 	private ComplaintStatus status;
 	private String answer;
 	private long procurementManagerId;
@@ -13,10 +15,11 @@ public class ComplaintDTO {
 	
 	public ComplaintDTO() {}
 	
-	public ComplaintDTO(long id, String content, ComplaintStatus status, String answer, 
-			long procurementManagerId, long companyId, long companyAdministratorId) {
+	public ComplaintDTO(long id, String content, ComplaintSubject subject, ComplaintStatus status, 
+			String answer, long procurementManagerId, long companyId, long companyAdministratorId) {
 		this.id = id;
 		this.content = content;
+		this.subject = subject;
 		this.status = status;
 		this.answer = answer;
 		this.procurementManagerId = procurementManagerId;
@@ -38,6 +41,14 @@ public class ComplaintDTO {
 	
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public ComplaintSubject getSubject() {
+		return subject;
+	}
+	
+	public void setSubject(ComplaintSubject subject) {
+		this.subject = subject;
 	}
 	
 	public ComplaintStatus getStatus() {
