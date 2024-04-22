@@ -10,7 +10,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 public class ExchangeTermConverter {
 	public ExchangeTermConverter() {}
 	
-	public static List<ExchangeTermDTO> convertToDTOsList(List<ExchangeTerm> exchangeTerms) {
+	public static List<ExchangeTermDTO> convertToDTOsList(Iterable<ExchangeTerm> exchangeTerms) {
 		if (exchangeTerms == null) {
 			return null;
 		}
@@ -33,10 +33,10 @@ public class ExchangeTermConverter {
 		Timestamp endingTime = exchangeTerm.getEndingTime();
 		long procurementManagerId = exchangeTerm.getProcurementManager().getId();
 		long companyId = exchangeTerm.getCompany().getId();
-		long administratorId = exchangeTerm.getCompanyAdministrator().getId();
+		long companyAdministratorId = exchangeTerm.getCompanyAdministrator().getId();
 		
 		ExchangeTermDTO dto = new ExchangeTermDTO(id, startingTime, endingTime, 
-				procurementManagerId, companyId, administratorId);
+				procurementManagerId, companyId, companyAdministratorId);
 		
 		return dto;
 	}

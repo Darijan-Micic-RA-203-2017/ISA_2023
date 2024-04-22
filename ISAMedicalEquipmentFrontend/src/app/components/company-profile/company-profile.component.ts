@@ -340,8 +340,8 @@ export class CompanyProfileComponent implements OnInit {
           let convertedOccupiedTerm: ExchangeTerm = new ExchangeTerm(unconvertedOccupiedTerm.id, 
               DateTime.fromMillis(unconvertedOccupiedTerm.startingTime), 
               DateTime.fromMillis(unconvertedOccupiedTerm.endingTime), unconvertedOccupiedTerm.procurementManagerId, 
-              unconvertedOccupiedTerm.companyId, unconvertedOccupiedTerm.administratorId);
-          
+              unconvertedOccupiedTerm.companyId, unconvertedOccupiedTerm.companyAdministratorId);
+
           this.occupiedTermsOnSelectedDate.push(convertedOccupiedTerm);
         }
 

@@ -16,7 +16,7 @@ public interface ExchangeTermService {
 	List<ExchangeTerm> findAllOnSpecificDateOfCompany(Timestamp date, long companyId);
 	List<ExchangeTerm> findAllOfProcurementManager(long procurementManagerId);
 	List<ExchangeTerm> findAllOfCompany(long companyId);
-	List<ExchangeTerm> findAllOfAdministrator(long administratorId);
+	List<ExchangeTerm> findAllOfCompanyAdministrator(long companyAdministratorId);
 	List<ExchangeTerm> findAll();
 	ExchangeTerm reserveTerm(ExchangeTermDTO exchangeTermDTO);
 }

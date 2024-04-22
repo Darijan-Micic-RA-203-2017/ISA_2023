@@ -110,9 +110,9 @@ INSERT INTO User_roles_join_table(user_id, role_id) VALUES (4, 2);
 INSERT INTO User_roles_join_table(user_id, role_id) VALUES (5, 3);
 
 -- Complaints:
-INSERT INTO Complaints(id, content, status, answer, procurement_manager_id, company_id, 
-	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'UNRESOLVED', null, 
-	1, 1, -1);
+INSERT INTO Complaints(id, content, subject, status, answer, procurement_manager_id, company_id, 
+	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'COMPANY', 'UNRESOLVED', null, 
+	1, 1, 3);
 
 -- Types of medical equipment:
 INSERT INTO Types_of_medical_equipment(id, name) VALUES (1, 
@@ -150,7 +150,7 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VA
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
-	administrator_id) VALUES (1, '2024-03-18 08:00:00.000+01', '2024-03-18 08:30:00.000+01', 
+	company_administrator_id) VALUES (1, '2024-03-18 08:00:00.000+01', '2024-03-18 08:30:00.000+01', 
 	1, 1, 3);
 
 -- Equipment orders:

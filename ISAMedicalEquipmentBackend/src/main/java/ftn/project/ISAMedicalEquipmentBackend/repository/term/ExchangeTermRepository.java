@@ -34,5 +34,5 @@ public interface ExchangeTermRepository extends JpaRepository<ExchangeTerm, Long
 	
 	@Query(value = "SELECT et FROM ExchangeTerm et JOIN FETCH et.companyAdministrator ca " 
 			+ "WHERE ca.id = ?1")
-	List<ExchangeTerm> getAllOfAdministrator(long administratorId);
+	List<ExchangeTerm> getAllOfCompanyAdministrator(long companyAdministratorId);
 }

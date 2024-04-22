@@ -85,10 +85,10 @@ public class ValidatorForOrderCreationDTO implements Validator {
 					"Company id of term is not specified!");
 		}
 		
-		long administratorIdOfTerm = term.getAdministratorId();
-		if (administratorIdOfTerm != 0) {
-			errors.rejectValue("term.administratorId", "field.value", null, 
-					"Administrator id of exchange term is not 0!");
+		long companyAdministratorIdOfTerm = term.getCompanyAdministratorId();
+		if (companyAdministratorIdOfTerm != 0) {
+			errors.rejectValue("term.companyAdministratorId", "field.value", null, 
+					"Company administrator id of exchange term is not 0!");
 		}
 	}
 	

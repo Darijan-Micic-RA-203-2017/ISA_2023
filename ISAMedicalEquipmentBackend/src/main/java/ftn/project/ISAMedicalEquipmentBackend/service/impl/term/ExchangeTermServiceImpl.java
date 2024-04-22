@@ -36,17 +36,17 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 		this.medicalEquipmentCompanyService = medicalEquipmentCompanyService;
 		this.companyAdministratorService = companyAdministratorService;
 	}
-
+	
 	@Override
 	public ExchangeTerm findById(long id) throws AccessDeniedException {
 		return exchangeTermRepository.findById(id).orElse(null);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findByStartingTime(Timestamp startingTime) {
 		return exchangeTermRepository.findByStartingTime(startingTime);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findByEndingTime(Timestamp endingTime) {
 		return exchangeTermRepository.findByEndingTime(endingTime);
@@ -62,7 +62,7 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 		
 		return exchangeTermRepository.getAllOnSpecificDate(date, oneDayLater);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findAllOnSpecificDateOfCompany(Timestamp date, long companyId) {
 		// REFERENCE: https://www.baeldung.com/java-increment-date
@@ -73,22 +73,22 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 		
 		return exchangeTermRepository.getAllOnSpecificDateOfCompany(date, oneDayLater, companyId);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findAllOfProcurementManager(long procurementManagerId) {
 		return exchangeTermRepository.getAllOfProcurementManager(procurementManagerId);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findAllOfCompany(long companyId) {
 		return exchangeTermRepository.getAllOfCompany(companyId);
 	}
-
+	
 	@Override
-	public List<ExchangeTerm> findAllOfAdministrator(long administratorId) {
-		return exchangeTermRepository.getAllOfAdministrator(administratorId);
+	public List<ExchangeTerm> findAllOfCompanyAdministrator(long companyAdministratorId) {
+		return exchangeTermRepository.getAllOfCompanyAdministrator(companyAdministratorId);
 	}
-
+	
 	@Override
 	public List<ExchangeTerm> findAll() {
 		return exchangeTermRepository.findAll();
@@ -103,7 +103,7 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 		MedicalEquipmentCompany company = 
 				medicalEquipmentCompanyService.findById(exchangeTermDTO.getCompanyId());
 		CompanyAdministrator companyAdministrator = 
-				companyAdministratorService.findById(exchangeTermDTO.getAdministratorId());
+				companyAdministratorService.findById(exchangeTermDTO.getCompanyAdministratorId());
 		
 		ExchangeTerm newExchangeTerm = new ExchangeTerm(0, startingTime, endingTime, 
 				procurementManager, company, companyAdministrator);

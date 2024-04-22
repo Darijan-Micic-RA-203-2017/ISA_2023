@@ -8,18 +8,18 @@ public class ExchangeTermDTO {
 	private Timestamp endingTime;
 	private long procurementManagerId;
 	private long companyId;
-	private long administratorId;
+	private long companyAdministratorId;
 	
 	public ExchangeTermDTO() {}
 	
 	public ExchangeTermDTO(long id, Timestamp startingTime, Timestamp endingTime, 
-			long procurementManagerId, long companyId, long administratorId) {
+			long procurementManagerId, long companyId, long companyAdministratorId) {
 		this.id = id;
 		this.startingTime = startingTime;
 		this.endingTime = endingTime;
 		this.procurementManagerId = procurementManagerId;
 		this.companyId = companyId;
-		this.administratorId = administratorId;
+		this.companyAdministratorId = companyAdministratorId;
 	}
 	
 	public long getId() {
@@ -62,11 +62,11 @@ public class ExchangeTermDTO {
 		this.companyId = companyId;
 	}
 	
-	public long getAdministratorId() {
-		return administratorId;
+	public long getCompanyAdministratorId() {
+		return companyAdministratorId;
 	}
 	
-	public void setAdministratorId(long administratorId) {
-		this.administratorId = administratorId;
+	public void setCompanyAdministratorId(long companyAdministratorId) {
+		this.companyAdministratorId = companyAdministratorId;
 	}
 }

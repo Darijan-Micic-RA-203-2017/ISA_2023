@@ -6,15 +6,15 @@ export class ExchangeTerm {
     endingTime: DateTime;
     procurementManagerId: number;
     companyId: number;
-    administratorId: number;
+    companyAdministratorId: number;
 
     constructor(id: number, startingTime: DateTime, endingTime: DateTime, procurementManagerId: number, 
-            companyId: number, administratorId: number) {
+            companyId: number, companyAdministratorId: number) {
         this.id = id;
         this.startingTime = startingTime;
         this.endingTime = endingTime;
         this.procurementManagerId = procurementManagerId;
         this.companyId = companyId;
-        this.administratorId = administratorId;
+        this.companyAdministratorId = companyAdministratorId;
     }
 }

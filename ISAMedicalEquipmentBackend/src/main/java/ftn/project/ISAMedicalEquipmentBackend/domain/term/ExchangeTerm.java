@@ -42,7 +42,7 @@ public class ExchangeTerm {
 	private MedicalEquipmentCompany company;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "administrator_id")
+	@JoinColumn(name = "company_administrator_id")
 	private CompanyAdministrator companyAdministrator;
 	
 	public ExchangeTerm() {}

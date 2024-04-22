@@ -53,10 +53,10 @@ public class ValidatorForExchangeTermDTO implements Validator {
 					"Company id is not specified!");
 		}
 		
-		long administratorId = exchangeTermDTO.getAdministratorId();
-		if (administratorId < 0) {
-			errors.rejectValue("administratorId", "field.min", null, 
-					"Administrator id is negative!");
+		long companyAdministratorId = exchangeTermDTO.getCompanyAdministratorId();
+		if (companyAdministratorId < 0) {
+			errors.rejectValue("companyAdministratorId", "field.min", null, 
+					"Company administrator id is negative!");
 		}
 	}
 }
