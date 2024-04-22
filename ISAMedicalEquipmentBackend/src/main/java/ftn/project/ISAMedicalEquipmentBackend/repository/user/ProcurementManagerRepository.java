@@ -1,6 +1,9 @@
 package ftn.project.ISAMedicalEquipmentBackend.repository.user;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
@@ -8,7 +11,34 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHo
 @Repository
 public interface ProcurementManagerRepository extends 
 		JpaRepository<ProcurementManagerOfHospital, Long> {
+	// REFERENCE: https://thorben-janssen.com/initialize-associations-spring-data-jpa/
+	// REFERENCE: https://thorben-janssen.com/hibernate-tips-difference-join-left-join-fetch-join/
+	@Query(value = "SELECT pm FROM ProcurementManagerOfHospital pm " 
+			+ "JOIN FETCH pm.loyaltyProgram lp LEFT JOIN FETCH pm.exchangeTerms excterms " 
+			+ "LEFT JOIN FETCH pm.complaints cmplts")
+	List<ProcurementManagerOfHospital> getAll();
+	
+	@Query(value = "SELECT pm FROM ProcurementManagerOfHospital pm " 
+			+ "JOIN FETCH pm.loyaltyProgram lp LEFT JOIN FETCH pm.exchangeTerms excterms " 
+			+ "LEFT JOIN FETCH pm.complaints cmplts " 
+			+ "WHERE pm.id = ?1")
+	ProcurementManagerOfHospital getById(long id);
+	
+	@Query(value = "SELECT pm FROM ProcurementManagerOfHospital pm " 
+			+ "JOIN FETCH pm.loyaltyProgram lp LEFT JOIN FETCH pm.exchangeTerms excterms " 
+			+ "LEFT JOIN FETCH pm.complaints cmplts " 
+			+ "WHERE pm.userCode = ?1")
 	ProcurementManagerOfHospital findByUserCode(String userCode);
+	
+	@Query(value = "SELECT pm FROM ProcurementManagerOfHospital pm " 
+			+ "JOIN FETCH pm.loyaltyProgram lp LEFT JOIN FETCH pm.exchangeTerms excterms " 
+			+ "LEFT JOIN FETCH pm.complaints cmplts " 
+			+ "WHERE pm.emailAddress = ?1")
 	ProcurementManagerOfHospital findByEmailAddress(String emailAddress);
+	
+	@Query(value = "SELECT pm FROM ProcurementManagerOfHospital pm " 
+			+ "JOIN FETCH pm.loyaltyProgram lp LEFT JOIN FETCH pm.exchangeTerms excterms " 
+			+ "LEFT JOIN FETCH pm.complaints cmplts " 
+			+ "WHERE pm.username = ?1")
 	ProcurementManagerOfHospital findByUsername(String username);
 }
