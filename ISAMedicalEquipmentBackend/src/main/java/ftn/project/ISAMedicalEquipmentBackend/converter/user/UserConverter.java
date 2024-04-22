@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
@@ -31,8 +31,8 @@ public class UserConverter {
 		}
 		
 		// REFERENCE: https://stackoverflow.com/questions/898909/is-it-possible-to-call-subclasses-methods-on-a-superclass-object
-		if (user instanceof ProcurementManagerOfHospital) {
-			return ProcurementManagerConverter.convertToDTO((ProcurementManagerOfHospital) user);
+		if (user instanceof ProcurementManager) {
+			return ProcurementManagerConverter.convertToDTO((ProcurementManager) user);
 		} else if (user instanceof CompanyAdministrator) {
 			return CompanyAdministratorConverter.convertToDTO((CompanyAdministrator) user);
 		} else if (user instanceof SystemAdministrator) {

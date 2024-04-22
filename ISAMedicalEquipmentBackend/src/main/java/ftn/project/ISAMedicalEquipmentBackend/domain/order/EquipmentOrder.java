@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 
 @Entity
 @Table(name = "equipment_orders")
@@ -35,7 +35,7 @@ public class EquipmentOrder {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "procurement_manager_id")
-	private ProcurementManagerOfHospital procurementManager;
+	private ProcurementManager procurementManager;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
 		orphanRemoval = true)
@@ -47,7 +47,7 @@ public class EquipmentOrder {
 	public EquipmentOrder() {}
 	
 	public EquipmentOrder(long id, ExchangeTerm exchangeTerm, 
-			ProcurementManagerOfHospital procurementManager, Set<DetailsOfEquipmentOrder> details, 
+			ProcurementManager procurementManager, Set<DetailsOfEquipmentOrder> details, 
 			double totalPrice) {
 		this.id = id;
 		this.exchangeTerm = exchangeTerm;
@@ -72,11 +72,11 @@ public class EquipmentOrder {
 		this.exchangeTerm = exchangeTerm;
 	}
 	
-	public ProcurementManagerOfHospital getProcurementManager() {
+	public ProcurementManager getProcurementManager() {
 		return procurementManager;
 	}
 	
-	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
+	public void setProcurementManager(ProcurementManager procurementManager) {
 		this.procurementManager = procurementManager;
 	}
 	

@@ -7,16 +7,16 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 import ftn.project.ISAMedicalEquipmentBackend.dto.complaint.ComplaintDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
-public class ProcurementManagerOfHospitalDTO extends UserDTO {
+public class ProcurementManagerDTO extends UserDTO {
 	private int penaltyPoints;
 	private int loyaltyPoints;
 	private LoyaltyProgramDTO loyaltyProgram;
 	private List<ExchangeTermDTO> exchangeTerms;
 	private List<ComplaintDTO> complaints;
 	
-	public ProcurementManagerOfHospitalDTO() {}
+	public ProcurementManagerDTO() {}
 	
-	public ProcurementManagerOfHospitalDTO(long id, List<UserRoleDTO> roles, boolean isEnabled, 
+	public ProcurementManagerDTO(long id, List<UserRoleDTO> roles, boolean isEnabled, 
 			String userCode, String emailAddress, String username, String password, 
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, 

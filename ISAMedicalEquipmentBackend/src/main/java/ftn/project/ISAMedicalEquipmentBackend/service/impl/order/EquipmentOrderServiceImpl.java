@@ -12,7 +12,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.DetailsOfEquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.order.EquipmentOrderRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.EquipmentOrderService;
@@ -49,7 +49,7 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 			List<MedicalEquipment> equipmentInOrder) {
 		ExchangeTerm exchangeTerm = 
 				exchangeTermService.findById(equipmentOrderDTO.getExchangeTermId());
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerService.findById(equipmentOrderDTO.getProcurementManagerId());
 		Set<DetailsOfEquipmentOrder> details = new TreeSet<DetailsOfEquipmentOrder>();
 		for (int i = 0; i < equipmentInOrder.size(); i++) {

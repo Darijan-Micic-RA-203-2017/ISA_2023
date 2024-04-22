@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.CompanyAdministratorRepository;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.ProcurementManagerRepository;
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerRepository.findByUsername(username);
 		if (procurementManager != null) {
 			return procurementManager;

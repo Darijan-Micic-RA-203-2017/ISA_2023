@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.term.ExchangeTermRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
@@ -98,7 +98,7 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 	public ExchangeTerm reserveTerm(ExchangeTermDTO exchangeTermDTO) {
 		Timestamp startingTime = exchangeTermDTO.getStartingTime();
 		Timestamp endingTime = exchangeTermDTO.getEndingTime();
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerService.findById(exchangeTermDTO.getProcurementManagerId());
 		MedicalEquipmentCompany company = 
 				medicalEquipmentCompanyService.findById(exchangeTermDTO.getCompanyId());

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 
 @Entity
 @Table(name = "complaints")
@@ -43,7 +43,7 @@ public class Complaint {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "procurement_manager_id")
-	private ProcurementManagerOfHospital procurementManager;
+	private ProcurementManager procurementManager;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
@@ -56,7 +56,7 @@ public class Complaint {
 	public Complaint() {}
 	
 	public Complaint(long id, String content, ComplaintSubject subject, ComplaintStatus status, 
-			String answer, ProcurementManagerOfHospital procurementManager, 
+			String answer, ProcurementManager procurementManager, 
 			MedicalEquipmentCompany company, CompanyAdministrator companyAdministrator) {
 		this.id = id;
 		this.content = content;
@@ -108,11 +108,11 @@ public class Complaint {
 		this.answer = answer;
 	}
 	
-	public ProcurementManagerOfHospital getProcurementManager() {
+	public ProcurementManager getProcurementManager() {
 		return procurementManager;
 	}
 	
-	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
+	public void setProcurementManager(ProcurementManager procurementManager) {
 		this.procurementManager = procurementManager;
 	}
 	

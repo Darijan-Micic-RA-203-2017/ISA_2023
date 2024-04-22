@@ -6,7 +6,7 @@ import { LoyaltyProgram } from "./loyalty-program";
 import { ExchangeTerm } from "../term/exchange-term";
 import { Complaint } from "../complaint/complaint";
 
-export class ProcurementManagerOfHospital extends User {
+export class ProcurementManager extends User {
     penaltyPoints: number;
     loyaltyPoints: number;
     loyaltyProgram: LoyaltyProgram;

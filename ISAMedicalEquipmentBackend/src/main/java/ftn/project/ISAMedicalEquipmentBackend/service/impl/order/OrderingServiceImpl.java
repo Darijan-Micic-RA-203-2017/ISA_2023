@@ -31,7 +31,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
@@ -174,7 +174,7 @@ public class OrderingServiceImpl implements OrderingService {
 				MimeMessageHelper emailMessageWithQRCodeOfNewOrder = 
 						new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				
-				ProcurementManagerOfHospital procurementManager = procurementManagerService
+				ProcurementManager procurementManager = procurementManagerService
 						.findById(newEquipmentOrder.getProcurementManagerId());
 				emailMessageWithQRCodeOfNewOrder.setTo(procurementManager.getEmailAddress());
 				emailMessageWithQRCodeOfNewOrder.setFrom(

@@ -20,14 +20,14 @@ import ftn.project.ISAMedicalEquipmentBackend.converter.user.ProcurementManagerC
 import ftn.project.ISAMedicalEquipmentBackend.converter.user.SystemAdministratorConverter;
 import ftn.project.ISAMedicalEquipmentBackend.converter.user.UserConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SimpleTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
-import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerOfHospitalDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.UserService;
@@ -57,13 +57,13 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "/procurement-managers")
-	public ResponseEntity<List<ProcurementManagerOfHospitalDTO>> findAllProcurementManagers() {
-		List<ProcurementManagerOfHospital> allProcurementManagers = 
+	public ResponseEntity<List<ProcurementManagerDTO>> findAllProcurementManagers() {
+		List<ProcurementManager> allProcurementManagers = 
 				userService.getProcurementManagerService().findAll();
 		System.out.println("\nTotal number of procurement managers: " 
 				+ allProcurementManagers.size());
 		
-		return new ResponseEntity<List<ProcurementManagerOfHospitalDTO>>(
+		return new ResponseEntity<List<ProcurementManagerDTO>>(
 				ProcurementManagerConverter.convertToDTOsList(allProcurementManagers), 
 				HttpStatus.OK);
 	}
@@ -145,7 +145,7 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		ProcurementManagerOfHospital newProcurementManager = userService
+		ProcurementManager newProcurementManager = userService
 				.getProcurementManagerService().save(procurementManagerRegistrationReqDTO);
 		try {
 			userService.getProcurementManagerService().sendActivationEmail(newProcurementManager);
@@ -177,9 +177,8 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		ProcurementManagerOfHospital procurementManager = userService
-				.getProcurementManagerService().findByUserCode(
-						codeOfNewRegisteredUserWrapper.getUserCode());
+		ProcurementManager procurementManager = userService.getProcurementManagerService()
+				.findByUserCode(codeOfNewRegisteredUserWrapper.getUserCode());
 		
 		if (procurementManager == null) {
 			return new ResponseEntity<SimpleTextResponseDTO>(

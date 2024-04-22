@@ -23,7 +23,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.LoyaltyProgram;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.ProcurementManagerRepository;
@@ -59,32 +59,32 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	}
 	
 	@Override
-	public ProcurementManagerOfHospital findById(long id) throws AccessDeniedException {
+	public ProcurementManager findById(long id) throws AccessDeniedException {
 		return procurementManagerRepository.getById(id);
 	}
 	
 	@Override
-	public ProcurementManagerOfHospital findByUserCode(String userCode) {
+	public ProcurementManager findByUserCode(String userCode) {
 		return procurementManagerRepository.findByUserCode(userCode);
 	}
 	
 	@Override
-	public ProcurementManagerOfHospital findByEmailAddress(String emailAddress) {
+	public ProcurementManager findByEmailAddress(String emailAddress) {
 		return procurementManagerRepository.findByEmailAddress(emailAddress);
 	}
 	
 	@Override
-	public ProcurementManagerOfHospital findByUsername(String username) {
+	public ProcurementManager findByUsername(String username) {
 		return procurementManagerRepository.findByUsername(username);
 	}
 	
 	@Override
-	public List<ProcurementManagerOfHospital> findAll() throws AccessDeniedException {
+	public List<ProcurementManager> findAll() throws AccessDeniedException {
 		return procurementManagerRepository.getAll();
 	}
 	
 	@Override
-	public ProcurementManagerOfHospital save(
+	public ProcurementManager save(
 			ProcurementManagerRegistrationReqDTO procurementManagerRegistrationReqDTO) {
 		Set<UserRole> roles = new HashSet<UserRole>();
 		roles.add(userRoleService.findByName("ROLE_PROCUREMENT_MANAGER"));
@@ -114,11 +114,11 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		Set<ExchangeTerm> exchangeTerms = null;
 		Set<Complaint> complaints = null;
 		
-		ProcurementManagerOfHospital newProcurementManager = new ProcurementManagerOfHospital(0, 
-				roles, isEnabled, userCode, emailAddress, username, password, 
-				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
-				phoneNumber, personalIdentityNumber, gender, profession, companyName, 
-				penaltyPoints, loyaltyPoints, loyaltyProgram, exchangeTerms, complaints);
+		ProcurementManager newProcurementManager = new ProcurementManager(0, roles, isEnabled, 
+				userCode, emailAddress, username, password, lastPasswordResetDate, firstName, 
+				lastName, residence, populatedPlace, country, phoneNumber, personalIdentityNumber, 
+				gender, profession, companyName, penaltyPoints, loyaltyPoints, loyaltyProgram, 
+				exchangeTerms, complaints);
 		
 		return procurementManagerRepository.save(newProcurementManager);
 	}
@@ -143,24 +143,24 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	@Async
 	@Override
-	public void sendActivationEmail(ProcurementManagerOfHospital newProcurementManagerOfHospital) 
+	public void sendActivationEmail(ProcurementManager newProcurementManager) 
 			throws MailException {
 		SimpleMailMessage emailMessageWithAccountActivationLink = new SimpleMailMessage();
 		
 		emailMessageWithAccountActivationLink.setTo(
-				newProcurementManagerOfHospital.getEmailAddress());
+				newProcurementManager.getEmailAddress());
 		emailMessageWithAccountActivationLink.setFrom(
 				environment.getProperty("spring.mail.username"));
 		emailMessageWithAccountActivationLink.setSubject(
 				"ISAMedicalEquipment - poveznica za aktivaciju naloga");
 		
 		StringBuilder emailMessageTextBuilder = new StringBuilder("Poštovani/a ");
-		emailMessageTextBuilder.append(newProcurementManagerOfHospital.getFirstName()).append(",\n\n");
+		emailMessageTextBuilder.append(newProcurementManager.getFirstName()).append(",\n\n");
 		emailMessageTextBuilder.append("Hvala Vam za registraciju na našoj aplikaciji. ");
 		emailMessageTextBuilder.append("Da bi aktivirali svoj nalog, molimo Vas da kliknete ");
 		emailMessageTextBuilder.append("na sledeću poveznicu:\n");
 		emailMessageTextBuilder.append("http://localhost:4200/activate-account/");
-		emailMessageTextBuilder.append(newProcurementManagerOfHospital.getUserCode()).append("\n\n");
+		emailMessageTextBuilder.append(newProcurementManager.getUserCode()).append("\n\n");
 		emailMessageTextBuilder.append("Srdačan pozdrav!").append("\n");
 		
 		emailMessageWithAccountActivationLink.setText(emailMessageTextBuilder.toString());
@@ -170,7 +170,7 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	@Override
 	public void activateAccount(String userCodeOfNewRegisteredUser) {
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerRepository.findByUserCode(userCodeOfNewRegisteredUser);
 		if (procurementManager == null) {
 			return;

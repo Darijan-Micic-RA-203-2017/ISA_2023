@@ -8,7 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.CompanyAdministratorService;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findById(long id) throws AccessDeniedException {
-		ProcurementManagerOfHospital procurementManager = procurementManagerService.findById(id);
+		ProcurementManager procurementManager = procurementManagerService.findById(id);
 		if (procurementManager != null) {
 			System.out.println("\nUsername of found procurement manager: " 
 					+ procurementManager.getUsername() + "\n");
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByUserCode(String userCode) {
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerService.findByUserCode(userCode);
 		if (procurementManager != null) {
 			return procurementManager;
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByEmailAddress(String emailAddress) {
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerService.findByEmailAddress(emailAddress);
 		if (procurementManager != null) {
 			return procurementManager;
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByUsername(String username) {
-		ProcurementManagerOfHospital procurementManager = 
+		ProcurementManager procurementManager = 
 				procurementManagerService.findByUsername(username);
 		if (procurementManager != null) {
 			return procurementManager;
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> findAll() throws AccessDeniedException {
 		List<User> allUsers = new ArrayList<User>();
 		
-		List<ProcurementManagerOfHospital> procurementManagers = procurementManagerService.findAll();
+		List<ProcurementManager> procurementManagers = procurementManagerService.findAll();
 		System.out.println("\nTotal number of procurement managers: " + procurementManagers.size());
 		if (!procurementManagers.isEmpty()) {
 			allUsers.addAll(procurementManagers);

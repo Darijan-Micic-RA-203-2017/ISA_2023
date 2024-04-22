@@ -17,7 +17,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 
 @Entity
 @Table(name = "procurement_managers")
-public class ProcurementManagerOfHospital extends User {
+public class ProcurementManager extends User {
 	@Column(name = "penalty_points", nullable = false)
 	private int penaltyPoints;
 	
@@ -34,9 +34,9 @@ public class ProcurementManagerOfHospital extends User {
 	@OneToMany(mappedBy = "procurementManager", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Complaint> complaints;
 	
-	public ProcurementManagerOfHospital() {}
+	public ProcurementManager() {}
 	
-	public ProcurementManagerOfHospital(long id, Set<UserRole> roles, boolean isEnabled, 
+	public ProcurementManager(long id, Set<UserRole> roles, boolean isEnabled, 
 			String userCode, String emailAddress, String username, String password, 
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, 
