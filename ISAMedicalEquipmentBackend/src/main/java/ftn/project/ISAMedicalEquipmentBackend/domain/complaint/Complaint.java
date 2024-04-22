@@ -4,11 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
 
 @Entity
 @Table(name = "complaints")
@@ -23,6 +30,10 @@ public class Complaint {
 	@Column(name = "content", nullable = false, columnDefinition = "text")
 	private String content;
 	
+	@Column(name = "subject", nullable = false)
+	@Enumerated(value = EnumType.STRING)
+	private ComplaintSubject subject;
+	
 	@Column(name = "status", nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private ComplaintStatus status;
@@ -30,26 +41,31 @@ public class Complaint {
 	@Column(name = "answer", columnDefinition = "text")
 	private String answer;
 	
-	@Column(name = "procurement_manager_id", nullable = false)
-	private long procurementManagerId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "procurement_manager_id")
+	private ProcurementManagerOfHospital procurementManager;
 	
-	@Column(name = "company_id", nullable = false)
-	private long companyId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id")
+	private MedicalEquipmentCompany company;
 	
-	@Column(name = "company_administrator_id", nullable = false)
-	private long companyAdministratorId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_administrator_id")
+	private CompanyAdministrator companyAdministrator;
 	
 	public Complaint() {}
 	
-	public Complaint(long id, String content, ComplaintStatus status, String answer, 
-			long procurementManagerId, long companyId, long companyAdministratorId) {
+	public Complaint(long id, String content, ComplaintSubject subject, ComplaintStatus status, 
+			String answer, ProcurementManagerOfHospital procurementManager, 
+			MedicalEquipmentCompany company, CompanyAdministrator companyAdministrator) {
 		this.id = id;
 		this.content = content;
+		this.subject = subject;
 		this.status = status;
 		this.answer = answer;
-		this.procurementManagerId = procurementManagerId;
-		this.companyId = companyId;
-		this.companyAdministratorId = companyAdministratorId;
+		this.procurementManager = procurementManager;
+		this.company = company;
+		this.companyAdministrator = companyAdministrator;
 	}
 	
 	public long getId() {
@@ -68,6 +84,14 @@ public class Complaint {
 		this.content = content;
 	}
 	
+	public ComplaintSubject getSubject() {
+		return subject;
+	}
+	
+	public void setSubject(ComplaintSubject subject) {
+		this.subject = subject;
+	}
+	
 	public ComplaintStatus getStatus() {
 		return status;
 	}
@@ -84,28 +108,28 @@ public class Complaint {
 		this.answer = answer;
 	}
 	
-	public long getProcurementManagerId() {
-		return procurementManagerId;
+	public ProcurementManagerOfHospital getProcurementManager() {
+		return procurementManager;
 	}
 	
-	public void setProcurementManagerId(long procurementManagerId) {
-		this.procurementManagerId = procurementManagerId;
+	public void setProcurementManager(ProcurementManagerOfHospital procurementManager) {
+		this.procurementManager = procurementManager;
 	}
 	
-	public long getCompanyId() {
-		return companyId;
+	public MedicalEquipmentCompany getCompany() {
+		return company;
 	}
 	
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
+	public void setCompany(MedicalEquipmentCompany company) {
+		this.company = company;
 	}
 	
-	public long getCompanyAdministratorId() {
-		return companyAdministratorId;
+	public CompanyAdministrator getCompanyAdministrator() {
+		return companyAdministrator;
 	}
 	
-	public void setCompanyAdministratorId(long companyAdministratorId) {
-		this.companyAdministratorId = companyAdministratorId;
+	public void setCompanyAdministrator(CompanyAdministrator companyAdministrator) {
+		this.companyAdministrator = companyAdministrator;
 	}
 	
 	@Override
@@ -114,6 +138,7 @@ public class Complaint {
 		int result = 1;
 		
 		result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+		result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
 		result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
 		result = prime * result + ((getAnswer() == null) ? 0 : getAnswer().hashCode());
 		
@@ -141,6 +166,10 @@ public class Complaint {
 				return false;
 			}
 		} else if (!getContent().equals(other.getContent())) {
+			return false;
+		}
+		
+		if (getSubject() != other.getSubject()) {
 			return false;
 		}
 		
