@@ -37,7 +37,8 @@ public class EquipmentOrder {
 	@JoinColumn(name = "procurement_manager_id")
 	private ProcurementManagerOfHospital procurementManager;
 	
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
+		orphanRemoval = true)
 	private Set<DetailsOfEquipmentOrder> details;
 	
 	@Column(name = "total_price", nullable = false)
