@@ -1,8 +1,9 @@
 import { DateTime } from "luxon";
-import { ExchangeTerm } from "../term/exchange-term";
+
 import { User } from "./user";
 import { UserRole } from "./user-role";
 import { LoyaltyProgram } from "./loyalty-program";
+import { ExchangeTerm } from "../term/exchange-term";
 import { Complaint } from "../complaint/complaint";
 
 export class ProcurementManagerOfHospital extends User {
@@ -13,7 +14,7 @@ export class ProcurementManagerOfHospital extends User {
     complaints: Complaint[];
 
     constructor(id: number, roles: UserRole[], isEnabled: boolean, userCode: string, emailAddress: string, 
-            username: string, password: string | undefined, lastPasswordResetDate: number | DateTime | null, 
+            username: string, password: string | null, lastPasswordResetDate: number | DateTime | null, 
             firstName: string, lastName: string, residence: string, populatedPlace: string, country: string, 
             phoneNumber: string, personalIdentityNumber: string, gender: string, profession: string | null, 
             companyName: string | null, penaltyPoints: number, loyaltyPoints: number, loyaltyProgram: LoyaltyProgram, 

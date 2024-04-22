@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+
 import { UserRole } from "./user-role";
 
 export class User {
@@ -8,7 +9,7 @@ export class User {
     userCode: string;
     emailAddress: string;
     username: string;
-    password: string | undefined;
+    password: string | null;
     lastPasswordResetDate: DateTime | null;
     firstName: string;
     lastName: string;
@@ -22,7 +23,7 @@ export class User {
     companyName: string | null;
 
     constructor(id: number, roles: UserRole[], isEnabled: boolean, userCode: string, emailAddress: string, 
-            username: string, password: string | undefined, lastPasswordResetDate: number | DateTime | null, 
+            username: string, password: string | null, lastPasswordResetDate: number | DateTime | null, 
             firstName: string, lastName: string, residence: string, populatedPlace: string, country: string, 
             phoneNumber: string, personalIdentityNumber: string, gender: string, profession: string | null, 
             companyName: string | null) {
