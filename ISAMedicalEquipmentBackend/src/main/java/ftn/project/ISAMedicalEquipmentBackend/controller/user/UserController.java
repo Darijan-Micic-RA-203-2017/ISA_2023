@@ -1,20 +1,35 @@
 package ftn.project.ISAMedicalEquipmentBackend.controller.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.project.ISAMedicalEquipmentBackend.converter.user.CompanyAdministratorConverter;
+import ftn.project.ISAMedicalEquipmentBackend.converter.user.ProcurementManagerConverter;
+import ftn.project.ISAMedicalEquipmentBackend.converter.user.SystemAdministratorConverter;
+import ftn.project.ISAMedicalEquipmentBackend.converter.user.UserConverter;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManagerOfHospital;
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SimpleTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerOfHospitalDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.UserService;
 import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
@@ -26,6 +41,78 @@ public class UserController {
 	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
+	}
+	
+	@GetMapping(path = "")
+	public ResponseEntity<List<UserDTO>> findAll() {
+		List<User> allUsers = userService.findAll();
+		System.out.println("\nTotal number of users: " + allUsers.size());
+		List<User> aU = new ArrayList<User>();
+		for (User u: allUsers) {
+			aU.add(u);
+		}
+		
+		return new ResponseEntity<List<UserDTO>>(UserConverter.convertToDTOsList(aU), 
+				HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/procurement-managers")
+	public ResponseEntity<List<ProcurementManagerOfHospitalDTO>> findAllProcurementManagers() {
+		List<ProcurementManagerOfHospital> allProcurementManagers = 
+				userService.getProcurementManagerService().findAll();
+		System.out.println("\nTotal number of procurement managers: " 
+				+ allProcurementManagers.size());
+		
+		return new ResponseEntity<List<ProcurementManagerOfHospitalDTO>>(
+				ProcurementManagerConverter.convertToDTOsList(allProcurementManagers), 
+				HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/company-administrators")
+	public ResponseEntity<List<CompanyAdministratorDTO>> findAllCompanyAdministrators() {
+		List<CompanyAdministrator> allCompanyAdministrators = 
+				userService.getCompanyAdministratorService().findAll();
+		System.out.println("\nTotal number of company administrators: " 
+				+ allCompanyAdministrators.size());
+		
+		return new ResponseEntity<List<CompanyAdministratorDTO>>(
+				CompanyAdministratorConverter.convertToDTOsList(allCompanyAdministrators), 
+				HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/system-administrators")
+	public ResponseEntity<List<SystemAdministratorDTO>> findAllSystemAdministrators() {
+		List<SystemAdministrator> allSystemAdministrators = 
+				userService.getSystemAdministratorService().findAll();
+		System.out.println("\nTotal number of system administrators: " 
+				+ allSystemAdministrators.size());
+		
+		return new ResponseEntity<List<SystemAdministratorDTO>>(
+				SystemAdministratorConverter.convertToDTOsList(allSystemAdministrators), 
+				HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<UserDTO> findById(@PathVariable(name = "id") String id) {
+		UserDTO user = null;
+		
+		long idAsLong = 0;
+		try {
+			idAsLong = Long.parseLong(id);
+		} catch (NumberFormatException nFE) {
+			return new ResponseEntity<UserDTO>(user, HttpStatus.BAD_REQUEST);
+		}
+		
+		user = UserConverter.convertToDTO(userService.findById(idAsLong));
+		
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/find-by-username/{username}")
+	public ResponseEntity<UserDTO> findByUsername(@PathVariable(name = "username") String username) {
+		UserDTO user = UserConverter.convertToDTO(userService.findByUsername(username));
+		
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/register-as-a-procurement-manager", 

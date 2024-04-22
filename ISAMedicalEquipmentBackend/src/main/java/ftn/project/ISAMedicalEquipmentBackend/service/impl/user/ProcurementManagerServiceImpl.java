@@ -60,7 +60,7 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	@Override
 	public ProcurementManagerOfHospital findById(long id) throws AccessDeniedException {
-		return procurementManagerRepository.findById(id).orElse(null);
+		return procurementManagerRepository.getById(id);
 	}
 	
 	@Override
@@ -80,7 +80,7 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	@Override
 	public List<ProcurementManagerOfHospital> findAll() throws AccessDeniedException {
-		return procurementManagerRepository.findAll();
+		return procurementManagerRepository.getAll();
 	}
 	
 	@Override

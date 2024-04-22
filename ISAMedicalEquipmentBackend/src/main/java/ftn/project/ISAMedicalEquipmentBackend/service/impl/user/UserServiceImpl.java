@@ -50,18 +50,27 @@ public class UserServiceImpl implements UserService {
 	public User findById(long id) throws AccessDeniedException {
 		ProcurementManagerOfHospital procurementManager = procurementManagerService.findById(id);
 		if (procurementManager != null) {
+			System.out.println("\nUsername of found procurement manager: " 
+					+ procurementManager.getUsername() + "\n");
 			return procurementManager;
 		}
+		System.out.println("\nNo procurement manager with specified id was found!\n");
 		
 		CompanyAdministrator companyAdministrator = companyAdministratorService.findById(id);
 		if (companyAdministrator != null) {
+			System.out.println("\nUsername of found company administrator: " 
+					+ companyAdministrator.getUsername() + "\n");
 			return companyAdministrator;
 		}
+		System.out.println("\nNo company administrator with specified id was found!\n");
 		
 		SystemAdministrator systemAdministrator = systemAdministratorService.findById(id);
 		if (systemAdministrator != null) {
+			System.out.println("\nUsername of found system administrator: " 
+					+ systemAdministrator.getUsername() + "\n");
 			return systemAdministrator;
 		}
+		System.out.println("\nNo system administrator with specified id was found!\n");
 		
 		return null;
 	}
@@ -140,17 +149,20 @@ public class UserServiceImpl implements UserService {
 		List<User> allUsers = new ArrayList<User>();
 		
 		List<ProcurementManagerOfHospital> procurementManagers = procurementManagerService.findAll();
-		if (procurementManagers != null) {
+		System.out.println("\nTotal number of procurement managers: " + procurementManagers.size());
+		if (!procurementManagers.isEmpty()) {
 			allUsers.addAll(procurementManagers);
 		}
 		
 		List<CompanyAdministrator> companyAdministrators = companyAdministratorService.findAll();
-		if (companyAdministrators != null) {
+		System.out.println("\nTotal number of company administrators: " + companyAdministrators.size());
+		if (!companyAdministrators.isEmpty()) {
 			allUsers.addAll(companyAdministrators);
 		}
 		
 		List<SystemAdministrator> systemAdministrators = systemAdministratorService.findAll();
-		if (systemAdministrators != null) {
+		System.out.println("\nTotal number of system administrators: " + systemAdministrators.size());
+		if (!systemAdministrators.isEmpty()) {
 			allUsers.addAll(systemAdministrators);
 		}
 		

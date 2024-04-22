@@ -22,7 +22,7 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
 	
 	@Override
 	public CompanyAdministrator findById(long id) throws AccessDeniedException {
-		return companyAdministratorRepository.findById(id).orElse(null);
+		return companyAdministratorRepository.getById(id);
 	}
 	
 	@Override
@@ -42,6 +42,6 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
 	
 	@Override
 	public List<CompanyAdministrator> findAll() throws AccessDeniedException {
-		return companyAdministratorRepository.findAll();
+		return companyAdministratorRepository.getAll();
 	}
 }
