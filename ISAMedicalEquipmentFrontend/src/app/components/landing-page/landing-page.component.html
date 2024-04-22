@@ -12,6 +12,7 @@
         </mat-card-header>
         <mat-card-content>
             <div class="searchFormDiv">
+                <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
                 <form #searchForm="ngForm" (ngSubmit)="searchCompaniesByNameOrPopulatedPlace()" [formGroup]="companyForm">
                     <mat-form-field>
                         <mat-label>Unesite naziv ili mesto: </mat-label>

@@ -5,6 +5,7 @@
             <mat-card-title>Podaci kompanije</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+            <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
             <form id="companyForm" #companyForm="ngForm" (ngSubmit)="editCompany()" *ngIf="!isFormForCompanySubmitted" 
                 [formGroup]="formForCompany">
                 <mat-form-field>

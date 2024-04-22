@@ -58,7 +58,7 @@ public class AuthController {
 			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
 					HttpStatus.LOCKED);
 		} catch (BadCredentialsException bCE) {
-			System.out.println("\nBad credentials have been sent to the server.\n");
+			System.out.println("\nBad credentials were sent to the server.\n");
 			
 			return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
 					HttpStatus.BAD_REQUEST);
@@ -70,8 +70,8 @@ public class AuthController {
 		accessToken = tokenUtils.generateToken(user);
 		expiresIn = tokenUtils.getExpiresIn();
 		
-		System.out.println("\nUser with username \"" + credentials.getUsername() + "\" has " + 
-			"been successfully logged in.\n");
+		System.out.println("\nUser with username \"" + credentials.getUsername() + "\" was " + 
+			"successfully logged in.\n");
 		
 		return new ResponseEntity<AccessTokenDTO>(new AccessTokenDTO(accessToken, expiresIn), 
 				HttpStatus.OK);

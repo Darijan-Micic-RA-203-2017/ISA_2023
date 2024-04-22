@@ -4,6 +4,7 @@
             <mat-card-title>Prijava na sistem</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+            <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
             <form #loginForm="ngForm" (ngSubmit)="submitCredentials()" *ngIf="!isSubmitted" [formGroup]="form">
                 <mat-form-field>
                     <mat-label>Korisničko ime: </mat-label>

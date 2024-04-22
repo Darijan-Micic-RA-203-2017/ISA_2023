@@ -4,8 +4,8 @@
             <mat-card-title>Registracija kao zaposleni u odeljenju nabavke bolnice</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form #registrationForm="ngForm" (ngSubmit)="submitRegistrationRequest()" *ngIf="!isSubmitted" 
-                [formGroup]="form">
+            <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
+            <form #registrationForm="ngForm" (ngSubmit)="submitRegistrationRequest()" *ngIf="!isSubmitted" [formGroup]="form">
                 <mat-form-field>
                     <mat-label>Adresa elektronske pošte: </mat-label>
                     <input matInput #emailAddressInput type="text" [formControl]="form.get('emailAddress')">
@@ -111,8 +111,7 @@
                     <input matInput #companyNameInput type="text" [formControl]="form.get('companyName')">
                 </mat-form-field>
                 <div class="buttonDiv">
-                    <button [disabled]="form.invalid" color="accent" mat-raised-button 
-                        type="submit">Registruj se</button>
+                    <button [disabled]="form.invalid" color="accent" mat-raised-button type="submit">Registruj se</button>
                 </div>
             </form>
         </mat-card-content>
