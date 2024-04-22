@@ -6,7 +6,7 @@ import java.util.List;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 
-public abstract class UserDTO {
+public class UserDTO {
 	protected long id;
 	protected List<UserRoleDTO> roles;
 	protected boolean isEnabled;
