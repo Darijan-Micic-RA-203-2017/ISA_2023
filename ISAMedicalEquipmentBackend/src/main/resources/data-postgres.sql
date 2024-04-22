@@ -131,22 +131,22 @@ INSERT INTO Types_of_medical_equipment(id, name) VALUES (7,
 	'Apoteka za bebe');
 
 -- Medical equipment:
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (1, 1, 
-	'Borna voda 250ml', 199.99, 900, 'Galenika');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (2, 2, 
-	'Komprese 10 x 10 sterilne Niva', 149.99, 7500, 'Galenika');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (3, 3, 
-	'Hydrocyclin mast 20g', 349.99, 600, 'Galenika');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (4, 4, 
-	'Diklofen gastrorezistentna tableta 20 x 50mg', 299.99, 13000, 'Galenika');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (5, 3, 
-	'Jekoderm mast 25g', 249.99, 400, 'Apotekarska ustanova Janković');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (6, 5, 
-	'Asepsol rastvor 1% 1l', 149.12, 22000, 'Apotekarska ustanova Janković');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (7, 6, 
-	'Scholl Party feet gel jastučići', 577.44, 500, 'Apotekarska ustanova Janković');
-INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name) VALUES (8, 7, 
-	'Bebicol Forte 10ml probiotske kapi', 1157.91, 750, 'Apotekarska ustanova Janković');
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(1, 1, 'Borna voda 250ml', 199.99, 900, 'Galenika', 1);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(2, 2, 'Komprese 10 x 10 sterilne Niva', 149.99, 7500, 'Galenika', 1);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(3, 3, 'Hydrocyclin mast 20g', 349.99, 600, 'Galenika', 1);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(4, 4, 'Diklofen gastrorezistentna tableta 20 x 50mg', 299.99, 13000, 'Galenika', 1);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(5, 3, 'Jekoderm mast 25g', 249.99, 400, 'Apotekarska ustanova Janković', 2);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(6, 5, 'Asepsol rastvor 1% 1l', 149.12, 22000, 'Apotekarska ustanova Janković', 2);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(7, 6, 'Scholl Party feet gel jastučići', 577.44, 500, 'Apotekarska ustanova Janković', 2);
+INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, company_id) VALUES 
+	(8, 7, 'Bebicol Forte 10ml probiotske kapi', 1157.91, 750, 'Apotekarska ustanova Janković', 2);
 
 -- Exchange terms:
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 

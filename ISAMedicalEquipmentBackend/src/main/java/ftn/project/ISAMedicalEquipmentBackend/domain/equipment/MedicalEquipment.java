@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
+
 @Entity
 @Table(name = "medical_equipment")
 public class MedicalEquipment {
@@ -37,16 +39,21 @@ public class MedicalEquipment {
 	@Column(name = "company_name", nullable = false)
 	private String companyName;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id")
+	private MedicalEquipmentCompany company;
+	
 	public MedicalEquipment() {}
 	
 	public MedicalEquipment(long id, TypeOfMedicalEquipment type, String name, double price, 
-			int amount, String companyName) {
+			int amount, String companyName, MedicalEquipmentCompany company) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
 		this.companyName = companyName;
+		this.company = company;
 	}
 	
 	public long getId() {
@@ -95,6 +102,14 @@ public class MedicalEquipment {
 	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	
+	public MedicalEquipmentCompany getCompany() {
+		return company;
+	}
+	
+	public void setCompany(MedicalEquipmentCompany company) {
+		this.company = company;
 	}
 	
 	@Override

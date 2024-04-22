@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.company.MedicalEquipmentCompany;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.TypeOfMedicalEquipment;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.MedicalEquipmentDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.equipment.MedicalEquipmentRepository;
+import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
 import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipmentService;
 import ftn.project.ISAMedicalEquipmentBackend.service.equipment.TypeOfMedicalEquipmentService;
 
@@ -19,12 +21,15 @@ import ftn.project.ISAMedicalEquipmentBackend.service.equipment.TypeOfMedicalEqu
 public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 	private final MedicalEquipmentRepository medicalEquipmentRepository;
 	private final TypeOfMedicalEquipmentService typeOfMedicalEquipmentService;
+	private final MedicalEquipmentCompanyService medicalEquipmentCompanyService;
 	
 	@Autowired
 	public MedicalEquipmentServiceImpl(MedicalEquipmentRepository medicalEquipmentRepository, 
-			TypeOfMedicalEquipmentService typeOfMedicalEquipmentService) {
+			TypeOfMedicalEquipmentService typeOfMedicalEquipmentService, 
+			MedicalEquipmentCompanyService medicalEquipmentCompanyService) {
 		this.medicalEquipmentRepository = medicalEquipmentRepository;
 		this.typeOfMedicalEquipmentService = typeOfMedicalEquipmentService;
+		this.medicalEquipmentCompanyService = medicalEquipmentCompanyService;
 	}
 	
 	@Override
@@ -89,9 +94,10 @@ public class MedicalEquipmentServiceImpl implements MedicalEquipmentService {
 		double price = medicalEquipmentDTO.getPrice();
 		int amount = medicalEquipmentDTO.getAmount();
 		String companyName = medicalEquipmentDTO.getCompanyName();
+		MedicalEquipmentCompany company = medicalEquipmentCompanyService.findByName(companyName);
 		
 		MedicalEquipment medicalEquipment = new MedicalEquipment(id, type, name, price, amount, 
-				companyName);
+				companyName, company);
 		
 		return medicalEquipmentRepository.saveAndFlush(medicalEquipment);
 	}
