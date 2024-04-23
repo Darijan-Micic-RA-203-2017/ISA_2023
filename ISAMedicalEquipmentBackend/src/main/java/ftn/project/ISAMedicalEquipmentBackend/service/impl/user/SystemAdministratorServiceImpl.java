@@ -22,7 +22,7 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 	
 	@Override
 	public SystemAdministrator findById(long id) throws AccessDeniedException {
-		return systemAdministratorRepository.findById(id).orElse(null);
+		return systemAdministratorRepository.getById(id);
 	}
 	
 	@Override
@@ -42,6 +42,6 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 	
 	@Override
 	public List<SystemAdministrator> findAll() throws AccessDeniedException {
-		return systemAdministratorRepository.findAll();
+		return systemAdministratorRepository.getAll();
 	}
 }

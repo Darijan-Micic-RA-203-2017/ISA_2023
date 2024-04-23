@@ -35,7 +35,7 @@ public abstract class User implements UserDetails {
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	protected long id;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles_join_table", 
 		joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
 		inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
