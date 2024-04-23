@@ -31,19 +31,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		ProcurementManager procurementManager = 
-				procurementManagerRepository.findByUsername(username);
+				procurementManagerRepository.getByUsernameForAuthPurposes(username);
 		if (procurementManager != null) {
 			return procurementManager;
 		}
 		
 		CompanyAdministrator companyAdministrator = 
-				companyAdministratorRepository.findByUsername(username);
+				companyAdministratorRepository.getByUsernameForAuthPurposes(username);
 		if (companyAdministrator != null) {
 			return companyAdministrator;
 		}
 		
 		SystemAdministrator systemAdministrator = 
-				systemAdministratorRepository.findByUsername(username);
+				systemAdministratorRepository.getByUsernameForAuthPurposes(username);
 		if (systemAdministrator != null) {
 			return systemAdministrator;
 		}

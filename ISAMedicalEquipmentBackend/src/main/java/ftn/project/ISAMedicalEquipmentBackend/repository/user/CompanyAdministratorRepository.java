@@ -40,4 +40,8 @@ public interface CompanyAdministratorRepository extends JpaRepository<CompanyAdm
 			+ "LEFT JOIN FETCH ca.exchangeTerms excterms LEFT JOIN FETCH ca.complaints cmlpts " 
 			+ "WHERE ca.username = ?1")
 	CompanyAdministrator findByUsername(String username);
+	
+	@Query(value = "SELECT ca FROM CompanyAdministrator ca JOIN FETCH ca.roles r " 
+			+ "WHERE ca.username = ?1")
+	CompanyAdministrator getByUsernameForAuthPurposes(String username);
 }

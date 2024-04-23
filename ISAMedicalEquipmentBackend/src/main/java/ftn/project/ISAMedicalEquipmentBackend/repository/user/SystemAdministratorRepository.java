@@ -28,4 +28,8 @@ public interface SystemAdministratorRepository extends JpaRepository<SystemAdmin
 	@Query(value = "SELECT sa FROM SystemAdministrator sa JOIN FETCH sa.roles r " 
 			+ "WHERE sa.username = ?1")
 	SystemAdministrator findByUsername(String username);
+	
+	@Query(value = "SELECT sa FROM SystemAdministrator sa JOIN FETCH sa.roles r " 
+			+ "WHERE sa.username = ?1")
+	SystemAdministrator getByUsernameForAuthPurposes(String username);
 }

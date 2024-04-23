@@ -41,4 +41,8 @@ public interface ProcurementManagerRepository extends
 			+ "LEFT JOIN FETCH pm.complaints cmplts " 
 			+ "WHERE pm.username = ?1")
 	ProcurementManager findByUsername(String username);
+	
+	@Query(value = "SELECT pm FROM ProcurementManager pm JOIN FETCH pm.roles r " 
+			+ "WHERE pm.username = ?1")
+	ProcurementManager getByUsernameForAuthPurposes(String username);
 }
