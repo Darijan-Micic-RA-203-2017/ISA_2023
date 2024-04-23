@@ -11,7 +11,7 @@ public class MedicalEquipmentCompanyConverter {
 	public MedicalEquipmentCompanyConverter() {}
 	
 	public static List<MedicalEquipmentCompanyDTO> convertToDTOsList(
-			List<MedicalEquipmentCompany> companies) {
+			Iterable<MedicalEquipmentCompany> companies) {
 		if (companies == null) {
 			return null;
 		}

@@ -6,7 +6,6 @@ import java.util.List;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserRoleDTO;
 
@@ -33,10 +32,8 @@ public class SystemAdministratorConverter {
 		}
 		
 		long id = systemAdministrator.getId();
-		List<UserRoleDTO> roles = new ArrayList<UserRoleDTO>();
-		for (UserRole r: systemAdministrator.getRoles()) {
-			roles.add(UserRoleConverter.convertToDTO(r));
-		}
+		List<UserRoleDTO> roles = 
+				UserRoleConverter.convertToDTOsList(systemAdministrator.getRoles());
 		boolean isEnabled = systemAdministrator.isEnabled();
 		String userCode = systemAdministrator.getUserCode();
 		String emailAddress = systemAdministrator.getEmailAddress();

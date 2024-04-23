@@ -10,7 +10,7 @@ public class DetailsOfEquipmentOrderConverter {
 	public DetailsOfEquipmentOrderConverter() {}
 	
 	public static List<DetailsOfEquipmentOrderDTO> convertToDTOsList(
-			List<DetailsOfEquipmentOrder> detailsOfEquipmentOrders) {
+			Iterable<DetailsOfEquipmentOrder> detailsOfEquipmentOrders) {
 		if (detailsOfEquipmentOrders == null) {
 			return null;
 		}

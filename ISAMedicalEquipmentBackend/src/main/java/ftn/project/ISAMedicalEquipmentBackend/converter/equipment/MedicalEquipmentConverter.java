@@ -10,7 +10,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.equipment.TypeOfMedicalEquipme
 public class MedicalEquipmentConverter {
 	public MedicalEquipmentConverter() {}
 	
-	public static List<MedicalEquipmentDTO> convertToDTOsList(List<MedicalEquipment> equipment) {
+	public static List<MedicalEquipmentDTO> convertToDTOsList(Iterable<MedicalEquipment> equipment) {
 		if (equipment == null) {
 			return null;
 		}

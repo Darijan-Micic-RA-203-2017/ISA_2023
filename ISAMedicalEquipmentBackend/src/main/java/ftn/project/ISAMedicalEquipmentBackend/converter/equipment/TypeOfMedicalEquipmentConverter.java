@@ -10,7 +10,7 @@ public class TypeOfMedicalEquipmentConverter {
 	public TypeOfMedicalEquipmentConverter() {}
 	
 	public static List<TypeOfMedicalEquipmentDTO> convertToDTOsList(
-			List<TypeOfMedicalEquipment> typesOfMedicalEquipment) {
+			Iterable<TypeOfMedicalEquipment> typesOfMedicalEquipment) {
 		if (typesOfMedicalEquipment == null) {
 			return null;
 		}

@@ -9,7 +9,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.company.WorkTimeDTO;
 public class WorkTimeConverter {
 	public WorkTimeConverter() {}
 	
-	public static List<WorkTimeDTO> convertToDTOsList(List<WorkTime> workTimes) {
+	public static List<WorkTimeDTO> convertToDTOsList(Iterable<WorkTime> workTimes) {
 		if (workTimes == null) {
 			return null;
 		}

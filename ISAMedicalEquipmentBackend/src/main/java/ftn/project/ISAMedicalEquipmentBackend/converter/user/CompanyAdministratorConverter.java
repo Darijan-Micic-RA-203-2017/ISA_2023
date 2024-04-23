@@ -8,7 +8,6 @@ import ftn.project.ISAMedicalEquipmentBackend.converter.complaint.ComplaintConve
 import ftn.project.ISAMedicalEquipmentBackend.converter.term.ExchangeTermConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.complaint.ComplaintDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
@@ -38,10 +37,8 @@ public class CompanyAdministratorConverter {
 		}
 		
 		long id = companyAdministrator.getId();
-		List<UserRoleDTO> roles = new ArrayList<UserRoleDTO>();
-		for (UserRole r: companyAdministrator.getRoles()) {
-			roles.add(UserRoleConverter.convertToDTO(r));
-		}
+		List<UserRoleDTO> roles = 
+				UserRoleConverter.convertToDTOsList(companyAdministrator.getRoles());
 		boolean isEnabled = companyAdministrator.isEnabled();
 		String userCode = companyAdministrator.getUserCode();
 		String emailAddress = companyAdministrator.getEmailAddress();

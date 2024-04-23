@@ -8,7 +8,6 @@ import ftn.project.ISAMedicalEquipmentBackend.converter.complaint.ComplaintConve
 import ftn.project.ISAMedicalEquipmentBackend.converter.term.ExchangeTermConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
-import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.complaint.ComplaintDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.LoyaltyProgramDTO;
@@ -38,10 +37,8 @@ public class ProcurementManagerConverter {
 		}
 		
 		long id = procurementManager.getId();
-		List<UserRoleDTO> roles = new ArrayList<UserRoleDTO>();
-		for (UserRole r: procurementManager.getRoles()) {
-			roles.add(UserRoleConverter.convertToDTO(r));
-		}
+		List<UserRoleDTO> roles = 
+				UserRoleConverter.convertToDTOsList(procurementManager.getRoles());
 		boolean isEnabled = procurementManager.isEnabled();
 		String userCode = procurementManager.getUserCode();
 		String emailAddress = procurementManager.getEmailAddress();
