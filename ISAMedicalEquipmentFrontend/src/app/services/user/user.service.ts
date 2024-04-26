@@ -15,9 +15,17 @@ export class UserService {
       this.usersControllerURL.concat('/register-as-a-procurement-manager');
   private accountActivationURL: string = 
       this.usersControllerURL.concat('/activate-account');
-  
+
   constructor(private httpClient: HttpClient) { }
-  
+
+  findById(id: number): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    return this.httpClient.get(this.usersControllerURL.concat(`/${id}`), { headers: headers });
+  }
+
   registerAsAProcurementManager(procurementManagerRegistrationReq: ProcurementManagerRegistrationReq): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',

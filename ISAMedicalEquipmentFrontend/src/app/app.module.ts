@@ -26,6 +26,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,6 +41,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 const MaterialComponents = [
   MatToolbarModule,
@@ -55,7 +57,8 @@ const MaterialComponents = [
   // REFERENCE: https://v12.material.angular.io/components/datepicker/overview#choosing-a-date-implementation-and-date-format-settings
   MatLuxonDateModule,
   MatDatepickerModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSelectModule
 ];
 
 @NgModule({
@@ -66,7 +69,8 @@ const MaterialComponents = [
     RegistrationComponent,
     ActivateAccountComponent,
     LandingPageComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,

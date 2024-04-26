@@ -8,13 +8,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'activate-account/:userCode', component: ActivateAccountComponent },
-  { path: 'company/:id', component: CompanyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] }
+  { path: 'company/:id', component: CompanyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] },
+  { path: 'my-profile', component: MyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] }
 ];
 
 @NgModule({
