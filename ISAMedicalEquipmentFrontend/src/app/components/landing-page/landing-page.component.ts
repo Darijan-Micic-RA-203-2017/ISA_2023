@@ -30,10 +30,10 @@ export class LandingPageComponent implements OnInit {
   shownMedicalEquipment: MedicalEquipment[] = [];
   equipmentDataSource: MatTableDataSource<MedicalEquipment> = 
       new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
-  
+
   constructor(private medicalEquipmentCompanyService: MedicalEquipmentCompanyService, 
       private medicalEquipmentService: MedicalEquipmentService, private formBuilder: FormBuilder) { }
-  
+
   ngOnInit(): void {
     this.companyForm = this.formBuilder.group({
       searchCriterion: new FormControl('', {
@@ -51,7 +51,7 @@ export class LandingPageComponent implements OnInit {
     this.medicalEquipmentCompanyService.findAll().subscribe(
       data => {
         console.log('Retrieving all medical equipment companies response: ', data);
-        
+
         this.allMedicalEquipmentCompanies = data;
         this.shownMedicalEquipmentCompanies = data;
         this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
@@ -63,7 +63,7 @@ export class LandingPageComponent implements OnInit {
     this.medicalEquipmentService.findAll().subscribe(
       data => {
         console.log('Retrieving all medical equipment response: ', data);
-        
+
         this.allMedicalEquipment = data;
         this.shownMedicalEquipment = data;
         this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);

@@ -83,17 +83,17 @@ export class CompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.hideEditCompanyButtonIfUserIsAProcurementManager();
-    
+
     this.fillFormForCompanyWithData();
     this.initializeFormForEquipmentSearch();
     this.initializeFormForTerm();
-    
+
     let route: string = this.router.url;
     let routeParts: string[] = route.split('company');
     let companyId: number = Number.parseInt(routeParts[routeParts.length - 1].substring(1));
     if (isNaN(companyId)) {
       this.router.navigateByUrl('/');
-      
+
       return;
     }
 
@@ -141,19 +141,19 @@ export class CompanyProfileComponent implements OnInit {
   fillFormForCompanyWithData(): void {
     if (this.company.id == 0) {
       this.formForCompany = this.formBuilder.group({
-        name: new FormControl({value: this.company.name, disabled: this.isFormForCompanyDisabled}, {
+        name: new FormControl({ value: this.company.name, disabled: this.isFormForCompanyDisabled }, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        streetAndNumber: new FormControl({value: this.company.streetAndNumber, disabled: this.isFormForCompanyDisabled}, {
+        streetAndNumber: new FormControl({ value: this.company.streetAndNumber, disabled: this.isFormForCompanyDisabled }, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        populatedPlace: new FormControl({value: this.company.populatedPlace, disabled: this.isFormForCompanyDisabled}, {
+        populatedPlace: new FormControl({ value: this.company.populatedPlace, disabled: this.isFormForCompanyDisabled }, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
-        country: new FormControl({value: this.company.country, disabled: this.isFormForCompanyDisabled}, {
+        country: new FormControl({ value: this.company.country, disabled: this.isFormForCompanyDisabled }, {
           validators: [Validators.required, Validators.pattern(/^[A-Z\p{L}][a-z\p{L}]+([ -][A-Z\p{L}][a-z\p{L}]+)*$/u)], 
           updateOn: 'change'
         }),
@@ -172,7 +172,7 @@ export class CompanyProfileComponent implements OnInit {
           validators: [Validators.pattern(/^$|^Ne radimo$|^[0-2][0-9]:[0-5][0-9] - [0-2][0-9]:[0-5][0-9]$/)], 
           updateOn: 'change'
         }),
-        description: new FormControl({value: this.company.description, disabled: this.isFormForCompanyDisabled}, {
+        description: new FormControl({ value: this.company.description, disabled: this.isFormForCompanyDisabled }, {
           validators: [Validators.required], 
           updateOn: 'change'
         })
@@ -266,7 +266,7 @@ export class CompanyProfileComponent implements OnInit {
     if (details.amount == 0) {
       return;
     }
-    
+
     details.amount -= 1;
     let newSubtotalPrice: number = details.subtotalPrice - details.equipment.price;
     details.subtotalPrice = this.formatPrice(newSubtotalPrice);
@@ -475,31 +475,31 @@ export class CompanyProfileComponent implements OnInit {
         if (this.formForCompany.get('streetAndNumber').hasError('required')) {
           errorMessage = 'Morate uneti ulicu i broj!';
         }
-        
+
         if (this.formForCompany.get('streetAndNumber').hasError('pattern')) {
           errorMessage = 'Naziv ulice mora početi velikim slovom!';
         }
-        
+
         break;
       case 'populatedPlace':
         if (this.formForCompany.get('populatedPlace').hasError('required')) {
           errorMessage = 'Morate uneti mesto!';
         }
-        
+
         if (this.formForCompany.get('populatedPlace').hasError('pattern')) {
           errorMessage = 'Naziv mesta mora početi velikim slovom!';
         }
-        
+
         break;
       case 'country':
         if (this.formForCompany.get('country').hasError('required')) {
           errorMessage = 'Morate uneti državu!';
         }
-        
+
         if (this.formForCompany.get('country').hasError('pattern')) {
           errorMessage = 'Naziv države mora početi velikim slovom!';
         }
-        
+
         break;
       case 'workTimeOnMondaysThroughFridays':
         if (this.formForCompany.get('workTimeOnMondaysThroughFridays').hasError('required')) {
@@ -509,25 +509,25 @@ export class CompanyProfileComponent implements OnInit {
         if (this.formForCompany.get('workTimeOnMondaysThroughFridays').hasError('pattern')) {
           errorMessage = 'Radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
         }
-        
+
         break;
       case 'workTimeOnSaturdays':
         if (this.formForCompany.get('workTimeOnSaturdays').hasError('pattern')) {
           errorMessage = 'Mora biti napisano "Ne radimo" ili radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
         }
-        
+
         break;
       case 'workTimeOnSundays':
         if (this.formForCompany.get('workTimeOnSundays').hasError('pattern')) {
           errorMessage = 'Mora biti napisano "Ne radimo" ili radno vreme mora biti uneto u obliku "hh:mm - hh:mm"!';
         }
-        
+
         break;
       case 'description':
         if (this.formForCompany.get('description').hasError('required')) {
           errorMessage = 'Morate uneti opis kompanije!';
         }
-        
+
         break;
       case 'dateOfTerm':
         if (this.formForTerm.get('dateOfTerm').hasError('required')) {
@@ -543,7 +543,7 @@ export class CompanyProfileComponent implements OnInit {
         if (this.formForTerm.get('term').hasError('required')) {
           errorMessage = 'Morate odabrati termin (pritiskom tastera "SPACE")!';
         }
-        
+
         break;
       default:
         errorMessage = '';
@@ -569,7 +569,7 @@ export class CompanyProfileComponent implements OnInit {
     if (endMinute == '0') {
       endMinute = endMinute.concat('0');
     }
-    
+
     let freeTermAsString: string = startHour.concat(':', startMinute, ' - ', endHour, ':', endMinute);
 
     return freeTermAsString;

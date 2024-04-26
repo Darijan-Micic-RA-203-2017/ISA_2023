@@ -110,7 +110,12 @@ public class UserController {
 	
 	@GetMapping(path = "/find-by-username/{username}")
 	public ResponseEntity<UserDTO> findByUsername(@PathVariable(name = "username") String username) {
-		UserDTO user = UserConverter.convertToDTO(userService.findByUsername(username));
+		UserDTO user = null;
+		if (username.isEmpty()) {
+			return new ResponseEntity<UserDTO>(user, HttpStatus.BAD_REQUEST);
+		}
+		
+		user = UserConverter.convertToDTO(userService.findByUsername(username));
 		
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 	}

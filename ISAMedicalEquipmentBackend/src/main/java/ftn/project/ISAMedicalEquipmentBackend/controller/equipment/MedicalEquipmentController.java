@@ -61,7 +61,6 @@ public class MedicalEquipmentController {
 	public ResponseEntity<List<MedicalEquipmentDTO>> findByCompanyName(
 			@PathVariable(name = "companyName") String companyName) {
 		List<MedicalEquipmentDTO> allEquipmentOfSpecifiedCompany = null;
-		
 		if (companyName.isEmpty()) {
 			return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
 					HttpStatus.BAD_REQUEST);
@@ -96,7 +95,6 @@ public class MedicalEquipmentController {
 			@PathVariable(name = "companyName") String companyName, 
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
 		List<MedicalEquipmentDTO> equipment = null;
-		
 		if (companyName.isEmpty()) {
 			return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.BAD_REQUEST);
 		}

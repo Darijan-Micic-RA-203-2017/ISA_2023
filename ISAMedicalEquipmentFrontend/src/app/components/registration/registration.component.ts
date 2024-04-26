@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit {
   hidePasswordConfirmation: boolean = true;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
-  
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       emailAddress: new FormControl('', {
@@ -126,14 +126,14 @@ export class RegistrationComponent implements OnInit {
       }
     );
   }
-  
+
   // REFERENCE: https://blog.angular-university.io/angular-custom-validators/
   passwordsDoNotMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       let form = control.parent;
       let enteredPassword = form?.get('password')?.value;
       let enteredPasswordConfirmation = form?.get('passwordConfirmation')?.value;
-      
+
       if (enteredPassword || enteredPasswordConfirmation) {
         if (enteredPassword !== enteredPasswordConfirmation) {
           return {
@@ -144,7 +144,7 @@ export class RegistrationComponent implements OnInit {
           };
         }
       }
-      
+
       return null;
     };
   }
@@ -157,7 +157,7 @@ export class RegistrationComponent implements OnInit {
         if (this.form.get('emailAddress').hasError('required')) {
           errorMessage = 'Morate uneti adresu elektronske pošte!';
         }
-        
+
         if (this.form.get('emailAddress').hasError('pattern')) {
           errorMessage = 'Adresa elektronske pošte nije ispravnog oblika!';
         }
@@ -178,21 +178,21 @@ export class RegistrationComponent implements OnInit {
         if (this.form.get('password').hasError('required')) {
           errorMessage = 'Morate uneti lozinku!';
         }
-        
+
         if (this.form.get('password').hasError('passwordsDoNotMatch')) {
           errorMessage = 'Lozinka ne poklapa se sa sadržajem polja za ponovni unos lozinke!';
         }
-        
+
         break;
       case 'passwordConfirmation':
         if (this.form.get('passwordConfirmation').hasError('required')) {
           errorMessage = 'Morate ponovo uneti lozinku!';
         }
-        
+
         if (this.form.get('passwordConfirmation').hasError('passwordsDoNotMatch')) {
           errorMessage = 'Sadržaj polja za ponovni unos lozinke ne poklapa se sa lozinkom!';
         }
-        
+
         break;
       case 'firstName':
         if (this.form.get('firstName').hasError('required')) {
@@ -208,7 +208,7 @@ export class RegistrationComponent implements OnInit {
         if (this.form.get('lastName').hasError('required')) {
           errorMessage = 'Morate uneti prezime!';
         }
-        
+
         if (this.form.get('lastName').hasError('pattern')) {
           errorMessage = 'Prezime nije ispravnog oblika!';
         }
@@ -218,19 +218,19 @@ export class RegistrationComponent implements OnInit {
         if (this.form.get('residence').hasError('required')) {
           errorMessage = 'Morate uneti ulicu i broj!';
         }
-        
+
         break;
       case 'populatedPlace':
         if (this.form.get('populatedPlace').hasError('required')) {
           errorMessage = 'Morate uneti mesto!';
         }
-        
+
         break;
       case 'country':
         if (this.form.get('country').hasError('required')) {
           errorMessage = 'Morate uneti državu!';
         }
-        
+
         break;
       default:
         errorMessage = '';

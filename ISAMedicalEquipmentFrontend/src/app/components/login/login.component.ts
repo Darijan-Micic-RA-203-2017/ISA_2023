@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router, 
       private snackBar: MatSnackBar) { }
-  
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: new FormControl('', {
@@ -93,11 +93,11 @@ export class LoginComponent implements OnInit {
         if (this.form.get('password').hasError('required')) {
           errorMessage = 'Morate uneti lozinku!';
         }
-        
+
         if (this.form.get('password').hasError('minlength') || this.form.get('password').hasError('maxlength')) {
           errorMessage = 'Lozinka mora sadržati najmanje 4, a najviše 32 znaka!';
         }
-        
+
         break;
       default:
         errorMessage = '';

@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   roleNameForShowPurposes: any;
 
   constructor(private router: Router) { }
-  
+
   ngOnInit(): void {
     this.username = localStorage.getItem('username');
     this.userId = localStorage.getItem('userId');
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
         break;
       case 'ROLE_COMPANY_ADMINISTRATOR':
         roleName = 'Administrator kompanije';
-        
+
         break;
       case 'ROLE_SYSTEM_ADMINISTRATOR':
         roleName = 'Administrator sistema';

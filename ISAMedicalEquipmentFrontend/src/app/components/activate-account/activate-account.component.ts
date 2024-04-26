@@ -15,7 +15,7 @@ import { UserCodeWrapper } from 'src/app/domain/user-code-wrapper';
 })
 export class ActivateAccountComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private snackBar: MatSnackBar) { }
-  
+
   ngOnInit(): void {
     let route: string = this.router.url;
     let routeParts: string[] = route.split('activate-account');
