@@ -11,10 +11,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
 import ftn.project.ISAMedicalEquipmentBackend.security.auth.RestAuthenticationEntryPoint;
 import ftn.project.ISAMedicalEquipmentBackend.security.auth.TokenAuthenticationFilter;
 import ftn.project.ISAMedicalEquipmentBackend.service.impl.user.CustomUserDetailsService;
@@ -55,30 +57,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(passwordEncoder());
 	}
 	
+	// REFERENCE: https://stackoverflow.com/questions/51712724/how-to-allow-a-user-only-access-their-own-data-in-spring-boot-spring-security/51713982#51713982
+	public boolean hasId(long userId) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (user.getId() == userId) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 				.authorizeRequests()
 				.antMatchers("/auth/**").permitAll()
-				.antMatchers("/users").authenticated()
-				.antMatchers("/users/procurement-managers").authenticated()
-				.antMatchers("/users/company-administrators").authenticated()
-				.antMatchers("/users/system-administrators").authenticated()
-				.antMatchers("/users/{id}").authenticated()
-				.antMatchers("/users/find-by-username/{username}").authenticated()
+				.antMatchers("/users").hasRole("SYSTEM_ADMINISTRATOR")
+				.antMatchers("/users/procurement-managers").hasRole("SYSTEM_ADMINISTRATOR")
+				.antMatchers("/users/company-administrators").hasRole("SYSTEM_ADMINISTRATOR")
+				.antMatchers("/users/system-administrators").hasRole("SYSTEM_ADMINISTRATOR")
+				// REFERENCE: https://stackoverflow.com/questions/51712724/how-to-allow-a-user-only-access-their-own-data-in-spring-boot-spring-security/51713982#51713982
+				.antMatchers("/users/{id}").access("hasRole(\"SYSTEM_ADMINISTRATOR\") OR @webSecurityConfig.hasId(#id)")
+				.antMatchers("/users/find-by-username/{username}").hasRole("SYSTEM_ADMINISTRATOR")
 				.antMatchers("/users/register-as-a-procurement-manager").permitAll()
 				.antMatchers("/users/activate-account").permitAll()
 				.antMatchers("/medical-equipment-companies").permitAll()
-				.antMatchers("/medical-equipment-companies/{id}").permitAll()
+				.antMatchers("/medical-equipment-companies/{id}").authenticated()
 				.antMatchers("/medical-equipment-companies/search-by-name-or-populated-place").permitAll()
 				.antMatchers("/medical-equipment").permitAll()
-				.antMatchers("/medical-equipment/{id}").permitAll()
+				.antMatchers("/medical-equipment/{id}").authenticated()
 				.antMatchers("/medical-equipment/of-company/{companyName}").authenticated()
 				.antMatchers("/medical-equipment/search-by-name").permitAll()
 				.antMatchers("/medical-equipment/search-by-name/of-company/{companyName}").authenticated()
-				.antMatchers("/types-of-medical-equipment").permitAll()
-				.antMatchers("/types-of-medical-equipment/{id}").permitAll()
+				.antMatchers("/types-of-medical-equipment").authenticated()
+				.antMatchers("/types-of-medical-equipment/{id}").authenticated()
 				.antMatchers("/exchange-terms").authenticated()
 				.antMatchers("/exchange-terms/{id}").authenticated()
 				.antMatchers("/exchange-terms/on-specific-date").authenticated()
