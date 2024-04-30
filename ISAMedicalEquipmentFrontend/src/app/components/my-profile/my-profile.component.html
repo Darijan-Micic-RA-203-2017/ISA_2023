@@ -109,10 +109,12 @@
                     <mat-hint align="start">Tačno 13 cifara</mat-hint>
                     <mat-hint align="end">{{ personalIdentityNumberInput.value?.length || 0 }}/13</mat-hint>
                 </mat-form-field>
-                <mat-radio-group class="genderRadioGroup" name="genderRadioGroup">
+                <!-- REFERENCE: https://stackoverflow.com/questions/70435739/typescript-angular-mat-radio-button-change-option-programmatically -->
+                <mat-radio-group class="genderRadioGroup" name="genderRadioGroup" [formControl]="formForUser.get('gender')">
                     <mat-label>Pol: </mat-label>
                     <mat-radio-button class="genderRadioButton" value="MALE">Muški</mat-radio-button>
                     <mat-radio-button class="genderRadioButton" value="FEMALE">Ženski</mat-radio-button>
+                    <mat-error *ngIf="formForUser.get('gender').invalid">{{ getErrorMessageFor('gender') }}</mat-error>
                 </mat-radio-group>
                 <mat-form-field>
                     <mat-label>Zanimanje: </mat-label>

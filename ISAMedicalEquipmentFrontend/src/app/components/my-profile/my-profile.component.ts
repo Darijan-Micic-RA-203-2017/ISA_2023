@@ -112,6 +112,8 @@ export class MyProfileComponent implements OnInit {
         validators: [Validators.required, Validators.pattern(/^[0-9]{13}$/)], 
         updateOn: 'change'
       }),
+      // REFERENCE: https://stackoverflow.com/questions/70435739/typescript-angular-mat-radio-button-change-option-programmatically
+      gender: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
       profession: new FormControl(''),
       companyName: new FormControl('')
     });
@@ -133,6 +135,7 @@ export class MyProfileComponent implements OnInit {
         country: this.procurementManager.country,
         phoneNumber: this.procurementManager.phoneNumber,
         personalIdentityNumber: this.procurementManager.personalIdentityNumber,
+        gender: this.procurementManager.gender,
         profession: this.procurementManager.profession,
         companyName: this.procurementManager.companyName
       });
@@ -150,6 +153,7 @@ export class MyProfileComponent implements OnInit {
         country: this.companyAdministrator.country,
         phoneNumber: this.companyAdministrator.phoneNumber,
         personalIdentityNumber: this.companyAdministrator.personalIdentityNumber,
+        gender: this.companyAdministrator.gender,
         profession: this.companyAdministrator.profession,
         companyName: this.companyAdministrator.companyName
       });
@@ -167,6 +171,7 @@ export class MyProfileComponent implements OnInit {
         country: this.systemAdministrator.country,
         phoneNumber: this.systemAdministrator.phoneNumber,
         personalIdentityNumber: this.systemAdministrator.personalIdentityNumber,
+        gender: this.systemAdministrator.gender,
         profession: this.systemAdministrator.profession,
         companyName: this.systemAdministrator.companyName
       });
@@ -277,6 +282,12 @@ export class MyProfileComponent implements OnInit {
       case 'country':
         if (this.formForUser.get('country').hasError('required')) {
           errorMessage = 'Morate uneti državu!';
+        }
+
+        break;
+      case 'gender':
+        if (this.formForUser.get('gender').hasError('required')) {
+          errorMessage = 'Morate odabrati pol!';
         }
 
         break;

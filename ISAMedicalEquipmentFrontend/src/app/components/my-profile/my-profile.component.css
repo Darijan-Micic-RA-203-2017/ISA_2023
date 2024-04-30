@@ -30,7 +30,7 @@ mat-form-field {
     margin-bottom: 15px;
 }
 
-.genderRadioButton {
+.genderRadioGroup > *:not(:first-child) {
     margin-left: 15px;
 }
 

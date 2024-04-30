@@ -62,6 +62,8 @@ export class RegistrationComponent implements OnInit {
         validators: [Validators.required, Validators.pattern(/^[0-9]{13}$/)], 
         updateOn: 'change'
       }),
+      // REFERENCE: https://stackoverflow.com/questions/70435739/typescript-angular-mat-radio-button-change-option-programmatically
+      gender: new FormControl('', { validators: [Validators.required], updateOn: 'change' }),
       profession: new FormControl(''),
       companyName: new FormControl('')
     });
@@ -69,17 +71,6 @@ export class RegistrationComponent implements OnInit {
 
   submitRegistrationRequest(): void {
     this.isSubmitted = true;
-
-    let genderRadioButtons = document.getElementsByClassName('genderRadioButton');
-    let checkedGenderRadioButton = Array.from(genderRadioButtons).find(
-        (radioButton) => radioButton.getAttribute('checked') == 'true');
-    let checkedGender: string = '';
-    if (checkedGenderRadioButton) {
-      let valueOfCheckedButton = checkedGenderRadioButton.getAttribute('value');
-      if (valueOfCheckedButton) {
-        checkedGender = valueOfCheckedButton;
-      }
-    }
 
     let profession = null;
     if (this.form.value.profession) {
@@ -93,7 +84,7 @@ export class RegistrationComponent implements OnInit {
     let procurementManagerRegistrationReq: ProcurementManagerRegistrationReq = new ProcurementManagerRegistrationReq(
         this.form.value.emailAddress, this.form.value.username, this.form.value.password, this.form.value.firstName, 
         this.form.value.lastName, this.form.value.residence, this.form.value.populatedPlace, this.form.value.country, 
-        this.form.value.phoneNumber, this.form.value.personalIdentityNumber, checkedGender, profession, companyName);
+        this.form.value.phoneNumber, this.form.value.personalIdentityNumber, this.form.value.gender, profession, companyName);
 
     this.userService.registerAsAProcurementManager(procurementManagerRegistrationReq).subscribe(
       data => {
@@ -229,6 +220,12 @@ export class RegistrationComponent implements OnInit {
       case 'country':
         if (this.form.get('country').hasError('required')) {
           errorMessage = 'Morate uneti državu!';
+        }
+
+        break;
+      case 'gender':
+        if (this.form.get('gender').hasError('required')) {
+          errorMessage = 'Morate odabrati pol!';
         }
 
         break;
