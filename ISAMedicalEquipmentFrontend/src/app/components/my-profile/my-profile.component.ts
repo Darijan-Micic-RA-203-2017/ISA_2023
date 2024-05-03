@@ -7,11 +7,14 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { DateTime } from 'luxon';
 import { ProcurementManager } from 'src/app/domain/user/procurement-manager';
 import { CompanyAdministrator } from 'src/app/domain/user/company-administrator';
 import { SystemAdministrator } from 'src/app/domain/user/system-administrator';
+import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
+import { Complaint } from 'src/app/domain/complaint/complaint';
 
 @Component({
   selector: 'app-my-profile',
@@ -21,12 +24,19 @@ import { SystemAdministrator } from 'src/app/domain/user/system-administrator';
 export class MyProfileComponent implements OnInit {
   formForUser: any;
   isFormForUserSubmitted: boolean = false;
+  hideNewPassword: boolean = true;
+  hideNewPasswordConfirmation: boolean = true;
   procurementManager: ProcurementManager | undefined = undefined;
   companyAdministrator: CompanyAdministrator | undefined = undefined;
   systemAdministrator: SystemAdministrator | undefined = undefined;
 
-  hideNewPassword: boolean = true;
-  hideNewPasswordConfirmation: boolean = true;
+  displayedColumnsOfTerms: string[] = ['startingTime', 'endingTime'];
+  terms: ExchangeTerm[] = [];
+  termsDataSource: MatTableDataSource<ExchangeTerm> = new MatTableDataSource<ExchangeTerm>(this.terms);
+
+  displayedColumnsOfComplaints: string[] = ['subject', 'status', 'answer'];
+  complaints: Complaint[] = [];
+  complaintsDataSource: MatTableDataSource<Complaint> = new MatTableDataSource<Complaint>(this.complaints);
 
   userId: number = 0;
 
@@ -139,6 +149,11 @@ export class MyProfileComponent implements OnInit {
         profession: this.procurementManager.profession,
         companyName: this.procurementManager.companyName
       });
+
+      this.terms = this.procurementManager.exchangeTerms;
+      this.termsDataSource = new MatTableDataSource<ExchangeTerm>(this.terms);
+      this.complaints = this.procurementManager.complaints;
+      this.complaintsDataSource = new MatTableDataSource<Complaint>(this.complaints);
     } else if (this.companyAdministrator) {
       this.formForUser.setValue({
         role: this.companyAdministrator.roles[0].name,
@@ -157,6 +172,11 @@ export class MyProfileComponent implements OnInit {
         profession: this.companyAdministrator.profession,
         companyName: this.companyAdministrator.companyName
       });
+
+      this.terms = this.companyAdministrator.exchangeTerms;
+      this.termsDataSource = new MatTableDataSource<ExchangeTerm>(this.terms);
+      this.complaints = this.companyAdministrator.complaints;
+      this.complaintsDataSource = new MatTableDataSource<Complaint>(this.complaints);
     } else if (this.systemAdministrator) {
       this.formForUser.setValue({
         role: this.systemAdministrator.roles[0].name,

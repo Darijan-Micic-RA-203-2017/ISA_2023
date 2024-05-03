@@ -1,142 +1,216 @@
-<div class="matCardDiv">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Profil</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
-            <form #userForm="ngForm" (ngSubmit)="editProfile()" *ngIf="!isFormForUserSubmitted" [formGroup]="formForUser">
-                <!-- REFERENCE: https://v12.material.angular.io/components/select/overview -->
-                <mat-form-field>
-                    <mat-label>Uloga: </mat-label>
-                    <mat-select #roleSelect [formControl]="formForUser.get('role')">
-                        <mat-option value="ROLE_PROCUREMENT_MANAGER">Menadžer nabavke</mat-option>
-                        <mat-option value="ROLE_COMPANY_ADMINISTRATOR">Administrator kompanije</mat-option>
-                        <mat-option value="ROLE_SYSTEM_ADMINISTRATOR">Administrator sistema</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formForUser.get('role').invalid">
-                        {{ getErrorMessageFor('role') }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Adresa elektronske pošte: </mat-label>
-                    <input matInput #emailAddressInput type="text" [formControl]="formForUser.get('emailAddress')">
-                    <mat-error *ngIf="formForUser.get('emailAddress').invalid">
-                        {{ getErrorMessageFor('emailAddress') }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Korisničko ime: </mat-label>
-                    <input matInput #usernameInput type="text" [formControl]="formForUser.get('username')">
-                    <mat-hint align="start" *ngIf="!formForUser.get('username').errors?.pattern">
-                        Najmanje 4, a najviše 32 znaka
-                    </mat-hint>
-                    <mat-hint align="end" *ngIf="!formForUser.get('username').errors?.pattern">
-                        {{ usernameInput.value?.length || 0 }}/32
-                    </mat-hint>
-                    <mat-error *ngIf="formForUser.get('username').invalid">{{ getErrorMessageFor('username') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Nova lozinka: </mat-label>
-                    <input matInput #newPasswordInput [type]="hideNewPassword ? 'password' : 'text'" 
-                        [formControl]="formForUser.get('newPassword')">
-                    <button mat-icon-button matSuffix type="button" (click)="hideNewPassword = !hideNewPassword">
-                        <mat-icon>{{ hideNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-                    </button>
-                    <mat-hint align="start" *ngIf="!formForUser.get('newPassword').errors?.passwordsDoNotMatch">
-                        Najmanje 4, a najviše 32 znaka
-                    </mat-hint>
-                    <mat-hint align="end" *ngIf="!formForUser.get('newPassword').errors?.passwordsDoNotMatch">
-                        {{ newPasswordInput.value?.length || 0 }}/32
-                    </mat-hint>
-                    <mat-error *ngIf="formForUser.get('newPassword').invalid">{{ getErrorMessageFor('newPassword') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Još jednom unesite novu lozinku: </mat-label>
-                    <input matInput #newPasswordConfirmationInput [type]="hideNewPasswordConfirmation ? 'password' : 'text'" 
-                        [formControl]="formForUser.get('newPasswordConfirmation')">
-                    <button mat-icon-button matSuffix type="button" 
-                        (click)="hideNewPasswordConfirmation = !hideNewPasswordConfirmation">
-                        <mat-icon>{{ hideNewPasswordConfirmation ? 'visibility_off' : 'visibility' }}</mat-icon>
-                    </button>
-                    <mat-hint align="start" *ngIf="!formForUser.get('newPasswordConfirmation').errors?.passwordsDoNotMatch">
-                        Najmanje 4, a najviše 32 znaka
-                    </mat-hint>
-                    <mat-hint align="end" *ngIf="!formForUser.get('newPasswordConfirmation').errors?.passwordsDoNotMatch">
-                        {{ newPasswordConfirmationInput.value?.length || 0 }}/32
-                    </mat-hint>
-                    <mat-error *ngIf="formForUser.get('newPasswordConfirmation').invalid">
-                        {{ getErrorMessageFor('newPasswordConfirmation') }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Ime: </mat-label>
-                    <input matInput #firstNameInput type="text" [formControl]="formForUser.get('firstName')">
-                    <mat-error *ngIf="formForUser.get('firstName').invalid">{{ getErrorMessageFor('firstName') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Prezime: </mat-label>
-                    <input matInput #lastNameInput type="text" [formControl]="formForUser.get('lastName')">
-                    <mat-error *ngIf="formForUser.get('lastName').invalid">{{ getErrorMessageFor('lastName') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Ulica i broj: </mat-label>
-                    <input matInput #residenceInput type="text" [formControl]="formForUser.get('residence')">
-                    <mat-error *ngIf="formForUser.get('residence').invalid">{{ getErrorMessageFor('residence') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Mesto: </mat-label>
-                    <input matInput #populatedPlaceInput type="text" [formControl]="formForUser.get('populatedPlace')">
-                    <mat-error *ngIf="formForUser.get('populatedPlace').invalid">
-                        {{ getErrorMessageFor('populatedPlace') }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Država: </mat-label>
-                    <input matInput #countryInput type="text" [formControl]="formForUser.get('country')">
-                    <mat-error *ngIf="formForUser.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Broj telefona: </mat-label>
-                    <input matInput #phoneNumberInput type="text" [formControl]="formForUser.get('phoneNumber')">
-                    <mat-hint align="start">Npr. +381 61250250</mat-hint>
-                    <mat-hint align="end">Mora biti unet u ovom formatu</mat-hint>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>JMBG: </mat-label>
-                    <input matInput #personalIdentityNumberInput type="text" 
-                        [formControl]="formForUser.get('personalIdentityNumber')">
-                    <mat-hint align="start">Tačno 13 cifara</mat-hint>
-                    <mat-hint align="end">{{ personalIdentityNumberInput.value?.length || 0 }}/13</mat-hint>
-                </mat-form-field>
-                <!-- REFERENCE: https://stackoverflow.com/questions/70435739/typescript-angular-mat-radio-button-change-option-programmatically -->
-                <mat-radio-group class="genderRadioGroup" name="genderRadioGroup" [formControl]="formForUser.get('gender')">
-                    <mat-label>Pol: </mat-label>
-                    <mat-radio-button class="genderRadioButton" value="MALE">Muški</mat-radio-button>
-                    <mat-radio-button class="genderRadioButton" value="FEMALE">Ženski</mat-radio-button>
-                    <mat-error *ngIf="formForUser.get('gender').invalid">{{ getErrorMessageFor('gender') }}</mat-error>
-                </mat-radio-group>
-                <mat-form-field>
-                    <mat-label>Zanimanje: </mat-label>
-                    <input matInput #professionInput type="text" [formControl]="formForUser.get('profession')">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Naziv bolnice/kompanije: </mat-label>
-                    <input matInput #companyNameInput type="text" [formControl]="formForUser.get('companyName')">
-                </mat-form-field>
+<div class="myProfileDiv">
+    <div class="profileCardDiv">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Profil</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <!-- REFERENCE: https://v12.material.angular.io/components/form-field/overview -->
+                <form #userForm="ngForm" (ngSubmit)="editProfile()" *ngIf="!isFormForUserSubmitted" [formGroup]="formForUser">
+                    <!-- REFERENCE: https://v12.material.angular.io/components/select/overview -->
+                    <mat-form-field>
+                        <mat-label>Uloga: </mat-label>
+                        <mat-select #roleSelect [formControl]="formForUser.get('role')">
+                            <mat-option value="ROLE_PROCUREMENT_MANAGER">Menadžer nabavke</mat-option>
+                            <mat-option value="ROLE_COMPANY_ADMINISTRATOR">Administrator kompanije</mat-option>
+                            <mat-option value="ROLE_SYSTEM_ADMINISTRATOR">Administrator sistema</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formForUser.get('role').invalid">{{ getErrorMessageFor('role') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Adresa elektronske pošte: </mat-label>
+                        <input matInput #emailAddressInput type="text" [formControl]="formForUser.get('emailAddress')">
+                        <mat-error *ngIf="formForUser.get('emailAddress').invalid">{{ getErrorMessageFor('emailAddress') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Korisničko ime: </mat-label>
+                        <input matInput #usernameInput type="text" [formControl]="formForUser.get('username')">
+                        <mat-hint align="start" *ngIf="!formForUser.get('username').errors?.pattern">
+                            Najmanje 4, a najviše 32 znaka
+                        </mat-hint>
+                        <mat-hint align="end" *ngIf="!formForUser.get('username').errors?.pattern">
+                            {{ usernameInput.value?.length || 0 }}/32
+                        </mat-hint>
+                        <mat-error *ngIf="formForUser.get('username').invalid">{{ getErrorMessageFor('username') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Nova lozinka: </mat-label>
+                        <input matInput #newPasswordInput [type]="hideNewPassword ? 'password' : 'text'" 
+                            [formControl]="formForUser.get('newPassword')">
+                        <button mat-icon-button matSuffix type="button" (click)="hideNewPassword = !hideNewPassword">
+                            <mat-icon>{{ hideNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                        <mat-hint align="start" *ngIf="!formForUser.get('newPassword').errors?.passwordsDoNotMatch">
+                            Najmanje 4, a najviše 32 znaka
+                        </mat-hint>
+                        <mat-hint align="end" *ngIf="!formForUser.get('newPassword').errors?.passwordsDoNotMatch">
+                            {{ newPasswordInput.value?.length || 0 }}/32
+                        </mat-hint>
+                        <mat-error *ngIf="formForUser.get('newPassword').invalid">{{ getErrorMessageFor('newPassword') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Još jednom unesite novu lozinku: </mat-label>
+                        <input matInput #newPasswordConfirmationInput [type]="hideNewPasswordConfirmation ? 'password' : 'text'" 
+                            [formControl]="formForUser.get('newPasswordConfirmation')">
+                        <button mat-icon-button matSuffix type="button" 
+                            (click)="hideNewPasswordConfirmation = !hideNewPasswordConfirmation">
+                            <mat-icon>{{ hideNewPasswordConfirmation ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                        <mat-hint align="start" *ngIf="!formForUser.get('newPasswordConfirmation').errors?.passwordsDoNotMatch">
+                            Najmanje 4, a najviše 32 znaka
+                        </mat-hint>
+                        <mat-hint align="end" *ngIf="!formForUser.get('newPasswordConfirmation').errors?.passwordsDoNotMatch">
+                            {{ newPasswordConfirmationInput.value?.length || 0 }}/32
+                        </mat-hint>
+                        <mat-error *ngIf="formForUser.get('newPasswordConfirmation').invalid">
+                            {{ getErrorMessageFor('newPasswordConfirmation') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ime: </mat-label>
+                        <input matInput #firstNameInput type="text" [formControl]="formForUser.get('firstName')">
+                        <mat-error *ngIf="formForUser.get('firstName').invalid">{{ getErrorMessageFor('firstName') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Prezime: </mat-label>
+                        <input matInput #lastNameInput type="text" [formControl]="formForUser.get('lastName')">
+                        <mat-error *ngIf="formForUser.get('lastName').invalid">{{ getErrorMessageFor('lastName') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Ulica i broj: </mat-label>
+                        <input matInput #residenceInput type="text" [formControl]="formForUser.get('residence')">
+                        <mat-error *ngIf="formForUser.get('residence').invalid">{{ getErrorMessageFor('residence') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Mesto: </mat-label>
+                        <input matInput #populatedPlaceInput type="text" [formControl]="formForUser.get('populatedPlace')">
+                        <mat-error *ngIf="formForUser.get('populatedPlace').invalid">{{ getErrorMessageFor('populatedPlace') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Država: </mat-label>
+                        <input matInput #countryInput type="text" [formControl]="formForUser.get('country')">
+                        <mat-error *ngIf="formForUser.get('country').invalid">{{ getErrorMessageFor('country') }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Broj telefona: </mat-label>
+                        <input matInput #phoneNumberInput type="text" [formControl]="formForUser.get('phoneNumber')">
+                        <mat-hint align="start">Npr. +381 61250250</mat-hint>
+                        <mat-hint align="end">Mora biti unet u ovom formatu</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>JMBG: </mat-label>
+                        <input matInput #personalIdentityNumberInput type="text" 
+                            [formControl]="formForUser.get('personalIdentityNumber')">
+                        <mat-hint align="start">Tačno 13 cifara</mat-hint>
+                        <mat-hint align="end">{{ personalIdentityNumberInput.value?.length || 0 }}/13</mat-hint>
+                    </mat-form-field>
+                    <!-- REFERENCE: https://stackoverflow.com/questions/70435739/typescript-angular-mat-radio-button-change-option-programmatically -->
+                    <mat-radio-group class="genderRadioGroup" name="genderRadioGroup" [formControl]="formForUser.get('gender')">
+                        <mat-label>Pol: </mat-label>
+                        <mat-radio-button class="genderRadioButton" value="MALE">Muški</mat-radio-button>
+                        <mat-radio-button class="genderRadioButton" value="FEMALE">Ženski</mat-radio-button>
+                        <mat-error *ngIf="formForUser.get('gender').invalid">{{ getErrorMessageFor('gender') }}</mat-error>
+                    </mat-radio-group>
+                    <mat-form-field>
+                        <mat-label>Zanimanje: </mat-label>
+                        <input matInput #professionInput type="text" [formControl]="formForUser.get('profession')">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Naziv bolnice/kompanije: </mat-label>
+                        <input matInput #companyNameInput type="text" [formControl]="formForUser.get('companyName')">
+                    </mat-form-field>
+                    <div class="buttonDiv">
+                        <button [disabled]="formForUser.invalid" color="accent" mat-raised-button type="submit">
+                            Izmeni podatke
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
                 <div class="buttonDiv">
-                    <button [disabled]="formForUser.invalid" color="accent" mat-raised-button type="submit">Izmeni podatke</button>
+                    <button [disabled]="isFormForUserSubmitted" color="primary" mat-raised-button mat-button 
+                        type="button" routerLink="/">Početna stranica</button>
                 </div>
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <div class="buttonDiv">
-                <button [disabled]="isFormForUserSubmitted" color="primary" mat-raised-button mat-button 
-                    type="button" routerLink="/">Početna stranica</button>
+            </mat-card-actions>
+            <div class="spinnerDiv">
+                <mat-progress-spinner *ngIf="isFormForUserSubmitted" mode="indeterminate"></mat-progress-spinner>
             </div>
-        </mat-card-actions>
-        <div class="spinnerDiv">
-            <mat-progress-spinner *ngIf="isFormForUserSubmitted" mode="indeterminate"></mat-progress-spinner>
-        </div>
-    </mat-card>
+        </mat-card>
+    </div>
+    <div class="termsAndComplaintsDiv">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Termini</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="termsDataSource" id="termsTable" class="mat-elevation-z8">
+                    <ng-container matColumnDef="startingTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Početak
+                        </th>
+                        <td mat-cell *matCellDef="let term">
+                            {{ term.startingTime }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>Ukupan broj termina:</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="endingTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Završetak
+                        </th>
+                        <td mat-cell *matCellDef="let term">
+                            {{ term.endingTime }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>{{ termsDataSource.data.length }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsOfTerms"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsOfTerms;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumnsOfTerms"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Žalbe</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="complaintsDataSource" id="complaintsTable" class="mat-elevation-z8">
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Subjekat
+                        </th>
+                        <td mat-cell *matCellDef="let complaint">
+                            {{ complaint.subject }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>Ukupan broj žalbi:</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let complaint">
+                            {{ complaint.status }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="answer">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Odgovor
+                        </th>
+                        <td mat-cell *matCellDef="let complaint">
+                            {{ complaint.answer }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>{{ complaintsDataSource.data.length }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsOfComplaints"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsOfComplaints;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumnsOfComplaints"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
