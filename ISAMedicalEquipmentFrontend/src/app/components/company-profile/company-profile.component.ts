@@ -114,8 +114,7 @@ export class CompanyProfileComponent implements OnInit {
             for (let equ of this.shownMedicalEquipmentOfCompany) {
               this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
             }
-            this.equipmentDataSource = 
-                new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
+            this.equipmentDataSource.data = this.shownDetailsOfOrderWithEquipment;
           },
           (errorResponse: HttpErrorResponse) => {
             console.log(`Error on retrieving all medical equipment of company!\n\n${errorResponse.error.textMessage}`);
@@ -220,8 +219,7 @@ export class CompanyProfileComponent implements OnInit {
       for (let equ of this.shownMedicalEquipmentOfCompany) {
         this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
       }
-      this.equipmentDataSource = 
-          new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
+      this.equipmentDataSource.data = this.shownDetailsOfOrderWithEquipment;
 
       return;
     }
@@ -236,8 +234,7 @@ export class CompanyProfileComponent implements OnInit {
         for (let equ of this.shownMedicalEquipmentOfCompany) {
           this.shownDetailsOfOrderWithEquipment.push(new DetailsOfOrderWithEquipment(0, 0, equ, 0, 0));
         }
-        this.equipmentDataSource = 
-            new MatTableDataSource<DetailsOfOrderWithEquipment>(this.shownDetailsOfOrderWithEquipment);
+        this.equipmentDataSource.data = this.shownDetailsOfOrderWithEquipment;
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on search medical equipment of company ${this.company.name} by name!\n\n${errorResponse.error.textMessage}`);

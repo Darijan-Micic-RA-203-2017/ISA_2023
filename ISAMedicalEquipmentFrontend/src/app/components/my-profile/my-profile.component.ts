@@ -151,9 +151,9 @@ export class MyProfileComponent implements OnInit {
       });
 
       this.terms = this.procurementManager.exchangeTerms;
-      this.termsDataSource = new MatTableDataSource<ExchangeTerm>(this.terms);
+      this.termsDataSource.data = this.terms;
       this.complaints = this.procurementManager.complaints;
-      this.complaintsDataSource = new MatTableDataSource<Complaint>(this.complaints);
+      this.complaintsDataSource.data = this.complaints;
     } else if (this.companyAdministrator) {
       this.formForUser.setValue({
         role: this.companyAdministrator.roles[0].name,
@@ -174,9 +174,9 @@ export class MyProfileComponent implements OnInit {
       });
 
       this.terms = this.companyAdministrator.exchangeTerms;
-      this.termsDataSource = new MatTableDataSource<ExchangeTerm>(this.terms);
+      this.termsDataSource.data = this.terms;
       this.complaints = this.companyAdministrator.complaints;
-      this.complaintsDataSource = new MatTableDataSource<Complaint>(this.complaints);
+      this.complaintsDataSource.data = this.complaints;
     } else if (this.systemAdministrator) {
       this.formForUser.setValue({
         role: this.systemAdministrator.roles[0].name,

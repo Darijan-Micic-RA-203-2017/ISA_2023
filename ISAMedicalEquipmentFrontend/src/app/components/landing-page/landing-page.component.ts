@@ -54,7 +54,7 @@ export class LandingPageComponent implements OnInit {
 
         this.allMedicalEquipmentCompanies = data;
         this.shownMedicalEquipmentCompanies = data;
-        this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+        this.companiesDataSource.data = this.shownMedicalEquipmentCompanies;
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on retrieving all medical equipment companies!\n\n${errorResponse.error.textMessage}`);
@@ -66,7 +66,7 @@ export class LandingPageComponent implements OnInit {
 
         this.allMedicalEquipment = data;
         this.shownMedicalEquipment = data;
-        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+        this.equipmentDataSource.data = this.shownMedicalEquipment;
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on retrieving all medical equipment!\n\n${errorResponse.error.textMessage}`);
@@ -77,7 +77,7 @@ export class LandingPageComponent implements OnInit {
   searchCompaniesByNameOrPopulatedPlace(): void {
     if (!this.companyForm.value.searchCriterion) {
       this.shownMedicalEquipmentCompanies = this.allMedicalEquipmentCompanies;
-      this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+      this.companiesDataSource.data = this.shownMedicalEquipmentCompanies;
 
       return;
     }
@@ -89,7 +89,7 @@ export class LandingPageComponent implements OnInit {
         console.log('Search medical equipment companies by name or populated place response: ', data);
 
         this.shownMedicalEquipmentCompanies = data;
-        this.companiesDataSource = new MatTableDataSource<MedicalEquipmentCompany>(this.shownMedicalEquipmentCompanies);
+        this.companiesDataSource.data = this.shownMedicalEquipmentCompanies;
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on search medical equipment companies by name or populated place!\n\n${errorResponse.error.textMessage}`);
@@ -100,7 +100,7 @@ export class LandingPageComponent implements OnInit {
   searchEquipmentByName(): void {
     if (!this.equipmentForm.value.searchCriterion) {
       this.shownMedicalEquipment = this.allMedicalEquipment;
-      this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+      this.equipmentDataSource.data = this.shownMedicalEquipment;
 
       return;
     }
@@ -112,7 +112,7 @@ export class LandingPageComponent implements OnInit {
         console.log('Search medical equipment by name response: ', data);
 
         this.shownMedicalEquipment = data;
-        this.equipmentDataSource = new MatTableDataSource<MedicalEquipment>(this.shownMedicalEquipment);
+        this.equipmentDataSource.data = this.shownMedicalEquipment;
       },
       (errorResponse: HttpErrorResponse) => {
         console.log(`Error on search medical equipment by name!\n\n${errorResponse.error.textMessage}`);
