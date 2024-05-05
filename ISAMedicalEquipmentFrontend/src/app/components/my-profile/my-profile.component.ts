@@ -56,6 +56,12 @@ export class MyProfileComponent implements OnInit {
         if (data.employedSince) {
           data.employedSince = DateTime.fromMillis(data.employedSince);
         }
+        if (data.exchangeTerms) {
+          for (let t of data.exchangeTerms) {
+            t.startingTime = DateTime.fromMillis(t.startingTime);
+            t.endingTime = DateTime.fromMillis(t.endingTime);
+          }
+        }
 
         // REFERENCE: https://stackoverflow.com/questions/45964008/typescript-instanceof-not-working?noredirect=1&lq=1
         if (data.roles[0].name == 'ROLE_PROCUREMENT_MANAGER') {
@@ -312,9 +318,98 @@ export class MyProfileComponent implements OnInit {
 
         break;
       default:
-        errorMessage = '';
+        break;
     }
 
     return errorMessage;
+  }
+
+  showDateTime(dateTime: DateTime): string {
+    let weekday: string = '';
+    switch (dateTime.weekday) {
+      case 1:
+        weekday = 'Ponedeljak';
+
+        break;
+      case 2:
+        weekday = 'Utorak';
+
+        break;
+      case 3:
+        weekday = 'Sreda';
+
+        break;
+      case 4:
+        weekday = 'Četvrtak';
+
+        break;
+      case 5:
+        weekday = 'Petak';
+
+        break;
+      case 6:
+        weekday = 'Subota';
+
+        break;
+      case 7:
+        weekday = 'Nedelja';
+
+        break;
+      default:
+        break;
+    }
+    let hour: string = dateTime.hour.toString();
+    if (hour.length == 1) {
+      hour = '0'.concat(hour);
+    }
+    let minute: string = dateTime.minute.toString();
+    if (minute.length == 1) {
+      minute = '0'.concat(minute);
+    }
+
+    let dateTimeAsString: string = weekday.concat(', ', dateTime.day.toString(), '.', dateTime.month.toString(), '.', 
+        dateTime.year.toString(), '. u ', hour, ':', minute);
+
+    return dateTimeAsString;
+  }
+
+  showSubjectOfComplaint(subject: string): string {
+    let subjectOfComplaint: string = '';
+    switch (subject) {
+      case 'COMPANY':
+        subjectOfComplaint = 'Kompanija';
+
+        break;
+      case 'COMPANY_ADMINISTRATOR':
+        subjectOfComplaint = 'Administrator kompanije';
+
+        break;
+      default:
+        break;
+    }
+
+    return subjectOfComplaint;
+  }
+
+  showStatusOfComplaint(status: string): string {
+    let statusOfComplaint: string = '';
+    switch (status) {
+      case 'UNRESOLVED':
+        statusOfComplaint = 'Nerešena';
+
+        break;
+      case 'ACCEPTED':
+        statusOfComplaint = 'Prihvaćena';
+
+        break;
+      case 'DENIED':
+        statusOfComplaint = 'Odbijena';
+
+        break;
+      default:
+        break;
+    }
+
+    return statusOfComplaint;
   }
 }

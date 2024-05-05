@@ -149,7 +149,7 @@
                             Početak
                         </th>
                         <td mat-cell *matCellDef="let term">
-                            {{ term.startingTime }}
+                            {{ showDateTime(term.startingTime) }}
                         </td>
                         <td mat-footer-cell *matFooterCellDef>Ukupan broj termina:</td>
                     </ng-container>
@@ -159,7 +159,7 @@
                             Završetak
                         </th>
                         <td mat-cell *matCellDef="let term">
-                            {{ term.endingTime }}
+                            {{ showDateTime(term.endingTime) }}
                         </td>
                         <td mat-footer-cell *matFooterCellDef>{{ termsDataSource.data.length }}</td>
                     </ng-container>
@@ -181,7 +181,7 @@
                             Subjekat
                         </th>
                         <td mat-cell *matCellDef="let complaint">
-                            {{ complaint.subject }}
+                            {{ showSubjectOfComplaint(complaint.subject) }}
                         </td>
                         <td mat-footer-cell *matFooterCellDef>Ukupan broj žalbi:</td>
                     </ng-container>
@@ -191,7 +191,7 @@
                             Status
                         </th>
                         <td mat-cell *matCellDef="let complaint">
-                            {{ complaint.status }}
+                            {{ showStatusOfComplaint(complaint.status) }}
                         </td>
                         <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
