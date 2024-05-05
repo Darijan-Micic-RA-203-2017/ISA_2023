@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
 
         break;
       default:
-        errorMessage = '';
+        break;
     }
 
     return errorMessage;

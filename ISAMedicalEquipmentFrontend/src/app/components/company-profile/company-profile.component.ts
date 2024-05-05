@@ -543,7 +543,7 @@ export class CompanyProfileComponent implements OnInit {
 
         break;
       default:
-        errorMessage = '';
+        break;
     }
 
     return errorMessage;

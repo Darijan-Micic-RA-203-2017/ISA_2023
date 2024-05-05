@@ -200,8 +200,8 @@ public class UserController {
 		userService.getProcurementManagerService().activateAccount(
 				codeOfNewRegisteredUserWrapper.getUserCode());
 		
-		System.out.println("\nAccount of user with username \"" + procurementManager.getUsername() + 
-				"\" has been successfully activated.\n");
+		System.out.println("\nAccount of user with username \"" + procurementManager.getUsername() 
+				+ "\" has been successfully activated.\n");
 		
 		return new ResponseEntity<SimpleTextResponseDTO>(
 				new SimpleTextResponseDTO("Account of user with username \"" + 

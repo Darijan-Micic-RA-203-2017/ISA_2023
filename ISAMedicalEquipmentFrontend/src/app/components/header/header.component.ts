@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
 
         break;
       default:
-        roleName = '';
+        break;
     }
 
     return roleName;

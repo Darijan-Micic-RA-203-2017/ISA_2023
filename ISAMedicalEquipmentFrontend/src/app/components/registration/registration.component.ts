@@ -230,7 +230,7 @@ export class RegistrationComponent implements OnInit {
 
         break;
       default:
-        errorMessage = '';
+        break;
     }
 
     return errorMessage;
