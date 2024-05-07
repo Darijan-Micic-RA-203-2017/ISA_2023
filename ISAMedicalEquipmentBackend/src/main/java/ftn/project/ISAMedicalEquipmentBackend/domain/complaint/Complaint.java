@@ -1,5 +1,7 @@
 package ftn.project.ISAMedicalEquipmentBackend.domain.complaint;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,6 +29,9 @@ public class Complaint {
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	
+	@Column(name = "submitted_at", nullable = false)
+	private Timestamp submittedAt;
+	
 	@Column(name = "content", nullable = false, columnDefinition = "text")
 	private String content;
 	
@@ -40,6 +45,9 @@ public class Complaint {
 	
 	@Column(name = "answer", columnDefinition = "text")
 	private String answer;
+	
+	@Column(name = "answered_at")
+	private Timestamp answeredAt;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "procurement_manager_id")
@@ -55,14 +63,17 @@ public class Complaint {
 	
 	public Complaint() {}
 	
-	public Complaint(long id, String content, ComplaintSubject subject, ComplaintStatus status, 
-			String answer, ProcurementManager procurementManager, 
-			MedicalEquipmentCompany company, CompanyAdministrator companyAdministrator) {
+	public Complaint(long id, Timestamp submittedAt, String content, ComplaintSubject subject, 
+			ComplaintStatus status, String answer, Timestamp answeredAt, 
+			ProcurementManager procurementManager, MedicalEquipmentCompany company, 
+			CompanyAdministrator companyAdministrator) {
 		this.id = id;
+		this.submittedAt = submittedAt;
 		this.content = content;
 		this.subject = subject;
 		this.status = status;
 		this.answer = answer;
+		this.answeredAt = answeredAt;
 		this.procurementManager = procurementManager;
 		this.company = company;
 		this.companyAdministrator = companyAdministrator;
@@ -74,6 +85,14 @@ public class Complaint {
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public Timestamp getSubmittedAt() {
+		return submittedAt;
+	}
+	
+	public void setSubmittedAt(Timestamp submittedAt) {
+		this.submittedAt = submittedAt;
 	}
 	
 	public String getContent() {
@@ -108,6 +127,14 @@ public class Complaint {
 		this.answer = answer;
 	}
 	
+	public Timestamp getAnsweredAt() {
+		return answeredAt;
+	}
+	
+	public void setAnsweredAt(Timestamp answeredAt) {
+		this.answeredAt = answeredAt;
+	}
+	
 	public ProcurementManager getProcurementManager() {
 		return procurementManager;
 	}
@@ -137,10 +164,12 @@ public class Complaint {
 		final int prime = 47;
 		int result = 1;
 		
+		result = prime * result + ((getSubmittedAt() == null) ? 0 : getSubmittedAt().hashCode());
 		result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
 		result = prime * result + ((getSubject() == null) ? 0 : getSubject().hashCode());
 		result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
 		result = prime * result + ((getAnswer() == null) ? 0 : getAnswer().hashCode());
+		result = prime * result + ((getAnsweredAt() == null) ? 0 : getAnsweredAt().hashCode());
 		
 		return result;
 	}
@@ -158,6 +187,14 @@ public class Complaint {
 		Complaint other = (Complaint) obj;
 		
 		if (getId() != other.getId()) {
+			return false;
+		}
+		
+		if (getSubmittedAt() == null) {
+			if (other.getSubmittedAt() != null) {
+				return false;
+			}
+		} else if (!getSubmittedAt().equals(other.getSubmittedAt())) {
 			return false;
 		}
 		
@@ -182,6 +219,14 @@ public class Complaint {
 				return false;
 			}
 		} else if (!getAnswer().equals(other.getAnswer())) {
+			return false;
+		}
+		
+		if (getAnsweredAt() == null) {
+			if (other.getAnsweredAt() != null) {
+				return false;
+			}
+		} else if (!getAnsweredAt().equals(other.getAnsweredAt())) {
 			return false;
 		}
 		

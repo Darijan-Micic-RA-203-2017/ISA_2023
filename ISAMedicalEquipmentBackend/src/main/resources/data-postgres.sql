@@ -110,8 +110,9 @@ INSERT INTO User_roles_join_table(user_id, role_id) VALUES (4, 2);
 INSERT INTO User_roles_join_table(user_id, role_id) VALUES (5, 3);
 
 -- Complaints:
-INSERT INTO Complaints(id, content, subject, status, answer, procurement_manager_id, company_id, 
-	company_administrator_id) VALUES (1, 'Popusti prekratko traju.', 'COMPANY', 'UNRESOLVED', null, 
+INSERT INTO Complaints(id, submitted_at, content, subject, status, answer, answered_at, 
+	procurement_manager_id, company_id, company_administrator_id) VALUES (1, 
+	'2024-04-28 09:07:32.000+02', 'Popusti prekratko traju.', 'COMPANY', 'UNRESOLVED', null, null, 
 	1, 1, 3);
 
 -- Types of medical equipment:

@@ -176,6 +176,16 @@
             </mat-card-header>
             <mat-card-content>
                 <table mat-table [dataSource]="complaintsDataSource" id="complaintsTable" class="mat-elevation-z8">
+                    <ng-container matColumnDef="submittedAt">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Podneta u
+                        </th>
+                        <td mat-cell *matCellDef="let complaint">
+                            {{ showDateTime(complaint.submittedAt) }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>Ukupan broj žalbi:</td>
+                    </ng-container>
+
                     <ng-container matColumnDef="subject">
                         <th mat-header-cell *matHeaderCellDef>
                             Subjekat
@@ -183,7 +193,7 @@
                         <td mat-cell *matCellDef="let complaint">
                             {{ showSubjectOfComplaint(complaint.subject) }}
                         </td>
-                        <td mat-footer-cell *matFooterCellDef>Ukupan broj žalbi:</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
                     </ng-container>
 
                     <ng-container matColumnDef="status">
@@ -202,6 +212,16 @@
                         </th>
                         <td mat-cell *matCellDef="let complaint">
                             {{ complaint.answer }}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="answeredAt">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Odgovoreno u
+                        </th>
+                        <td mat-cell *matCellDef="let complaint">
+                            {{ showDateTime(complaint.answeredAt) }}
                         </td>
                         <td mat-footer-cell *matFooterCellDef>{{ complaintsDataSource.data.length }}</td>
                     </ng-container>

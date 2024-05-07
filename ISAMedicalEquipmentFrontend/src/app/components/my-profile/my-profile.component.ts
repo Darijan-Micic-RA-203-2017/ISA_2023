@@ -34,7 +34,7 @@ export class MyProfileComponent implements OnInit {
   terms: ExchangeTerm[] = [];
   termsDataSource: MatTableDataSource<ExchangeTerm> = new MatTableDataSource<ExchangeTerm>(this.terms);
 
-  displayedColumnsOfComplaints: string[] = ['subject', 'status', 'answer'];
+  displayedColumnsOfComplaints: string[] = ['submittedAt', 'subject', 'status', 'answer', 'answeredAt'];
   complaints: Complaint[] = [];
   complaintsDataSource: MatTableDataSource<Complaint> = new MatTableDataSource<Complaint>(this.complaints);
 
@@ -60,6 +60,14 @@ export class MyProfileComponent implements OnInit {
           for (let t of data.exchangeTerms) {
             t.startingTime = DateTime.fromMillis(t.startingTime);
             t.endingTime = DateTime.fromMillis(t.endingTime);
+          }
+        }
+        if (data.complaints) {
+          for (let c of data.complaints) {
+            c.submittedAt = DateTime.fromMillis(c.submittedAt);
+            if (c.answeredAt) {
+              c.answeredAt = DateTime.fromMillis(c.answeredAt);
+            }
           }
         }
 
@@ -324,7 +332,11 @@ export class MyProfileComponent implements OnInit {
     return errorMessage;
   }
 
-  showDateTime(dateTime: DateTime): string {
+  showDateTime(dateTime: DateTime | null): string {
+    if (!dateTime) {
+      return '';
+    }
+
     let weekday: string = '';
     switch (dateTime.weekday) {
       case 1:

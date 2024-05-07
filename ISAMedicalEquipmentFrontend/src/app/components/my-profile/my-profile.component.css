@@ -6,21 +6,21 @@
     align-items: flex-start;
     height: 100%;
     /* REFERENCE: https://stackoverflow.com/questions/14590913/div-extends-beyond-screen */
-    width: calc(100% - 4vw);
-    margin-left: 2vw;
-    margin-right: 2vw;
+    width: calc(100% - 2vw);
+    margin-left: 1vw;
+    margin-right: 1vw;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .myProfileDiv > *:first-child {
     box-sizing: border-box;
-    width: 48%;
+    width: 49%;
 }
 
 .myProfileDiv > *:last-child {
     box-sizing: border-box;
-    width: 48%;
+    width: 49%;
 }
 
 mat-card {
@@ -107,12 +107,8 @@ tr.mat-footer-row {
     color: rgba(0, 0, 0, 1);
 }
 
-#termsTable .mat-column-startingTime {
-    width: 50%;
-}
-
-#termsTable .mat-column-endingTime {
-    width: 50%;
+#complaintsTable .mat-column-submittedAt {
+    width: 25%;
 }
 
 #complaintsTable .mat-column-subject {
@@ -120,9 +116,13 @@ tr.mat-footer-row {
 }
 
 #complaintsTable .mat-column-status {
-    width: 40%;
+    width: 15%;
 }
 
 #complaintsTable .mat-column-answer {
-    width: 40%;
+    width: 20%;
+}
+
+#complaintsTable .mat-column-answeredAt {
+    width: 20%;
 }

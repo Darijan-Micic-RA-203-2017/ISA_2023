@@ -1,5 +1,6 @@
 package ftn.project.ISAMedicalEquipmentBackend.converter.complaint;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +31,18 @@ public class ComplaintConverter {
 		}
 		
 		long id = complaint.getId();
+		Timestamp submittedAt = complaint.getSubmittedAt();
 		String content = complaint.getContent();
 		ComplaintSubject subject = complaint.getSubject();
 		ComplaintStatus status = complaint.getStatus();
 		String answer = complaint.getAnswer();
+		Timestamp answeredAt = complaint.getAnsweredAt();
 		long procurementManagerId = complaint.getProcurementManager().getId();
 		long companyId = complaint.getCompany().getId();
 		long companyAdministratorId = complaint.getCompanyAdministrator().getId();
 		
-		ComplaintDTO dto = new ComplaintDTO(id, content, subject, status, answer, 
-				procurementManagerId, companyId, companyAdministratorId);
+		ComplaintDTO dto = new ComplaintDTO(id, submittedAt, content, subject, status, answer, 
+				answeredAt, procurementManagerId, companyId, companyAdministratorId);
 		
 		return dto;
 	}

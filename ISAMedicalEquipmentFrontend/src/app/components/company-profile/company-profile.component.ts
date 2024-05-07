@@ -335,9 +335,9 @@ export class CompanyProfileComponent implements OnInit {
         console.log('Retrieving all exchange terms on selected date of company response: ', data);
         for (let unconvertedOccupiedTerm of data) {
           let convertedOccupiedTerm: ExchangeTerm = new ExchangeTerm(unconvertedOccupiedTerm.id, 
-              DateTime.fromMillis(unconvertedOccupiedTerm.startingTime), 
-              DateTime.fromMillis(unconvertedOccupiedTerm.endingTime), unconvertedOccupiedTerm.procurementManagerId, 
-              unconvertedOccupiedTerm.companyId, unconvertedOccupiedTerm.companyAdministratorId);
+              unconvertedOccupiedTerm.startingTime, unconvertedOccupiedTerm.endingTime, 
+              unconvertedOccupiedTerm.procurementManagerId, unconvertedOccupiedTerm.companyId, 
+              unconvertedOccupiedTerm.companyAdministratorId);
 
           this.occupiedTermsOnSelectedDate.push(convertedOccupiedTerm);
         }
