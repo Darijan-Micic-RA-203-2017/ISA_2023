@@ -96,7 +96,7 @@ export class MyProfileComponent implements OnInit {
             Validators.pattern(/^ROLE_PROCUREMENT_MANAGER$|^ROLE_COMPANY_ADMINISTRATOR$|^ROLE_SYSTEM_ADMINISTRATOR$/)], 
         updateOn: 'change'
       }),
-      emailAddress: new FormControl('', {
+      emailAddress: new FormControl({ value: '', disabled: true }, {
         validators: [Validators.required, Validators.pattern(/^[a-z0-9\_\-\.]+@[a-z]+\.[a-z\.]+$/)], 
         updateOn: 'change'
       }),
