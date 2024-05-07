@@ -137,7 +137,7 @@
             </div>
         </mat-card>
     </div>
-    <div class="termsAndComplaintsDiv">
+    <div *ngIf="!systemAdministrator" class="termsAndComplaintsDiv">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Termini</mat-card-title>
