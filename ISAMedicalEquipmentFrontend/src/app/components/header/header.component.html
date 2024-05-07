@@ -2,6 +2,7 @@
     <button type="button" style="font-size: 22px" mat-button [routerLink]="['/']">
         Medicinska oprema
     </button>
+    <button *ngIf="userId" type="button" mat-raised-button mat-button [routerLink]="'/my-profile'">Moj profil</button>
 
     <span class="spacer"></span>
 
