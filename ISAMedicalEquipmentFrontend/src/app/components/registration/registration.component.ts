@@ -72,11 +72,11 @@ export class RegistrationComponent implements OnInit {
   submitRegistrationRequest(): void {
     this.isSubmitted = true;
 
-    let profession = null;
+    let profession: string | null = null;
     if (this.form.value.profession) {
       profession = this.form.value.profession;
     }
-    let companyName = null;
+    let companyName: string | null = null;
     if (this.form.value.companyName) {
       companyName = this.form.value.companyName;
     }
@@ -122,8 +122,8 @@ export class RegistrationComponent implements OnInit {
   passwordsDoNotMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       let form = control.parent;
-      let enteredPassword = form?.get('password')?.value;
-      let enteredPasswordConfirmation = form?.get('passwordConfirmation')?.value;
+      let enteredPassword: string = form?.get('password')?.value;
+      let enteredPasswordConfirmation: string = form?.get('passwordConfirmation')?.value;
 
       if (enteredPassword || enteredPasswordConfirmation) {
         if (enteredPassword !== enteredPasswordConfirmation) {

@@ -4,8 +4,20 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.Gender;
 
+// REFERENCE: https://stackoverflow.com/questions/48733012/spring-requestbody-inheritance
+// REFERENCE: https://stackoverflow.com/questions/27170298/spring-reponsebody-requestbody-with-abstract-class?rq=3
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, 
+	property = "type", visible = false)
+@JsonSubTypes(value = {
+	@JsonSubTypes.Type(name = ".ProcurementManagerDTO", value = ProcurementManagerDTO.class), 
+	@JsonSubTypes.Type(name = ".CompanyAdministratorDTO", value = CompanyAdministratorDTO.class), 
+	@JsonSubTypes.Type(name = ".SystemAdministratorDTO", value = SystemAdministratorDTO.class)
+})
 public class UserDTO {
 	protected long id;
 	protected List<UserRoleDTO> roles;

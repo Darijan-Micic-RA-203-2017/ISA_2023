@@ -4,20 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.SystemAdministratorRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.SystemAdministratorService;
 
 @Service
 public class SystemAdministratorServiceImpl implements SystemAdministratorService {
 	private final SystemAdministratorRepository systemAdministratorRepository;
+	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	public SystemAdministratorServiceImpl(
-			SystemAdministratorRepository systemAdministratorRepository) {
+			SystemAdministratorRepository systemAdministratorRepository, 
+			PasswordEncoder passwordEncoder) {
 		this.systemAdministratorRepository = systemAdministratorRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	@Override
@@ -43,5 +49,33 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 	@Override
 	public List<SystemAdministrator> findAll() throws AccessDeniedException {
 		return systemAdministratorRepository.getAll();
+	}
+	
+	@Override
+	@Transactional
+	public SystemAdministrator edit(SystemAdministratorDTO systemAdministratorToBeEdited) {
+		System.out.println("Entered edit method of SystemAdministratorService.");
+		SystemAdministrator originalSystemAdministrator = 
+				findById(systemAdministratorToBeEdited.getId());
+		
+		originalSystemAdministrator.setUsername(systemAdministratorToBeEdited.getUsername());
+		originalSystemAdministrator.setPassword(
+				passwordEncoder.encode(systemAdministratorToBeEdited.getPassword()));
+		originalSystemAdministrator.setLastPasswordResetDate(
+				systemAdministratorToBeEdited.getLastPasswordResetDate());
+		originalSystemAdministrator.setFirstName(systemAdministratorToBeEdited.getFirstName());
+		originalSystemAdministrator.setLastName(systemAdministratorToBeEdited.getLastName());
+		originalSystemAdministrator.setResidence(systemAdministratorToBeEdited.getResidence());
+		originalSystemAdministrator.setPopulatedPlace(
+				systemAdministratorToBeEdited.getPopulatedPlace());
+		originalSystemAdministrator.setCountry(systemAdministratorToBeEdited.getCountry());
+		originalSystemAdministrator.setPhoneNumber(systemAdministratorToBeEdited.getPhoneNumber());
+		originalSystemAdministrator.setPersonalIdentityNumber(
+				systemAdministratorToBeEdited.getPersonalIdentityNumber());
+		originalSystemAdministrator.setGender(systemAdministratorToBeEdited.getGender());
+		originalSystemAdministrator.setProfession(systemAdministratorToBeEdited.getProfession());
+		originalSystemAdministrator.setCompanyName(systemAdministratorToBeEdited.getCompanyName());
+		
+		return systemAdministratorRepository.saveAndFlush(originalSystemAdministrator);
 	}
 }

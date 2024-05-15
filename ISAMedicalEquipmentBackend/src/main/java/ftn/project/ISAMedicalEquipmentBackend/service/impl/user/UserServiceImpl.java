@@ -11,6 +11,10 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.CompanyAdministratorService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.SystemAdministratorService;
@@ -167,5 +171,32 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return allUsers;
+	}
+	
+	@Override
+	public User edit(UserDTO userToBeEdited) {
+		ProcurementManagerDTO pmToBeEdited = null;
+		CompanyAdministratorDTO caToBeEdited = null;
+		SystemAdministratorDTO saToBeEdited = null;
+		// REFERENCE: https://www.simplilearn.com/tutorials/java-tutorial/instanceof-in-java
+		if (userToBeEdited instanceof ProcurementManagerDTO) {
+			System.out.println("Entered \"if-branch\" in edit method of UserService.");
+			pmToBeEdited = (ProcurementManagerDTO) userToBeEdited;
+			
+			return procurementManagerService.edit(pmToBeEdited);
+		} else if (userToBeEdited instanceof CompanyAdministratorDTO) {
+			System.out.println("Entered \"if-branch\" in edit method of UserService.");
+			caToBeEdited = (CompanyAdministratorDTO) userToBeEdited;
+			
+			return companyAdministratorService.edit(caToBeEdited);
+		} else if (userToBeEdited instanceof SystemAdministratorDTO) {
+			System.out.println("Entered \"if-branch\" in edit method of UserService.");
+			saToBeEdited = (SystemAdministratorDTO) userToBeEdited;
+			
+			return systemAdministratorService.edit(saToBeEdited);
+		}
+		
+		System.out.println("DID NOT enter \"if-branch\" in edit method of UserService!");
+		return null;
 	}
 }

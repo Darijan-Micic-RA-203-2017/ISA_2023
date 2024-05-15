@@ -11,6 +11,7 @@ import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
+import ftn.project.ISAMedicalEquipmentBackend.dto.ObjectAndTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.SimpleTextResponseDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
@@ -151,7 +153,7 @@ public class UserController {
 		}
 		
 		ProcurementManager newProcurementManager = userService
-				.getProcurementManagerService().save(procurementManagerRegistrationReqDTO);
+				.getProcurementManagerService().register(procurementManagerRegistrationReqDTO);
 		try {
 			userService.getProcurementManagerService().sendActivationEmail(newProcurementManager);
 		} catch (MailException mE) {
@@ -206,6 +208,29 @@ public class UserController {
 		return new ResponseEntity<SimpleTextResponseDTO>(
 				new SimpleTextResponseDTO("Account of user with username \"" + 
 						procurementManager.getUsername() + "\" has been successfully activated."), 
+				HttpStatus.OK);
+	}
+	
+	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ObjectAndTextResponseDTO> edit(
+			@PathVariable(name = "id") String id, @RequestBody UserDTO userToBeEdited) {
+		UserDTO editedUser = null;
+		
+		long idAsLong = 0;
+		try {
+			idAsLong = Long.parseLong(id);
+		} catch (NumberFormatException nFE) {
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(editedUser, "Id sent to the server is not an integer!"), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		editedUser = UserConverter.convertToDTO(userService.edit(userToBeEdited));
+		System.out.println("\nProfile of user with id = " + idAsLong + " was successfully edited.\n");
+		
+		return new ResponseEntity<ObjectAndTextResponseDTO>(new 
+				ObjectAndTextResponseDTO(editedUser, 
+						"Profile of user with id = " + idAsLong + " was successfully edited!"), 
 				HttpStatus.OK);
 	}
 }

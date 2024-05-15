@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.access.AccessDeniedException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.User;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 
 public interface UserService {
 	ProcurementManagerService getProcurementManagerService();
@@ -15,4 +16,5 @@ public interface UserService {
 	User findByEmailAddress(String emailAddress);
 	User findByUsername(String username);
 	List<User> findAll() throws AccessDeniedException;
+	User edit(UserDTO userToBeEdited);
 }

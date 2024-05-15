@@ -7,6 +7,7 @@ import org.springframework.security.access.AccessDeniedException;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
 
 public interface ProcurementManagerService {
 	ProcurementManager findById(long id) throws AccessDeniedException;
@@ -14,9 +15,10 @@ public interface ProcurementManagerService {
 	ProcurementManager findByEmailAddress(String emailAddress);
 	ProcurementManager findByUsername(String username);
 	List<ProcurementManager> findAll() throws AccessDeniedException;
-	ProcurementManager save(
+	ProcurementManager register(
 			ProcurementManagerRegistrationReqDTO procurementManagerRegistrationReqDTO);
 	String generateUserCodeFrom(String password);
 	void sendActivationEmail(ProcurementManager newProcurementManager) throws MailException;
 	void activateAccount(String userCodeOfNewRegisteredUser);
+	ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited);
 }

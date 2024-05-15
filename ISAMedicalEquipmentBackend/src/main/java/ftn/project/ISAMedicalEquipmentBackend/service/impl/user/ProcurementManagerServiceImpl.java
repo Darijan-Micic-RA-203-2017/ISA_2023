@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
@@ -26,6 +27,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.LoyaltyProgram;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.ProcurementManagerRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.LoyaltyProgramService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
@@ -84,7 +86,7 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	}
 	
 	@Override
-	public ProcurementManager save(
+	public ProcurementManager register(
 			ProcurementManagerRegistrationReqDTO procurementManagerRegistrationReqDTO) {
 		Set<UserRole> roles = new HashSet<UserRole>();
 		roles.add(userRoleService.findByName("ROLE_PROCUREMENT_MANAGER"));
@@ -179,5 +181,33 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		procurementManager.setEnabled(true);
 		
 		procurementManagerRepository.save(procurementManager);
+	}
+	
+	@Override
+	@Transactional
+	public ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited) {
+		System.out.println("Entered edit method of ProcurementManagerService.");
+		ProcurementManager originalProcurementManager = 
+				findById(procurementManagerToBeEdited.getId());
+		
+		originalProcurementManager.setUsername(procurementManagerToBeEdited.getUsername());
+		originalProcurementManager.setPassword(
+				passwordEncoder.encode(procurementManagerToBeEdited.getPassword()));
+		originalProcurementManager.setLastPasswordResetDate(
+				procurementManagerToBeEdited.getLastPasswordResetDate());
+		originalProcurementManager.setFirstName(procurementManagerToBeEdited.getFirstName());
+		originalProcurementManager.setLastName(procurementManagerToBeEdited.getLastName());
+		originalProcurementManager.setResidence(procurementManagerToBeEdited.getResidence());
+		originalProcurementManager.setPopulatedPlace(
+				procurementManagerToBeEdited.getPopulatedPlace());
+		originalProcurementManager.setCountry(procurementManagerToBeEdited.getCountry());
+		originalProcurementManager.setPhoneNumber(procurementManagerToBeEdited.getPhoneNumber());
+		originalProcurementManager.setPersonalIdentityNumber(
+				procurementManagerToBeEdited.getPersonalIdentityNumber());
+		originalProcurementManager.setGender(procurementManagerToBeEdited.getGender());
+		originalProcurementManager.setProfession(procurementManagerToBeEdited.getProfession());
+		originalProcurementManager.setCompanyName(procurementManagerToBeEdited.getCompanyName());
+		
+		return procurementManagerRepository.saveAndFlush(originalProcurementManager);
 	}
 }

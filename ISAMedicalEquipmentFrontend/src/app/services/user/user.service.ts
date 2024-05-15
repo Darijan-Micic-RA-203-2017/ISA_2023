@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { ProcurementManagerRegistrationReq } from 'src/app/domain/procurement-manager-registration-req';
 import { UserCodeWrapper } from 'src/app/domain/user-code-wrapper';
+import { User } from 'src/app/domain/user/user';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,16 @@ export class UserService {
     });
 
     return this.httpClient.post(this.accountActivationURL, JSON.stringify(codeOfNewRegisteredUserWrapper), 
+        { headers: headers });
+  }
+
+  edit(userToBeEdited: User): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+
+    return this.httpClient.put(this.usersControllerURL.concat(`/${userToBeEdited.id}`), JSON.stringify(userToBeEdited), 
         { headers: headers });
   }
 }

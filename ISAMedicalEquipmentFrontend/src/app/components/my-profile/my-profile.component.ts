@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -15,6 +14,7 @@ import { CompanyAdministrator } from 'src/app/domain/user/company-administrator'
 import { SystemAdministrator } from 'src/app/domain/user/system-administrator';
 import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 import { Complaint } from 'src/app/domain/complaint/complaint';
+import { User } from 'src/app/domain/user/user';
 
 @Component({
   selector: 'app-my-profile',
@@ -41,7 +41,7 @@ export class MyProfileComponent implements OnInit {
   userId: number = 0;
 
   constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, 
-      private router: Router, private snackBar: MatSnackBar) { }
+      private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initializeFormForUser();
@@ -212,14 +212,99 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  editProfile(): void { }
+  editProfile(): void {
+    this.isFormForUserSubmitted = true;
+
+    let newPassword: string = this.formForUser.value.newPassword;
+    let profession: string | null = null;
+    if (this.formForUser.value.profession) {
+      profession = this.formForUser.value.profession;
+    }
+    let companyName: string | null = null;
+    if (this.formForUser.value.companyName) {
+      companyName = this.formForUser.value.companyName;
+    }
+
+    let userToBeEdited: User | undefined = undefined;
+    if (this.procurementManager) {
+      this.procurementManager.username = this.formForUser.value.username;
+      if (newPassword) {
+        this.procurementManager.password = newPassword;
+        this.procurementManager.lastPasswordResetDate = DateTime.now();
+      }
+      this.procurementManager.firstName = this.formForUser.value.firstName;
+      this.procurementManager.lastName = this.formForUser.value.lastName;
+      this.procurementManager.residence = this.formForUser.value.residence;
+      this.procurementManager.populatedPlace = this.formForUser.value.populatedPlace;
+      this.procurementManager.country = this.formForUser.value.country;
+      this.procurementManager.phoneNumber = this.formForUser.value.phoneNumber;
+      this.procurementManager.personalIdentityNumber = this.formForUser.value.personalIdentityNumber;
+      this.procurementManager.gender = this.formForUser.value.gender;
+      this.procurementManager.profession = profession;
+      this.procurementManager.companyName = companyName;
+
+      userToBeEdited = this.procurementManager;
+    } else if (this.companyAdministrator) {
+      this.companyAdministrator.username = this.formForUser.value.username;
+      if (newPassword) {
+        this.companyAdministrator.password = newPassword;
+        this.companyAdministrator.lastPasswordResetDate = DateTime.now();
+      }
+      this.companyAdministrator.firstName = this.formForUser.value.firstName;
+      this.companyAdministrator.lastName = this.formForUser.value.lastName;
+      this.companyAdministrator.residence = this.formForUser.value.residence;
+      this.companyAdministrator.populatedPlace = this.formForUser.value.populatedPlace;
+      this.companyAdministrator.country = this.formForUser.value.country;
+      this.companyAdministrator.phoneNumber = this.formForUser.value.phoneNumber;
+      this.companyAdministrator.personalIdentityNumber = this.formForUser.value.personalIdentityNumber;
+      this.companyAdministrator.gender = this.formForUser.value.gender;
+      this.companyAdministrator.profession = profession;
+      this.companyAdministrator.companyName = companyName;
+
+      userToBeEdited = this.companyAdministrator;
+    } else if (this.systemAdministrator) {
+      this.systemAdministrator.username = this.formForUser.value.username;
+      if (newPassword) {
+        this.systemAdministrator.password = newPassword;
+        this.systemAdministrator.lastPasswordResetDate = DateTime.now();
+      }
+      this.systemAdministrator.firstName = this.formForUser.value.firstName;
+      this.systemAdministrator.lastName = this.formForUser.value.lastName;
+      this.systemAdministrator.residence = this.formForUser.value.residence;
+      this.systemAdministrator.populatedPlace = this.formForUser.value.populatedPlace;
+      this.systemAdministrator.country = this.formForUser.value.country;
+      this.systemAdministrator.phoneNumber = this.formForUser.value.phoneNumber;
+      this.systemAdministrator.personalIdentityNumber = this.formForUser.value.personalIdentityNumber;
+      this.systemAdministrator.gender = this.formForUser.value.gender;
+      this.systemAdministrator.profession = profession;
+      this.systemAdministrator.companyName = companyName;
+
+      userToBeEdited = this.systemAdministrator;
+    } else {
+      return;
+    }
+
+    this.userService.edit(userToBeEdited).subscribe(
+      data => {
+        console.log(`Editing user with id = ${userToBeEdited?.id} response: `, data);
+
+        this.isFormForUserSubmitted = false;
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.isFormForUserSubmitted = false;
+
+        console.log(`Error on editing user with id = ${userToBeEdited?.id}!\n\n${errorResponse.error.textMessage}`);
+        this.snackBar.open('Došlo je do greške prilikom izmene Vašeg profila!', 'Zatvori', { duration: 5000 });
+      }
+    );
+  }
 
   // REFERENCE: https://blog.angular-university.io/angular-custom-validators/
   passwordsDoNotMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       let form = control.parent;
-      let enteredNewPassword = form?.get('newPassword')?.value;
-      let enteredNewPasswordConfirmation = form?.get('newPasswordConfirmation')?.value;
+      let enteredNewPassword: string = form?.get('newPassword')?.value;
+      let enteredNewPasswordConfirmation: string = form?.get('newPasswordConfirmation')?.value;
 
       if (enteredNewPassword || enteredNewPasswordConfirmation) {
         if (enteredNewPassword !== enteredNewPasswordConfirmation) {

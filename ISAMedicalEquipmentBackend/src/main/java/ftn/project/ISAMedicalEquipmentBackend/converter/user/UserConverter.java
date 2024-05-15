@@ -30,7 +30,7 @@ public class UserConverter {
 			return null;
 		}
 		
-		// REFERENCE: https://stackoverflow.com/questions/898909/is-it-possible-to-call-subclasses-methods-on-a-superclass-object
+		// REFERENCE: https://www.simplilearn.com/tutorials/java-tutorial/instanceof-in-java
 		if (user instanceof ProcurementManager) {
 			return ProcurementManagerConverter.convertToDTO((ProcurementManager) user);
 		} else if (user instanceof CompanyAdministrator) {
