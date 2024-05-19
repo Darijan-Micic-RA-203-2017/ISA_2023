@@ -59,10 +59,12 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 				findById(systemAdministratorToBeEdited.getId());
 		
 		originalSystemAdministrator.setUsername(systemAdministratorToBeEdited.getUsername());
-		originalSystemAdministrator.setPassword(
-				passwordEncoder.encode(systemAdministratorToBeEdited.getPassword()));
-		originalSystemAdministrator.setLastPasswordResetDate(
-				systemAdministratorToBeEdited.getLastPasswordResetDate());
+		String newPassword = systemAdministratorToBeEdited.getPassword();
+		if (newPassword != null) {
+			originalSystemAdministrator.setPassword(passwordEncoder.encode(newPassword));
+			originalSystemAdministrator.setLastPasswordResetDate(
+					systemAdministratorToBeEdited.getLastPasswordResetDate());
+		}
 		originalSystemAdministrator.setFirstName(systemAdministratorToBeEdited.getFirstName());
 		originalSystemAdministrator.setLastName(systemAdministratorToBeEdited.getLastName());
 		originalSystemAdministrator.setResidence(systemAdministratorToBeEdited.getResidence());

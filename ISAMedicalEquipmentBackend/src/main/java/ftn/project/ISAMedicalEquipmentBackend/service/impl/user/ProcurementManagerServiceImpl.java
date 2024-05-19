@@ -191,10 +191,12 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 				findById(procurementManagerToBeEdited.getId());
 		
 		originalProcurementManager.setUsername(procurementManagerToBeEdited.getUsername());
-		originalProcurementManager.setPassword(
-				passwordEncoder.encode(procurementManagerToBeEdited.getPassword()));
-		originalProcurementManager.setLastPasswordResetDate(
-				procurementManagerToBeEdited.getLastPasswordResetDate());
+		String newPassword = procurementManagerToBeEdited.getPassword();
+		if (newPassword != null) {
+			originalProcurementManager.setPassword(passwordEncoder.encode(newPassword));
+			originalProcurementManager.setLastPasswordResetDate(
+					procurementManagerToBeEdited.getLastPasswordResetDate());
+		}
 		originalProcurementManager.setFirstName(procurementManagerToBeEdited.getFirstName());
 		originalProcurementManager.setLastName(procurementManagerToBeEdited.getLastName());
 		originalProcurementManager.setResidence(procurementManagerToBeEdited.getResidence());

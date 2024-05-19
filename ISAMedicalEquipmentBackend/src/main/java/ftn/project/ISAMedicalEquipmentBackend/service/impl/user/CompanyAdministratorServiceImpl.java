@@ -59,10 +59,12 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
 				findById(companyAdministratorToBeEdited.getId());
 		
 		originalCompanyAdministrator.setUsername(companyAdministratorToBeEdited.getUsername());
-		originalCompanyAdministrator.setPassword(
-				passwordEncoder.encode(companyAdministratorToBeEdited.getPassword()));
-		originalCompanyAdministrator.setLastPasswordResetDate(
-				companyAdministratorToBeEdited.getLastPasswordResetDate());
+		String newPassword = companyAdministratorToBeEdited.getPassword();
+		if (newPassword != null) {
+			originalCompanyAdministrator.setPassword(passwordEncoder.encode(newPassword));
+			originalCompanyAdministrator.setLastPasswordResetDate(
+					companyAdministratorToBeEdited.getLastPasswordResetDate());
+		}
 		originalCompanyAdministrator.setFirstName(companyAdministratorToBeEdited.getFirstName());
 		originalCompanyAdministrator.setLastName(companyAdministratorToBeEdited.getLastName());
 		originalCompanyAdministrator.setResidence(companyAdministratorToBeEdited.getResidence());
