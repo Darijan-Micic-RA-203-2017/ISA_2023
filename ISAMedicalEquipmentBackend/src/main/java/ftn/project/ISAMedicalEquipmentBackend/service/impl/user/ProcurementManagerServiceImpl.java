@@ -186,7 +186,6 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	@Override
 	@Transactional
 	public ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited) {
-		System.out.println("Entered edit method of ProcurementManagerService.");
 		ProcurementManager originalProcurementManager = 
 				findById(procurementManagerToBeEdited.getId());
 		

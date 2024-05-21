@@ -180,23 +180,19 @@ public class UserServiceImpl implements UserService {
 		SystemAdministratorDTO saToBeEdited = null;
 		// REFERENCE: https://www.simplilearn.com/tutorials/java-tutorial/instanceof-in-java
 		if (userToBeEdited instanceof ProcurementManagerDTO) {
-			System.out.println("Entered \"if-branch\" in edit method of UserService.");
 			pmToBeEdited = (ProcurementManagerDTO) userToBeEdited;
 			
 			return procurementManagerService.edit(pmToBeEdited);
 		} else if (userToBeEdited instanceof CompanyAdministratorDTO) {
-			System.out.println("Entered \"if-branch\" in edit method of UserService.");
 			caToBeEdited = (CompanyAdministratorDTO) userToBeEdited;
 			
 			return companyAdministratorService.edit(caToBeEdited);
 		} else if (userToBeEdited instanceof SystemAdministratorDTO) {
-			System.out.println("Entered \"if-branch\" in edit method of UserService.");
 			saToBeEdited = (SystemAdministratorDTO) userToBeEdited;
 			
 			return systemAdministratorService.edit(saToBeEdited);
 		}
 		
-		System.out.println("DID NOT enter \"if-branch\" in edit method of UserService!");
 		return null;
 	}
 }

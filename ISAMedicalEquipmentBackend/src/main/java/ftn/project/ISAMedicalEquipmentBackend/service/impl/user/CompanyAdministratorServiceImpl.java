@@ -54,7 +54,6 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
 	@Override
 	@Transactional
 	public CompanyAdministrator edit(CompanyAdministratorDTO companyAdministratorToBeEdited) {
-		System.out.println("Entered edit method of CompanyAdministratorService.");
 		CompanyAdministrator originalCompanyAdministrator = 
 				findById(companyAdministratorToBeEdited.getId());
 		

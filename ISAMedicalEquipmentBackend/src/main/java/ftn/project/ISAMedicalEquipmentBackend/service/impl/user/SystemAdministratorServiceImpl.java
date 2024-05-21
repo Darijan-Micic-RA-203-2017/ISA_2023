@@ -54,7 +54,6 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 	@Override
 	@Transactional
 	public SystemAdministrator edit(SystemAdministratorDTO systemAdministratorToBeEdited) {
-		System.out.println("Entered edit method of SystemAdministratorService.");
 		SystemAdministrator originalSystemAdministrator = 
 				findById(systemAdministratorToBeEdited.getId());
 		
