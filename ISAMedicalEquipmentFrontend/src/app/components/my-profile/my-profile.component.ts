@@ -287,6 +287,10 @@ export class MyProfileComponent implements OnInit {
     this.userService.edit(userToBeEdited).subscribe(
       data => {
         console.log(`Editing user with id = ${userToBeEdited?.id} response: `, data);
+        this.snackBar.open('Vaši lični podaci uspešno su izmenjeni. Ako ste promenili korisničko ime i/ili lozinku, ' 
+            + 'neophodno je da se odjavite i ponovo prijavite sa novim kredencijalima kako bi mogli da nastavite da ' 
+            + 'koristite aplikaciju.', 
+            'Zatvori', { duration: 5000 });
 
         this.isFormForUserSubmitted = false;
       },
@@ -294,7 +298,7 @@ export class MyProfileComponent implements OnInit {
         this.isFormForUserSubmitted = false;
 
         console.log(`Error on editing user with id = ${userToBeEdited?.id}!\n\n${errorResponse.error.textMessage}`);
-        this.snackBar.open('Došlo je do greške prilikom izmene Vašeg profila!', 'Zatvori', { duration: 5000 });
+        this.snackBar.open('Došlo je do greške prilikom izmene Vaših ličnih podataka!', 'Zatvori', { duration: 5000 });
       }
     );
   }
