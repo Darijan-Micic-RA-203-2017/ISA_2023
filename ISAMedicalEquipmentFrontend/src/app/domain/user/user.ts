@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 
 import { UserRole } from "./user-role";
 
-export class User {
+export abstract class User {
     // REFERENCE: https://stackoverflow.com/questions/48733012/spring-requestbody-inheritance
     // REFERENCE: https://stackoverflow.com/questions/27170298/spring-reponsebody-requestbody-with-abstract-class?rq=3
     type: string | undefined;

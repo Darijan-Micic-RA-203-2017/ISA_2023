@@ -21,7 +21,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	private TokenUtils tokenUtils;
 	private UserDetailsService userDetailsService;
 	
-	protected final Log LOGGER = LogFactory.getLog(getClass());
+	private final Log LOGGER = LogFactory.getLog(getClass());
 	
 	public TokenAuthenticationFilter(TokenUtils tokenUtils, 
 			UserDetailsService userDetailsService) {
@@ -30,7 +30,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	}
 	
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
+	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
 			FilterChain filterChain) throws ServletException, IOException {
 		String authToken = tokenUtils.getToken(request);
 		
@@ -48,8 +48,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 						
 						tokenBasedAuthentication.setToken(authToken);
 						
-						SecurityContextHolder.getContext()
-								.setAuthentication(tokenBasedAuthentication);
+						SecurityContextHolder.getContext().setAuthentication(tokenBasedAuthentication);
 					}
 				}
 			}

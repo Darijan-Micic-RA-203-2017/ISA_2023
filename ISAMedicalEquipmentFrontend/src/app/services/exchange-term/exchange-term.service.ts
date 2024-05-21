@@ -11,8 +11,7 @@ import { DateTimeWrapper } from 'src/app/domain/date-time-wrapper';
 })
 export class ExchangeTermService {
   private exchangeTermsControllerURL: string = 'http://localhost:8080/exchange-terms';
-  private findAllTermsOnSpecificDateURL: string = 
-      this.exchangeTermsControllerURL.concat('/on-specific-date');
+  private findAllTermsOnSpecificDateURL: string = this.exchangeTermsControllerURL.concat('/on-specific-date');
   private findAllTermsOnSpecificDateOfCompanyURL: string = 
       this.exchangeTermsControllerURL.concat('/on-specific-date-of-company');
   private findAllTermsOfCompanyURL: string = this.exchangeTermsControllerURL.concat('/of-company');

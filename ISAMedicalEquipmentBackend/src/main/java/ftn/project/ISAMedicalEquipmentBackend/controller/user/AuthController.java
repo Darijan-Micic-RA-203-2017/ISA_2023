@@ -1,7 +1,5 @@
 package ftn.project.ISAMedicalEquipmentBackend.controller.user;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +25,6 @@ import ftn.project.ISAMedicalEquipmentBackend.util.TokenUtils;
 @RequestMapping(path = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 	private final TokenUtils tokenUtils;
-	
 	private final AuthenticationManager authenticationManager;
 	
 	@Autowired
@@ -37,8 +34,7 @@ public class AuthController {
 	}
 	
 	@PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccessTokenDTO> login(@RequestBody CredentialsDTO credentials, 
-			HttpServletResponse response) {
+	public ResponseEntity<AccessTokenDTO> login(@RequestBody CredentialsDTO credentials) {
 		Authentication authentication = null;
 		String accessToken = "";
 		long expiresIn = 0;

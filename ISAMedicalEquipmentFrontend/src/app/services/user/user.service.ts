@@ -14,8 +14,7 @@ export class UserService {
   private usersControllerURL: string = 'http://localhost:8080/users';
   private procurementManagerRegistrationURL: string = 
       this.usersControllerURL.concat('/register-as-a-procurement-manager');
-  private accountActivationURL: string = 
-      this.usersControllerURL.concat('/activate-account');
+  private accountActivationURL: string = this.usersControllerURL.concat('/activate-account');
 
   constructor(private httpClient: HttpClient) { }
 

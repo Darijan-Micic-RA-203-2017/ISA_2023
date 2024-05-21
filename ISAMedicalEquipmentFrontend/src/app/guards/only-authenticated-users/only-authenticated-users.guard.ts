@@ -20,7 +20,7 @@ export class OnlyAuthenticatedUsersGuard implements CanActivate {
         return true;
       }
     }
-    
+
     let deniedUrl: string = "";
     for (let i = 0; i < route.url.length; i++) {
       if (i > 0) {
@@ -32,7 +32,7 @@ export class OnlyAuthenticatedUsersGuard implements CanActivate {
     this.router.navigateByUrl('/login').then(() => {
       this.snackBar.open('Nemate pravo pristupa unetoj putanji!', 'Zatvori', { duration: 7500 });
     });
-    
+
     return false;
   }
 }

@@ -226,11 +226,11 @@ public class UserController {
 		}
 		
 		editedUser = UserConverter.convertToDTO(userService.edit(userToBeEdited));
-		System.out.println("\nProfile of user with id = " + idAsLong + " was successfully edited.\n");
+		System.out.println("\nPersonal data of user with id = " + idAsLong + " was successfully edited.\n");
 		
 		return new ResponseEntity<ObjectAndTextResponseDTO>(new 
 				ObjectAndTextResponseDTO(editedUser, 
-						"Profile of user with id = " + idAsLong + " was successfully edited!"), 
+						"Personal data of user with id = " + idAsLong + " was successfully edited!"), 
 				HttpStatus.OK);
 	}
 }

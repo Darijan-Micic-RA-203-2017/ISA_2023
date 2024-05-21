@@ -90,9 +90,9 @@ export class RegistrationComponent implements OnInit {
       data => {
         console.log('Registration as a procurement manager response: ', data);
 
-        this.snackBar.open('Na adresu elektronske pošte koju ste naveli u zahtevu za registraciju ' + 
-            'poslata Vam je poveznica za aktivaciju naloga.\n' + 
-            'Kliknite na poslatu poveznicu kako bi završili proces registracije.', 
+        this.snackBar.open('Na adresu elektronske pošte koju ste naveli u zahtevu za registraciju ' 
+            + 'poslata Vam je poveznica za aktivaciju naloga.\n' 
+            + 'Kliknite na poslatu poveznicu kako bi završili proces registracije.', 
             'Zatvori', { duration: 60000 });
 
         this.isSubmitted = false;

@@ -25,9 +25,9 @@ import ftn.project.ISAMedicalEquipmentBackend.util.TokenUtils;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private CustomUserDetailsService customUserDetailsService;
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-	private TokenUtils tokenUtils;
+	private final CustomUserDetailsService customUserDetailsService;
+	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	private final TokenUtils tokenUtils;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -43,8 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, 
 			RestAuthenticationEntryPoint restAuthenticationEntryPoint, TokenUtils tokenUtils) {
-		super();
-		
 		this.customUserDetailsService = customUserDetailsService;
 		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
 		this.tokenUtils = tokenUtils;
