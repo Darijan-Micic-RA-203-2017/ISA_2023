@@ -11,12 +11,14 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
+import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForExchangeTermDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForOrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForSearchCriterionDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserCodeWrapperDTO;
+import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserDTO;
 
 public class ValidationPerformer {
 	public ValidationPerformer() {}
@@ -68,6 +70,9 @@ public class ValidationPerformer {
 					target, bindingResult);
 		} else if (target.getClass().isAssignableFrom(EquipmentOrderDTO.class)) {
 			ValidationUtils.invokeValidator(new ValidatorForEquipmentOrderDTO(), 
+					target, bindingResult);
+		} else if (UserDTO.class.isAssignableFrom(target.getClass())) {
+			ValidationUtils.invokeValidator(new ValidatorForUserDTO(), 
 					target, bindingResult);
 		}
 	}

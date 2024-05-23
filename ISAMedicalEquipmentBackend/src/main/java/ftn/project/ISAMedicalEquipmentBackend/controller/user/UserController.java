@@ -225,6 +225,13 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
+		String validationMessages = ValidationPerformer.getValidationMessages(userToBeEdited);
+		if (validationMessages != null) {
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(editedUser, validationMessages), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		editedUser = UserConverter.convertToDTO(userService.edit(userToBeEdited));
 		System.out.println("\nPersonal data of user with id = " + idAsLong + " was successfully edited.\n");
 		
