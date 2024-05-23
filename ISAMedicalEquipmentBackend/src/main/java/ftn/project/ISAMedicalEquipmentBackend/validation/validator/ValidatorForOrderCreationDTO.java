@@ -13,6 +13,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidatorForOrderCreationDTO implements Validator {
 	public ValidatorForOrderCreationDTO() {}
 	

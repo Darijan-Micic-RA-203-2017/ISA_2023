@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 
 import ftn.project.ISAMedicalEquipmentBackend.dto.term.ExchangeTermDTO;
 
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidatorForExchangeTermDTO implements Validator {
 	public ValidatorForExchangeTermDTO() {}
 	

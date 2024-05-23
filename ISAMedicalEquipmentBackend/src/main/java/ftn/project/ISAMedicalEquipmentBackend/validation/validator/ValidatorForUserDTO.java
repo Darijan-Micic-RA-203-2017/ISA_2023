@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserRoleDTO;
 
-// REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidatorForUserDTO implements Validator {
 	private static final int MINIMUM_LENGTH_FOR_USERNAME_AND_PASSWORD = 4;
 	private static final int MAXIMUM_LENGTH_FOR_USERNAME_AND_PASSWORD = 32;

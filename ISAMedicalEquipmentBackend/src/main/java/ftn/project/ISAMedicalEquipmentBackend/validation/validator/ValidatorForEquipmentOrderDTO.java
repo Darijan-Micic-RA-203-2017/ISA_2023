@@ -9,6 +9,7 @@ import org.springframework.validation.Validator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.DetailsOfEquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidatorForEquipmentOrderDTO implements Validator {
 	public ValidatorForEquipmentOrderDTO() {}
 	

@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 
 import ftn.project.ISAMedicalEquipmentBackend.dto.UserCodeWrapperDTO;
 
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidatorForUserCodeWrapperDTO implements Validator {
 	public ValidatorForUserCodeWrapperDTO() {}
 	

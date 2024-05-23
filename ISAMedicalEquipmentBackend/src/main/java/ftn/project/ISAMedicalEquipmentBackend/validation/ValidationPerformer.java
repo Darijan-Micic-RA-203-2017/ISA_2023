@@ -20,6 +20,7 @@ import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForS
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserCodeWrapperDTO;
 import ftn.project.ISAMedicalEquipmentBackend.validation.validator.ValidatorForUserDTO;
 
+/** REFERENCE: https://docs.spring.io/spring-framework/reference/core/validation/validator.html */
 public class ValidationPerformer {
 	public ValidationPerformer() {}
 	
@@ -53,22 +54,22 @@ public class ValidationPerformer {
 	
 	private static void invokeCorrespondingValidator(Object target, 
 			BeanPropertyBindingResult bindingResult) {
-		if (target.getClass().isAssignableFrom(ProcurementManagerRegistrationReqDTO.class)) {
+		if (ProcurementManagerRegistrationReqDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForProcurementManagerRegistrationReqDTO(), 
 					target, bindingResult);
-		} else if (target.getClass().isAssignableFrom(UserCodeWrapperDTO.class)) {
+		} else if (UserCodeWrapperDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForUserCodeWrapperDTO(), 
 					target, bindingResult);
-		} else if (target.getClass().isAssignableFrom(SearchCriterionDTO.class)) {
+		} else if (SearchCriterionDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForSearchCriterionDTO(), 
 					target, bindingResult);
-		} else if (target.getClass().isAssignableFrom(OrderCreationDTO.class)) {
+		} else if (OrderCreationDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForOrderCreationDTO(), 
 					target, bindingResult);
-		} else if (target.getClass().isAssignableFrom(ExchangeTermDTO.class)) {
+		} else if (ExchangeTermDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForExchangeTermDTO(), 
 					target, bindingResult);
-		} else if (target.getClass().isAssignableFrom(EquipmentOrderDTO.class)) {
+		} else if (EquipmentOrderDTO.class.isAssignableFrom(target.getClass())) {
 			ValidationUtils.invokeValidator(new ValidatorForEquipmentOrderDTO(), 
 					target, bindingResult);
 		} else if (UserDTO.class.isAssignableFrom(target.getClass())) {
