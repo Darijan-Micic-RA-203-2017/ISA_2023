@@ -9,12 +9,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { DateTime } from 'luxon';
+import { User } from 'src/app/domain/user/user';
 import { ProcurementManager } from 'src/app/domain/user/procurement-manager';
 import { CompanyAdministrator } from 'src/app/domain/user/company-administrator';
 import { SystemAdministrator } from 'src/app/domain/user/system-administrator';
+import { LoyaltyProgram } from 'src/app/domain/user/loyalty-program';
 import { ExchangeTerm } from 'src/app/domain/term/exchange-term';
 import { Complaint } from 'src/app/domain/complaint/complaint';
-import { User } from 'src/app/domain/user/user';
 
 @Component({
   selector: 'app-my-profile',
@@ -29,6 +30,10 @@ export class MyProfileComponent implements OnInit {
   procurementManager: ProcurementManager | undefined = undefined;
   companyAdministrator: CompanyAdministrator | undefined = undefined;
   systemAdministrator: SystemAdministrator | undefined = undefined;
+
+  displayedColumnsOfLoyaltyProgram: string[] = ['name', 'necessaryPoints', 'pointsGainedForEachSuccessfulExchange'];
+  loyaltyProgram: LoyaltyProgram[] = [];
+  loyaltyProgramDataSource: MatTableDataSource<LoyaltyProgram> = new MatTableDataSource<LoyaltyProgram>(this.loyaltyProgram);
 
   displayedColumnsOfTerms: string[] = ['startingTime', 'endingTime'];
   terms: ExchangeTerm[] = [];
@@ -164,6 +169,9 @@ export class MyProfileComponent implements OnInit {
         companyName: this.procurementManager.companyName
       });
 
+      this.loyaltyProgram.pop();
+      this.loyaltyProgram.push(this.procurementManager.loyaltyProgram);
+      this.loyaltyProgramDataSource.data = this.loyaltyProgram;
       this.terms = this.procurementManager.exchangeTerms;
       this.termsDataSource.data = this.terms;
       this.complaints = this.procurementManager.complaints;
@@ -187,6 +195,9 @@ export class MyProfileComponent implements OnInit {
         companyName: this.companyAdministrator.companyName
       });
 
+      this.loyaltyProgram.pop();
+      this.loyaltyProgram.push(this.companyAdministrator.loyaltyProgram);
+      this.loyaltyProgramDataSource.data = this.loyaltyProgram;
       this.terms = this.companyAdministrator.exchangeTerms;
       this.termsDataSource.data = this.terms;
       this.complaints = this.companyAdministrator.complaints;

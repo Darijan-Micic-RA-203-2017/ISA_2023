@@ -63,14 +63,14 @@ mat-card-actions > div.buttonDiv > button {
     width: 100%;
 }
 
-.termsAndComplaintsDiv {
+.rightSideDiv {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.termsAndComplaintsDiv > *:last-child {
+.rightSideDiv > *:not(:first-child) {
     margin-top: 15px;
 }
 
@@ -105,6 +105,18 @@ tr.mat-footer-row {
 
 .mat-cell {
     color: rgba(0, 0, 0, 1);
+}
+
+#loyaltyProgramTable .mat-column-name {
+    width: 30%;
+}
+
+#loyaltyProgramTable .mat-column-necessaryPoints {
+    width: 30%;
+}
+
+#loyaltyProgramTable .mat-column-pointsGainedForEachSuccessfulExchange {
+    width: 40%;
 }
 
 #complaintsTable .mat-column-submittedAt {

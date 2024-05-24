@@ -1,5 +1,5 @@
 <div class="myProfileDiv">
-    <div class="profileCardDiv">
+    <div class="leftSideDiv">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Lični podaci</mat-card-title>
@@ -137,7 +137,45 @@
             </div>
         </mat-card>
     </div>
-    <div *ngIf="!systemAdministrator" class="termsAndComplaintsDiv">
+    <div *ngIf="!systemAdministrator" class="rightSideDiv">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Program lojalnosti</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="loyaltyProgramDataSource" id="loyaltyProgramTable" class="mat-elevation-z8">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Naziv
+                        </th>
+                        <td mat-cell *matCellDef="let loyaltyProgram">
+                            {{ loyaltyProgram.name }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="necessaryPoints">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Neophodni poeni
+                        </th>
+                        <td mat-cell *matCellDef="let loyaltyProgram">
+                            {{ loyaltyProgram.necessaryPoints }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pointsGainedForEachSuccessfulExchange">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Poeni za svaku uspešnu razmenu
+                        </th>
+                        <td mat-cell *matCellDef="let loyaltyProgram">
+                            {{ loyaltyProgram.pointsGainedForEachSuccessfulExchange }}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsOfLoyaltyProgram"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsOfLoyaltyProgram;"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Termini</mat-card-title>
