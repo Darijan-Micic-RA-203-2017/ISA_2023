@@ -15,6 +15,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.ChangeOfEmailAddressException;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.CompanyAdministratorService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.SystemAdministratorService;
@@ -174,7 +175,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User edit(UserDTO userToBeEdited) {
+	public User edit(UserDTO userToBeEdited) throws ChangeOfEmailAddressException {
 		ProcurementManagerDTO pmToBeEdited = null;
 		CompanyAdministratorDTO caToBeEdited = null;
 		SystemAdministratorDTO saToBeEdited = null;

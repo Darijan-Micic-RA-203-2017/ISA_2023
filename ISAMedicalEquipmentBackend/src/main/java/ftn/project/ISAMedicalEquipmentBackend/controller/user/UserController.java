@@ -32,6 +32,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.UserDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.ChangeOfEmailAddressException;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.UserService;
 import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
@@ -232,7 +233,16 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		editedUser = UserConverter.convertToDTO(userService.edit(userToBeEdited));
+		try {
+			editedUser = UserConverter.convertToDTO(userService.edit(userToBeEdited));
+		} catch (ChangeOfEmailAddressException cOEAE) {
+			System.out.println("\n" + cOEAE.getMessage());
+			
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(editedUser, cOEAE.getMessage()), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		System.out.println("\nPersonal data of user with id = " + idAsLong + " was successfully edited.\n");
 		
 		return new ResponseEntity<ObjectAndTextResponseDTO>(new 

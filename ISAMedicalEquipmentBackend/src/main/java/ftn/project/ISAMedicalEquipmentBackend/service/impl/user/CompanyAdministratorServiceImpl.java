@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.CompanyAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.ChangeOfEmailAddressException;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.CompanyAdministratorRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.CompanyAdministratorService;
 
@@ -53,9 +54,16 @@ public class CompanyAdministratorServiceImpl implements CompanyAdministratorServ
 	
 	@Override
 	@Transactional
-	public CompanyAdministrator edit(CompanyAdministratorDTO companyAdministratorToBeEdited) {
+	public CompanyAdministrator edit(CompanyAdministratorDTO companyAdministratorToBeEdited) 
+			throws ChangeOfEmailAddressException {
 		CompanyAdministrator originalCompanyAdministrator = 
-				findById(companyAdministratorToBeEdited.getId());
+				findByEmailAddress(companyAdministratorToBeEdited.getEmailAddress());
+		if (originalCompanyAdministrator == null) {
+			throw new ChangeOfEmailAddressException();
+		}
+		if (originalCompanyAdministrator.getId() != companyAdministratorToBeEdited.getId()) {
+			throw new ChangeOfEmailAddressException();
+		}
 		
 		originalCompanyAdministrator.setUsername(companyAdministratorToBeEdited.getUsername());
 		String newPassword = companyAdministratorToBeEdited.getPassword();

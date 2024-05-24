@@ -28,6 +28,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.UserRole;
 import ftn.project.ISAMedicalEquipmentBackend.dto.ProcurementManagerRegistrationReqDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.ProcurementManagerDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.ChangeOfEmailAddressException;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.ProcurementManagerRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.LoyaltyProgramService;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.ProcurementManagerService;
@@ -185,9 +186,16 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 	
 	@Override
 	@Transactional
-	public ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited) {
+	public ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited) 
+			throws ChangeOfEmailAddressException {
 		ProcurementManager originalProcurementManager = 
-				findById(procurementManagerToBeEdited.getId());
+				findByEmailAddress(procurementManagerToBeEdited.getEmailAddress());
+		if (originalProcurementManager == null) {
+			throw new ChangeOfEmailAddressException();
+		}
+		if (originalProcurementManager.getId() != procurementManagerToBeEdited.getId()) {
+			throw new ChangeOfEmailAddressException();
+		}
 		
 		originalProcurementManager.setUsername(procurementManagerToBeEdited.getUsername());
 		String newPassword = procurementManagerToBeEdited.getPassword();

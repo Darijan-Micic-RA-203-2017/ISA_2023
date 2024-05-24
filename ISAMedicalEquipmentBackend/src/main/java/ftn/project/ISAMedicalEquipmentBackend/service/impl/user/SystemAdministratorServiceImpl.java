@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.SystemAdministrator;
 import ftn.project.ISAMedicalEquipmentBackend.dto.user.SystemAdministratorDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.ChangeOfEmailAddressException;
 import ftn.project.ISAMedicalEquipmentBackend.repository.user.SystemAdministratorRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.user.SystemAdministratorService;
 
@@ -53,9 +54,16 @@ public class SystemAdministratorServiceImpl implements SystemAdministratorServic
 	
 	@Override
 	@Transactional
-	public SystemAdministrator edit(SystemAdministratorDTO systemAdministratorToBeEdited) {
+	public SystemAdministrator edit(SystemAdministratorDTO systemAdministratorToBeEdited) 
+			throws ChangeOfEmailAddressException {
 		SystemAdministrator originalSystemAdministrator = 
-				findById(systemAdministratorToBeEdited.getId());
+				findByEmailAddress(systemAdministratorToBeEdited.getEmailAddress());
+		if (originalSystemAdministrator == null) {
+			throw new ChangeOfEmailAddressException();
+		}
+		if (originalSystemAdministrator.getId() != systemAdministratorToBeEdited.getId()) {
+			throw new ChangeOfEmailAddressException();
+		}
 		
 		originalSystemAdministrator.setUsername(systemAdministratorToBeEdited.getUsername());
 		String newPassword = systemAdministratorToBeEdited.getPassword();
