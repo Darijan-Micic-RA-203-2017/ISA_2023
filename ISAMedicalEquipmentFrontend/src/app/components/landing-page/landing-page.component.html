@@ -21,6 +21,7 @@
                     <button [disabled]="companyForm.invalid" color="accent" mat-raised-button type="submit">Pretraži</button>
                 </form>
             </div>
+            <!-- REFERENCE: https://v12.material.angular.io/components/table/overview -->
             <table mat-table [dataSource]="companiesDataSource" id="companiesTable" class="mat-elevation-z8">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>
@@ -31,37 +32,55 @@
                         <a routerLink="company/{{company.id}}">{{ company.name }}</a>
                     </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="streetAndNumber">
                     <th mat-header-cell *matHeaderCellDef>
                         Ulica i broj
                     </th>
-                    <td mat-cell *matCellDef="let company">{{ company.streetAndNumber }}</td>
+                    <td mat-cell *matCellDef="let company">
+                        {{ company.streetAndNumber }}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="populatedPlace">
                     <th mat-header-cell *matHeaderCellDef>
                         Mesto
                     </th>
-                    <td mat-cell *matCellDef="let company">{{ company.populatedPlace }}</td>
+                    <td mat-cell *matCellDef="let company">
+                        {{ company.populatedPlace }}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="country">
                     <th mat-header-cell *matHeaderCellDef>
                         Država
                     </th>
-                    <td mat-cell *matCellDef="let company">{{ company.country }}</td>
+                    <td mat-cell *matCellDef="let company">
+                        {{ company.country }}
+                    </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="averageGrade">
                     <th mat-header-cell *matHeaderCellDef>
                         Prosečna ocena
                     </th>
-                    <td mat-cell *matCellDef="let company">{{ company.averageGrade }}</td>
+                    <td mat-cell *matCellDef="let company">
+                        {{ company.averageGrade }}
+                    </td>
                 </ng-container>
-                
+
+                <ng-container matColumnDef="totalNumberOfCompanies">
+                    <td mat-footer-cell *matFooterCellDef colspan="5">
+                        <div class="totalNumberOfCompaniesTableDataDiv">
+                            <p>Ukupan broj kompanija:</p>
+                            <p>{{ companiesDataSource.data.length }}</p>
+                        </div>
+                    </td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsOfCompany"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsOfCompany;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['totalNumberOfCompanies']"></tr>
             </table>
         </mat-card-content>
     </mat-card>
@@ -84,25 +103,41 @@
                     <th mat-header-cell *matHeaderCellDef>
                         Naziv
                     </th>
-                    <td mat-cell *matCellDef="let equipment">{{ equipment.name }}</td>
+                    <td mat-cell *matCellDef="let equipment">
+                        {{ equipment.name }}
+                    </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef>
                         Tip
                     </th>
-                    <td mat-cell *matCellDef="let equipment">{{ equipment.type.name }}</td>
+                    <td mat-cell *matCellDef="let equipment">
+                        {{ equipment.type.name }}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="companyName">
                     <th mat-header-cell *matHeaderCellDef>
                         Kompanija
                     </th>
-                    <td mat-cell *matCellDef="let equipment">{{ equipment.companyName }}</td>
+                    <td mat-cell *matCellDef="let equipment">
+                        {{ equipment.companyName }}
+                    </td>
                 </ng-container>
-                
+
+                <ng-container matColumnDef="totalNumberOfEquipment">
+                    <td mat-footer-cell *matFooterCellDef colspan="3">
+                        <div class="totalNumberOfEquipmentTableDataDiv">
+                            <p>Ukupan broj oprema:</p>
+                            <p>{{ equipmentDataSource.data.length }}</p>
+                        </div>
+                    </td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsOfEquipment"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsOfEquipment;"></tr>
+                <tr mat-footer-row *matFooterRowDef="['totalNumberOfEquipment']"></tr>
             </table>
         </mat-card-content>
     </mat-card>

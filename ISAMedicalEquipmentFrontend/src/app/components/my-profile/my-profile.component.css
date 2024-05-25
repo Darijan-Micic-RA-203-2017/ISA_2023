@@ -107,18 +107,6 @@ tr.mat-footer-row {
     color: rgba(0, 0, 0, 1);
 }
 
-.mat-column-penaltyAndLoyaltyPoints > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.mat-column-penaltyAndLoyaltyPoints > div > p {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
 #loyaltyProgramTable .mat-column-name {
     width: 30%;
 }
@@ -149,4 +137,16 @@ tr.mat-footer-row {
 
 #complaintsTable .mat-column-answeredAt {
     width: 20%;
+}
+
+.penaltyAndLoyaltyPointsTableDataDiv, .totalNumberOfTermsTableDataDiv, .totalNumberOfComplaintsTableDataDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.penaltyAndLoyaltyPointsTableDataDiv > p, .totalNumberOfTermsTableDataDiv > p, .totalNumberOfComplaintsTableDataDiv > p {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

@@ -169,6 +169,18 @@ tr.mat-footer-row {
     align-items: center;
 }
 
+.totalPriceOfNewEquipmentOrderTableDataDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalPriceOfNewEquipmentOrderTableDataDiv > p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 mat-chip {
     justify-content: center;
     width: 25%;
