@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorF
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { OrderingService } from 'src/app/services/ordering/ordering.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -35,7 +36,7 @@ export class MyProfileComponent implements OnInit {
   loyaltyProgram: LoyaltyProgram[] = [];
   loyaltyProgramDataSource: MatTableDataSource<LoyaltyProgram> = new MatTableDataSource<LoyaltyProgram>(this.loyaltyProgram);
 
-  displayedColumnsOfTerms: string[] = ['startingTime', 'endingTime'];
+  displayedColumnsOfTerms: string[] = ['startingTime', 'endingTime', 'termCancellation'];
   terms: ExchangeTerm[] = [];
   termsDataSource: MatTableDataSource<ExchangeTerm> = new MatTableDataSource<ExchangeTerm>(this.terms);
 
@@ -45,8 +46,8 @@ export class MyProfileComponent implements OnInit {
 
   userId: number = 0;
 
-  constructor(private authService: AuthService, private userService: UserService, private formBuilder: FormBuilder, 
-      private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private userService: UserService, private orderingService: OrderingService, 
+      private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initializeFormForUser();
@@ -310,6 +311,17 @@ export class MyProfileComponent implements OnInit {
 
         console.log(`Error on editing user with id = ${userToBeEdited?.id}!\n\n${errorResponse.error.textMessage}`);
         this.snackBar.open('Došlo je do greške prilikom izmene Vaših ličnih podataka!', 'Zatvori', { duration: 5000 });
+      }
+    );
+  }
+
+  cancelTermForEquipmentOrder(termId: number): void {
+    this.orderingService.cancelOrder(termId).subscribe(
+      data => {
+        console.log('Cancelling order response: ', data);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        console.log(`Error on cancelling order!\n\n${errorResponse.error.textMessage}`);
       }
     );
   }

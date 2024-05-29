@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.zxing.WriterException;
@@ -37,14 +39,14 @@ public class OrderingController {
 	@PostMapping(path = "/create-order", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ObjectAndTextResponseDTO> createOrder(
 			@RequestBody OrderCreationDTO orderCreationDTO) {
-		EquipmentOrderDTO createdEquipmentOrder = null;
 		String validationMessages = ValidationPerformer.getValidationMessages(orderCreationDTO);
 		if (validationMessages != null) {
 			return new ResponseEntity<ObjectAndTextResponseDTO>(
-					new ObjectAndTextResponseDTO(createdEquipmentOrder, validationMessages), 
+					new ObjectAndTextResponseDTO(null, validationMessages), 
 					HttpStatus.BAD_REQUEST);
 		}
 		
+		EquipmentOrderDTO createdEquipmentOrder = null;
 		try {
 			createdEquipmentOrder = EquipmentOrderConverter.convertToDTO(
 					orderingService.createOrder(orderCreationDTO));
@@ -101,6 +103,26 @@ public class OrderingController {
 		
 		return new ResponseEntity<SimpleTextResponseDTO>(
 				new SimpleTextResponseDTO("QR code of new equipment order was successfully generated and sent to your email address."), 
+				HttpStatus.OK);
+	}
+	
+	// REFERENCE: https://stackoverflow.com/a/72170329
+	@DeleteMapping(path = "/cancel-order", params = "termId")
+	public ResponseEntity<ObjectAndTextResponseDTO> cancelOrder(
+			@RequestParam(name = "termId") String termId) {
+		long termIdAsLong = 0;
+		try {
+			termIdAsLong = Long.parseLong(termId);
+		} catch (NumberFormatException nFE) {
+			return new ResponseEntity<ObjectAndTextResponseDTO>(
+					new ObjectAndTextResponseDTO(null, "Term id is not a number!"), 
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		EquipmentOrderDTO canceledEquipmentOrder = null;
+		
+		return new ResponseEntity<ObjectAndTextResponseDTO>(
+				new ObjectAndTextResponseDTO(canceledEquipmentOrder, "Equipment order was successfully deleted."), 
 				HttpStatus.OK);
 	}
 }

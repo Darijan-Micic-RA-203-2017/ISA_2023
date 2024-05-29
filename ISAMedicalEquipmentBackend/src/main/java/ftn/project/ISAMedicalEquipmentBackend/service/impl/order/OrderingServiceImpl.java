@@ -195,4 +195,9 @@ public class OrderingServiceImpl implements OrderingService {
 			}
 		});
 	}
+	
+	@Override
+	public EquipmentOrder deleteOrder(long termId) {
+		return null;
+	}
 }

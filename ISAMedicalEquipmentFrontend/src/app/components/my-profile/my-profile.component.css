@@ -119,6 +119,18 @@ tr.mat-footer-row {
     width: 40%;
 }
 
+#termsTable .mat-column-startingTime {
+    width: 40%;
+}
+
+#termsTable .mat-column-endingTime {
+    width: 40%;
+}
+
+#termsTable .mat-column-termCancellation {
+    width: 20%;
+}
+
 #complaintsTable .mat-column-submittedAt {
     width: 25%;
 }

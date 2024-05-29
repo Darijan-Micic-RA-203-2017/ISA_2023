@@ -211,8 +211,19 @@
                         </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="termCancellation">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Otkazivanje
+                        </th>
+                        <td mat-cell *matCellDef="let term">
+                            <button type="button" (click)="cancelTermForEquipmentOrder(term.id)">
+                                <mat-icon>remove_circle</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="totalNumberOfTerms">
-                        <td mat-footer-cell *matFooterCellDef colspan="2">
+                        <td mat-footer-cell *matFooterCellDef colspan="3">
                             <div class="totalNumberOfTermsTableDataDiv">
                                 <p>Ukupan broj termina:</p>
                                 <p>{{ termsDataSource.data.length }}</p>
