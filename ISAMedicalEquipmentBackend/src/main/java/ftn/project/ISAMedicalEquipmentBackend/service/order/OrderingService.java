@@ -26,5 +26,5 @@ public interface OrderingService {
 	BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException;
 	void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
 			byte[] imageOfQRCodeAsByteArray) throws MailException;
-	EquipmentOrder deleteOrder(long termId);
+	boolean deleteOrderByExchangeTermId(long exchangeTermId);
 }

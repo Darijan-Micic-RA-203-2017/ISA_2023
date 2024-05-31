@@ -102,7 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/details-of-equipment-orders/{id}").authenticated()
 				.antMatchers("/ordering/create-order").authenticated()
 				.antMatchers("/ordering/generate-qr-code").authenticated()
-				.antMatchers("/ordering/cancel-order?termId={termId}").authenticated()
+				.antMatchers("/ordering/cancel-order?exchangeTermId={exchangeTermId}").authenticated()
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 

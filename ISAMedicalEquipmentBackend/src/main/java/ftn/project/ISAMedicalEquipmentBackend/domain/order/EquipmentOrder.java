@@ -29,7 +29,8 @@ public class EquipmentOrder {
 	@Column(name = "id", nullable = false, updatable = false, columnDefinition = "bigserial")
 	private long id;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	// REFERENCE: https://thorben-janssen.com/best-practices-many-one-one-many-associations-mappings/
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "exchange_term_id")
 	private ExchangeTerm exchangeTerm;
 	
@@ -37,6 +38,7 @@ public class EquipmentOrder {
 	@JoinColumn(name = "procurement_manager_id")
 	private ProcurementManager procurementManager;
 	
+	// REFERENCE: https://thorben-janssen.com/best-practices-many-one-one-many-associations-mappings/
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
 		orphanRemoval = true)
 	private Set<DetailsOfEquipmentOrder> details;

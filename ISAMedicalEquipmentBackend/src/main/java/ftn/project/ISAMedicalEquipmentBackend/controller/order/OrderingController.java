@@ -107,22 +107,27 @@ public class OrderingController {
 	}
 	
 	// REFERENCE: https://stackoverflow.com/a/72170329
-	@DeleteMapping(path = "/cancel-order", params = "termId")
-	public ResponseEntity<ObjectAndTextResponseDTO> cancelOrder(
-			@RequestParam(name = "termId") String termId) {
-		long termIdAsLong = 0;
+	@DeleteMapping(path = "/cancel-order", params = "exchangeTermId")
+	public ResponseEntity<SimpleTextResponseDTO> cancelOrder(
+			@RequestParam(name = "exchangeTermId") String exchangeTermId) {
+		long exchangeTermIdAsLong = 0;
 		try {
-			termIdAsLong = Long.parseLong(termId);
+			exchangeTermIdAsLong = Long.parseLong(exchangeTermId);
 		} catch (NumberFormatException nFE) {
-			return new ResponseEntity<ObjectAndTextResponseDTO>(
-					new ObjectAndTextResponseDTO(null, "Term id is not a number!"), 
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO("Exchange term id is not a number!"), 
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		EquipmentOrderDTO canceledEquipmentOrder = null;
+		boolean wasOrderFound = orderingService.deleteOrderByExchangeTermId(exchangeTermIdAsLong);
+		if (!wasOrderFound) {
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO("No equipment order with specified exchange term id exists!"), 
+					HttpStatus.BAD_REQUEST);
+		}
 		
-		return new ResponseEntity<ObjectAndTextResponseDTO>(
-				new ObjectAndTextResponseDTO(canceledEquipmentOrder, "Equipment order was successfully deleted."), 
+		return new ResponseEntity<SimpleTextResponseDTO>(
+				new SimpleTextResponseDTO("Equipment order was succesfully deleted."), 
 				HttpStatus.OK);
 	}
 }

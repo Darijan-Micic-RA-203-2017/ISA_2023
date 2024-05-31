@@ -35,13 +35,13 @@ export class OrderingService {
     return this.httpClient.post(this.generateQRCodeURL, JSON.stringify(newEquipmentOrder), { headers: headers });
   }
 
-  cancelOrder(termId: number): Observable<any> {
+  cancelOrder(exchangeTermId: number): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
     // REFERENCE: https://www.concretepage.com/angular/angular-httpclient-delete#HttpParams
-    let params: HttpParams = new HttpParams().set('termId', termId);
+    let params: HttpParams = new HttpParams().set('exchangeTermId', exchangeTermId);
 
     return this.httpClient.delete(this.cancelOrderURL, { headers: headers, params: params });
   }

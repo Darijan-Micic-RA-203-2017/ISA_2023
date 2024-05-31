@@ -28,6 +28,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 import ftn.project.ISAMedicalEquipmentBackend.converter.equipment.MedicalEquipmentConverter;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
+import ftn.project.ISAMedicalEquipmentBackend.domain.order.DetailsOfEquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
@@ -197,7 +198,19 @@ public class OrderingServiceImpl implements OrderingService {
 	}
 	
 	@Override
-	public EquipmentOrder deleteOrder(long termId) {
-		return null;
+	public boolean deleteOrderByExchangeTermId(long exchangeTermId) {
+		EquipmentOrder deletedEquipmentOrder = 
+				equipmentOrderService.deleteByExchangeTermId(exchangeTermId);
+		if (deletedEquipmentOrder == null) {
+			return false;
+		}
+		
+		for (DetailsOfEquipmentOrder d: deletedEquipmentOrder.getDetails()) {
+			MedicalEquipment medEqu = medicalEquipmentService.findById(d.getEquipment().getId());
+			medEqu.setAmount(medEqu.getAmount() + d.getAmount());
+			medicalEquipmentService.save(MedicalEquipmentConverter.convertToDTO(medEqu));
+		}
+		
+		return true;
 	}
 }

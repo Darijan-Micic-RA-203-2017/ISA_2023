@@ -10,7 +10,9 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 
 public interface EquipmentOrderService {
 	EquipmentOrder findById(long id) throws AccessDeniedException;
+	EquipmentOrder findByExchangeTermId(long exchangeTermId);
 	List<EquipmentOrder> findAll();
 	EquipmentOrder create(EquipmentOrderDTO equipmentOrderDTO, 
 			List<MedicalEquipment> equipmentInOrder);
+	EquipmentOrder deleteByExchangeTermId(long exchangeTermId);
 }

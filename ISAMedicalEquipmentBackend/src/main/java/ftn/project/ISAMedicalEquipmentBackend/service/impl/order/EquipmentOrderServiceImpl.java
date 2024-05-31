@@ -40,6 +40,11 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 	}
 	
 	@Override
+	public EquipmentOrder findByExchangeTermId(long exchangeTermId) {
+		return equipmentOrderRepository.findByExchangeTermId(exchangeTermId);
+	}
+	
+	@Override
 	public List<EquipmentOrder> findAll() {
 		return equipmentOrderRepository.getAll();
 	}
@@ -69,5 +74,15 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 		}
 		
 		return equipmentOrderRepository.saveAndFlush(equipmentOrder);
+	}
+	
+	@Override
+	public EquipmentOrder deleteByExchangeTermId(long exchangeTermId) {
+		EquipmentOrder equipmentOrderToBeDeleted = findByExchangeTermId(exchangeTermId);
+		if (equipmentOrderToBeDeleted != null) {
+			equipmentOrderRepository.deleteById(equipmentOrderToBeDeleted.getId());
+		}
+		
+		return equipmentOrderToBeDeleted;
 	}
 }

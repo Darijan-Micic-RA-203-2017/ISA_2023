@@ -15,4 +15,8 @@ public interface EquipmentOrderRepository extends JpaRepository<EquipmentOrder, 
 	
 	@Query(value = "SELECT o FROM EquipmentOrder o JOIN FETCH o.details d WHERE o.id = ?1")
 	EquipmentOrder getById(long id);
+	
+	@Query(value = "SELECT o FROM EquipmentOrder o JOIN FETCH o.exchangeTerm t " 
+			+ "JOIN FETCH o.details d WHERE t.id = ?1")
+	EquipmentOrder findByExchangeTermId(long exchangeTermId);
 }

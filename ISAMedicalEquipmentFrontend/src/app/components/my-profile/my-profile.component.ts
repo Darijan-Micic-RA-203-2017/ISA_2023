@@ -315,8 +315,8 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
-  cancelTermForEquipmentOrder(termId: number): void {
-    this.orderingService.cancelOrder(termId).subscribe(
+  cancelTermForEquipmentOrder(exchangeTermId: number): void {
+    this.orderingService.cancelOrder(exchangeTermId).subscribe(
       data => {
         console.log('Cancelling order response: ', data);
       },
