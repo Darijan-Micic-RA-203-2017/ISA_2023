@@ -1,5 +1,6 @@
 package ftn.project.ISAMedicalEquipmentBackend.service.impl.order;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,6 +15,7 @@ import ftn.project.ISAMedicalEquipmentBackend.domain.order.EquipmentOrder;
 import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.ProcurementManager;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
+import ftn.project.ISAMedicalEquipmentBackend.exception.PastTermDeletionException;
 import ftn.project.ISAMedicalEquipmentBackend.repository.order.EquipmentOrderRepository;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.EquipmentOrderService;
 import ftn.project.ISAMedicalEquipmentBackend.service.term.ExchangeTermService;
@@ -77,12 +79,30 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 	}
 	
 	@Override
-	public EquipmentOrder deleteByExchangeTermId(long exchangeTermId) {
+	public EquipmentOrder deleteByExchangeTermId(long exchangeTermId) throws PastTermDeletionException {
 		EquipmentOrder equipmentOrderToBeDeleted = findByExchangeTermId(exchangeTermId);
-		if (equipmentOrderToBeDeleted != null) {
-			equipmentOrderRepository.deleteById(equipmentOrderToBeDeleted.getId());
+		if (equipmentOrderToBeDeleted == null) {
+			return null;
 		}
 		
+		if (didTermAlreadyStart(equipmentOrderToBeDeleted.getExchangeTerm())) {
+			throw new PastTermDeletionException();
+		}
+		
+		equipmentOrderRepository.deleteById(equipmentOrderToBeDeleted.getId());
+		
 		return equipmentOrderToBeDeleted;
+	}
+	
+	@Override
+	public boolean didTermAlreadyStart(ExchangeTerm term) {
+		Calendar calendarWithCurrentTime = Calendar.getInstance();
+		long startingTimeOfTerm = term.getStartingTime().getTime();
+		long difference = calendarWithCurrentTime.getTimeInMillis() - startingTimeOfTerm;
+		if (difference >= 0) {
+			return true;
+		}
+		
+		return false;
 	}
 }

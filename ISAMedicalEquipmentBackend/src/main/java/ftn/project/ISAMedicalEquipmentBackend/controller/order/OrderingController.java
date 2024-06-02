@@ -23,6 +23,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
+import ftn.project.ISAMedicalEquipmentBackend.exception.PastTermDeletionException;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.OrderingService;
 import ftn.project.ISAMedicalEquipmentBackend.validation.ValidationPerformer;
 
@@ -119,7 +120,14 @@ public class OrderingController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		boolean wasOrderFound = orderingService.deleteOrderByExchangeTermId(exchangeTermIdAsLong);
+		boolean wasOrderFound = false;
+		try {
+			wasOrderFound = orderingService.deleteOrderByExchangeTermId(exchangeTermIdAsLong);
+		} catch (PastTermDeletionException pTDE) {
+			return new ResponseEntity<SimpleTextResponseDTO>(
+					new SimpleTextResponseDTO("Order cannot be canceled after it's exchange term already started!"), 
+					HttpStatus.BAD_REQUEST);
+		}
 		if (!wasOrderFound) {
 			return new ResponseEntity<SimpleTextResponseDTO>(
 					new SimpleTextResponseDTO("No equipment order with specified exchange term id exists!"), 

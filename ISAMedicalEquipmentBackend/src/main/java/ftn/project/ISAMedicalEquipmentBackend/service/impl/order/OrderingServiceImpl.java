@@ -38,6 +38,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
+import ftn.project.ISAMedicalEquipmentBackend.exception.PastTermDeletionException;
 import ftn.project.ISAMedicalEquipmentBackend.service.company.MedicalEquipmentCompanyService;
 import ftn.project.ISAMedicalEquipmentBackend.service.equipment.MedicalEquipmentService;
 import ftn.project.ISAMedicalEquipmentBackend.service.order.EquipmentOrderService;
@@ -198,7 +199,7 @@ public class OrderingServiceImpl implements OrderingService {
 	}
 	
 	@Override
-	public boolean deleteOrderByExchangeTermId(long exchangeTermId) {
+	public boolean deleteOrderByExchangeTermId(long exchangeTermId) throws PastTermDeletionException {
 		EquipmentOrder deletedEquipmentOrder = 
 				equipmentOrderService.deleteByExchangeTermId(exchangeTermId);
 		if (deletedEquipmentOrder == null) {

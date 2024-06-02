@@ -14,6 +14,7 @@ import ftn.project.ISAMedicalEquipmentBackend.dto.order.EquipmentOrderDTO;
 import ftn.project.ISAMedicalEquipmentBackend.dto.order.OrderCreationDTO;
 import ftn.project.ISAMedicalEquipmentBackend.exception.IncorrectSubtotalPriceOfOrderDetailsException;
 import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrderException;
+import ftn.project.ISAMedicalEquipmentBackend.exception.PastTermDeletionException;
 
 public interface OrderingService {
 	EquipmentOrder createOrder(OrderCreationDTO orderCreationDTO) throws 
@@ -26,5 +27,5 @@ public interface OrderingService {
 	BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException;
 	void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
 			byte[] imageOfQRCodeAsByteArray) throws MailException;
-	boolean deleteOrderByExchangeTermId(long exchangeTermId);
+	boolean deleteOrderByExchangeTermId(long exchangeTermId) throws PastTermDeletionException;
 }
