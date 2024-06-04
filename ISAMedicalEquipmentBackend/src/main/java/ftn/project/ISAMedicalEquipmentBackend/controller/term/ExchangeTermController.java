@@ -66,10 +66,10 @@ public class ExchangeTermController {
 				HttpStatus.OK);
 	}
 	
-	@PostMapping(path = "/on-specific-date-of-company/{companyId}", 
+	@PostMapping(path = "/on-specific-date-of-company/{company_id}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ExchangeTermDTO>> findAllOnSpecificDateOfCompany(
-			@PathVariable(name = "companyId") String companyId, 
+			@PathVariable(name = "company_id") String companyId, 
 			@RequestBody DateTimeWrapperDTO dateWrapper) {
 		List<ExchangeTermDTO> termsOnSpecificDateOfCompany = null;
 		
@@ -89,9 +89,9 @@ public class ExchangeTermController {
 				HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/of-company/{companyId}")
+	@GetMapping(path = "/of-company/{company_id}")
 	public ResponseEntity<List<ExchangeTermDTO>> findAllOfCompany(
-			@PathVariable(name = "companyId") String companyId) {
+			@PathVariable(name = "company_id") String companyId) {
 		List<ExchangeTermDTO> termsOfCompany = null;
 		
 		long companyIdAsLong = 0;

@@ -42,7 +42,7 @@ export class OrderingService {
     });
     // REFERENCE: https://www.concretepage.com/angular/angular-httpclient-delete#HttpParams
     let params: HttpParams = new HttpParams()
-        .set('exchangeTermId', exchangeTermId).set('procurementManagerId', procurementManagerId);
+        .set('exchange_term_id', exchangeTermId).set('procurement_manager_id', procurementManagerId);
 
     return this.httpClient.delete(this.cancelOrderURL, { headers: headers, params: params });
   }

@@ -57,9 +57,9 @@ public class MedicalEquipmentController {
 		return new ResponseEntity<MedicalEquipmentDTO>(equipment, HttpStatus.OK);
 	}
 	
-	@GetMapping(path = "/of-company/{companyName}")
+	@GetMapping(path = "/of-company/{company_name}")
 	public ResponseEntity<List<MedicalEquipmentDTO>> findByCompanyName(
-			@PathVariable(name = "companyName") String companyName) {
+			@PathVariable(name = "company_name") String companyName) {
 		List<MedicalEquipmentDTO> allEquipmentOfSpecifiedCompany = null;
 		if (companyName.isEmpty()) {
 			return new ResponseEntity<List<MedicalEquipmentDTO>>(allEquipmentOfSpecifiedCompany, 
@@ -89,10 +89,10 @@ public class MedicalEquipmentController {
 		return new ResponseEntity<List<MedicalEquipmentDTO>>(equipment, HttpStatus.OK);
 	}
 	
-	@PostMapping(path = "/search-by-name/of-company/{companyName}", 
+	@PostMapping(path = "/search-by-name/of-company/{company_name}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicalEquipmentDTO>> searchEquipmentOfCompanyByName(
-			@PathVariable(name = "companyName") String companyName, 
+			@PathVariable(name = "company_name") String companyName, 
 			@RequestBody SearchCriterionDTO searchCriterionDTO) {
 		List<MedicalEquipmentDTO> equipment = null;
 		if (companyName.isEmpty()) {

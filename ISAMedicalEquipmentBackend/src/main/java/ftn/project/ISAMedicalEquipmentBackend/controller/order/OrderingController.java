@@ -108,10 +108,10 @@ public class OrderingController {
 	}
 	
 	// REFERENCE: https://stackoverflow.com/a/72170329
-	@DeleteMapping(path = "/cancel-order", params = {"exchangeTermId", "procurementManagerId"})
+	@DeleteMapping(path = "/cancel-order", params = {"exchange_term_id", "procurement_manager_id"})
 	public ResponseEntity<SimpleTextResponseDTO> cancelOrder(
-			@RequestParam(name = "exchangeTermId") String exchangeTermId, 
-			@RequestParam(name = "procurementManagerId") String procurementManagerId) {
+			@RequestParam(name = "exchange_term_id") String exchangeTermId, 
+			@RequestParam(name = "procurement_manager_id") String procurementManagerId) {
 		long exchangeTermIdAsLong = 0;
 		try {
 			exchangeTermIdAsLong = Long.parseLong(exchangeTermId);
