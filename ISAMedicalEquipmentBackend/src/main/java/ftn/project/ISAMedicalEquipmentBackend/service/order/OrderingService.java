@@ -17,6 +17,8 @@ import ftn.project.ISAMedicalEquipmentBackend.exception.NotEnoughEquipmentForOrd
 import ftn.project.ISAMedicalEquipmentBackend.exception.PastTermDeletionException;
 
 public interface OrderingService {
+	static final long ONE_DAY_IN_MILLISECONDS = 86400000;
+	
 	EquipmentOrder createOrder(OrderCreationDTO orderCreationDTO) throws 
 			NotEnoughEquipmentForOrderException, IncorrectSubtotalPriceOfOrderDetailsException;
 	boolean isThereEnoughEquipmentForOrder(MedicalEquipment equipment, int requestedAmountInOrder);
@@ -28,4 +30,6 @@ public interface OrderingService {
 	void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
 			byte[] imageOfQRCodeAsByteArray) throws MailException;
 	boolean deleteOrderByExchangeTermId(long exchangeTermId) throws PastTermDeletionException;
+	void restoreAmountsOfMedicalEquipment(EquipmentOrder deletedEquipmentOrder);
+	void penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder);
 }

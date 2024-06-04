@@ -97,9 +97,10 @@ public class EquipmentOrderServiceImpl implements EquipmentOrderService {
 	@Override
 	public boolean didTermAlreadyStart(ExchangeTerm term) {
 		Calendar calendarWithCurrentTime = Calendar.getInstance();
-		long startingTimeOfTerm = term.getStartingTime().getTime();
-		long difference = calendarWithCurrentTime.getTimeInMillis() - startingTimeOfTerm;
-		if (difference >= 0) {
+		long differenceBetweenCurrentTimeAndStartingTimeOfTerm = 
+				exchangeTermService.calculateDifferenceBetweenTimestamps(
+						calendarWithCurrentTime.getTime(), term.getStartingTime());
+		if (differenceBetweenCurrentTimeAndStartingTimeOfTerm >= 0) {
 			return true;
 		}
 		

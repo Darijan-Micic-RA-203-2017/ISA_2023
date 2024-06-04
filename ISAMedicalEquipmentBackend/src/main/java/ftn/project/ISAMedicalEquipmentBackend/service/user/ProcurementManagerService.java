@@ -23,4 +23,5 @@ public interface ProcurementManagerService {
 	void activateAccount(String userCodeOfNewRegisteredUser);
 	ProcurementManager edit(ProcurementManagerDTO procurementManagerToBeEdited) 
 			throws ChangeOfEmailAddressException;
+	ProcurementManager penalizeWith(long id, int numberOfPenaltyPoints);
 }

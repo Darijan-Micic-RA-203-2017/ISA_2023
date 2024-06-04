@@ -219,4 +219,14 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		
 		return procurementManagerRepository.saveAndFlush(originalProcurementManager);
 	}
+	
+	@Override
+	public ProcurementManager penalizeWith(long id, int numberOfPenaltyPoints) {
+		ProcurementManager procurementManagerToBePenalised = findById(id);
+		int penaltyPointsTotal = 
+				procurementManagerToBePenalised.getPenaltyPoints() + numberOfPenaltyPoints;
+		procurementManagerToBePenalised.setPenaltyPoints(penaltyPointsTotal);
+		
+		return procurementManagerRepository.saveAndFlush(procurementManagerToBePenalised);
+	}
 }

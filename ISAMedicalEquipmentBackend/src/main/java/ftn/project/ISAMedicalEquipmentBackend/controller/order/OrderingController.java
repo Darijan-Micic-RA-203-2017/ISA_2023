@@ -108,9 +108,10 @@ public class OrderingController {
 	}
 	
 	// REFERENCE: https://stackoverflow.com/a/72170329
-	@DeleteMapping(path = "/cancel-order", params = "exchangeTermId")
+	@DeleteMapping(path = "/cancel-order", params = {"exchangeTermId", "procurementManagerId"})
 	public ResponseEntity<SimpleTextResponseDTO> cancelOrder(
-			@RequestParam(name = "exchangeTermId") String exchangeTermId) {
+			@RequestParam(name = "exchangeTermId") String exchangeTermId, 
+			@RequestParam(name = "procurementManagerId") String procurementManagerId) {
 		long exchangeTermIdAsLong = 0;
 		try {
 			exchangeTermIdAsLong = Long.parseLong(exchangeTermId);
@@ -125,7 +126,7 @@ public class OrderingController {
 			wasOrderFound = orderingService.deleteOrderByExchangeTermId(exchangeTermIdAsLong);
 		} catch (PastTermDeletionException pTDE) {
 			return new ResponseEntity<SimpleTextResponseDTO>(
-					new SimpleTextResponseDTO("Order cannot be canceled after it's exchange term already started!"), 
+					new SimpleTextResponseDTO("Order cannot be canceled after its exchange term already started!"), 
 					HttpStatus.BAD_REQUEST);
 		}
 		if (!wasOrderFound) {
@@ -133,6 +134,10 @@ public class OrderingController {
 					new SimpleTextResponseDTO("No equipment order with specified exchange term id exists!"), 
 					HttpStatus.BAD_REQUEST);
 		}
+		
+		System.out.println("\nEquipment order and its associations (exchange term and details) " 
+				+ "were successfully deleted.\nAmounts of medical equipment were restored.\n" 
+				+ "Procurement manager was penalized for cancelling the order.");
 		
 		return new ResponseEntity<SimpleTextResponseDTO>(
 				new SimpleTextResponseDTO("Equipment order was succesfully deleted."), 

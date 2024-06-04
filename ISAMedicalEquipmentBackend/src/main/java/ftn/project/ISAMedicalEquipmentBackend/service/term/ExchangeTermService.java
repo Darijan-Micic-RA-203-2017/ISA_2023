@@ -1,6 +1,7 @@
 package ftn.project.ISAMedicalEquipmentBackend.service.term;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -19,4 +20,5 @@ public interface ExchangeTermService {
 	List<ExchangeTerm> findAllOfCompanyAdministrator(long companyAdministratorId);
 	List<ExchangeTerm> findAll();
 	ExchangeTerm reserveTerm(ExchangeTermDTO exchangeTermDTO);
+	long calculateDifferenceBetweenTimestamps(Date firstTimestamp, Date secondTimestamp);
 }

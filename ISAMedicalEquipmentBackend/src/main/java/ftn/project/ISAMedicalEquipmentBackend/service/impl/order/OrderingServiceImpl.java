@@ -3,7 +3,10 @@ package ftn.project.ISAMedicalEquipmentBackend.service.impl.order;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -206,12 +209,38 @@ public class OrderingServiceImpl implements OrderingService {
 			return false;
 		}
 		
+		restoreAmountsOfMedicalEquipment(deletedEquipmentOrder);
+		
+		penalizeProcurementManager(deletedEquipmentOrder);
+		
+		return true;
+	}
+	
+	@Override
+	public void restoreAmountsOfMedicalEquipment(EquipmentOrder deletedEquipmentOrder) {
 		for (DetailsOfEquipmentOrder d: deletedEquipmentOrder.getDetails()) {
 			MedicalEquipment medEqu = medicalEquipmentService.findById(d.getEquipment().getId());
 			medEqu.setAmount(medEqu.getAmount() + d.getAmount());
 			medicalEquipmentService.save(MedicalEquipmentConverter.convertToDTO(medEqu));
 		}
+	}
+	
+	@Override
+	public void penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder) {
+		Timestamp startingTimeOfTerm = deletedEquipmentOrder.getExchangeTerm().getStartingTime();
+		Date currentTime = Calendar.getInstance().getTime();
+		long differenceBetweenStartingTimeOfTermAndCurrentTime = 
+				exchangeTermService.calculateDifferenceBetweenTimestamps(
+						startingTimeOfTerm, currentTime);
 		
-		return true;
+		int numberOfPenaltyPoints = 0;
+		if (differenceBetweenStartingTimeOfTermAndCurrentTime > ONE_DAY_IN_MILLISECONDS) {
+			numberOfPenaltyPoints = 1;
+		} else {
+			numberOfPenaltyPoints = 2;
+		}
+		
+		procurementManagerService.penalizeWith(
+				deletedEquipmentOrder.getProcurementManager().getId(), numberOfPenaltyPoints);
 	}
 }

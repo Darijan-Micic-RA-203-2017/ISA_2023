@@ -56,9 +56,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	// REFERENCE: https://stackoverflow.com/questions/51712724/how-to-allow-a-user-only-access-their-own-data-in-spring-boot-spring-security/51713982#51713982
-	public boolean hasId(long userId) {
+	public boolean hasId(String userId) {
+		long userIdAsLong = 0;
+		try {
+			userIdAsLong = Long.parseLong(userId);
+		} catch (NumberFormatException nFE) {
+			return false;
+		}
+		
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (user.getId() == userId) {
+		if (user.getId() == userIdAsLong) {
 			return true;
 		}
 		
@@ -76,7 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/company-administrators").hasRole("SYSTEM_ADMINISTRATOR")
 				.antMatchers("/users/system-administrators").hasRole("SYSTEM_ADMINISTRATOR")
 				// REFERENCE: https://stackoverflow.com/questions/51712724/how-to-allow-a-user-only-access-their-own-data-in-spring-boot-spring-security/51713982#51713982
-				.antMatchers("/users/{id}").access("hasRole(\"SYSTEM_ADMINISTRATOR\") OR @webSecurityConfig.hasId(#id)")
+				.antMatchers("/users/{id}")
+						.access("hasRole(\"SYSTEM_ADMINISTRATOR\") OR @webSecurityConfig.hasId(#id)")
 				.antMatchers("/users/find-by-username/{username}").hasRole("SYSTEM_ADMINISTRATOR")
 				.antMatchers("/users/register-as-a-procurement-manager").permitAll()
 				.antMatchers("/users/activate-account").permitAll()
@@ -102,7 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/details-of-equipment-orders/{id}").authenticated()
 				.antMatchers("/ordering/create-order").authenticated()
 				.antMatchers("/ordering/generate-qr-code").authenticated()
-				.antMatchers("/ordering/cancel-order?exchangeTermId={exchangeTermId}").authenticated()
+				.antMatchers("/ordering/cancel-order?exchangeTermId={exchangeTermId}&procurementManagerId={procurementManagerId}")
+						.access("hasRole(\"SYSTEM_ADMINISTRATOR\") OR @webSecurityConfig.hasId(#procurementManagerId)")
 				.anyRequest().authenticated().and()
 				.cors().and()
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, 

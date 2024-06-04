@@ -2,6 +2,7 @@ package ftn.project.ISAMedicalEquipmentBackend.service.impl.term;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +110,12 @@ public class ExchangeTermServiceImpl implements ExchangeTermService {
 				procurementManager, company, companyAdministrator);
 		
 		return exchangeTermRepository.saveAndFlush(newExchangeTerm);
+	}
+
+	@Override
+	public long calculateDifferenceBetweenTimestamps(Date firstTimestamp, Date secondTimestamp) {
+		long difference = firstTimestamp.getTime() - secondTimestamp.getTime();
+		
+		return difference;
 	}
 }

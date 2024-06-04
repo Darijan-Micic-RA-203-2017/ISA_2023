@@ -316,7 +316,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   cancelTermForEquipmentOrder(exchangeTermId: number): void {
-    this.orderingService.cancelOrder(exchangeTermId).subscribe(
+    this.orderingService.cancelOrder(exchangeTermId, this.userId).subscribe(
       data => {
         console.log('Cancelling order response: ', data);
       },
