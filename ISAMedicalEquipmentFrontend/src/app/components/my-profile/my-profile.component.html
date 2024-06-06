@@ -216,7 +216,8 @@
                             Otkazivanje
                         </th>
                         <td mat-cell *matCellDef="let term">
-                            <button [disabled]="isTermForEquipmentOrderBeingCancelled" type="button" 
+                            <button *ngIf="procurementManager && !didTermAlreadyStart(term)" 
+                                [disabled]="isTermForEquipmentOrderBeingCancelled" type="button" 
                                 (click)="cancelTermForEquipmentOrder(term.id)">
                                 <mat-icon>remove_circle</mat-icon>
                             </button>

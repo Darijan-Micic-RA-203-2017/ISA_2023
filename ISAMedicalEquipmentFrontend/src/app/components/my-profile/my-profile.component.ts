@@ -9,7 +9,7 @@ import { OrderingService } from 'src/app/services/ordering/ordering.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { DateTime } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { User } from 'src/app/domain/user/user';
 import { ProcurementManager } from 'src/app/domain/user/procurement-manager';
 import { CompanyAdministrator } from 'src/app/domain/user/company-administrator';
@@ -314,6 +314,17 @@ export class MyProfileComponent implements OnInit {
         this.snackBar.open('Došlo je do greške prilikom izmene Vaših ličnih podataka!', 'Zatvori', { duration: 5000 });
       }
     );
+  }
+
+  didTermAlreadyStart(term: ExchangeTerm): boolean {
+    let currentTime: DateTime = DateTime.now();
+    // REFERENCE: https://moment.github.io/luxon/#/tour?id=durations
+    let differenceBetweenCurrentTimeAndStartingTimeOfTerm: Duration = currentTime.diff(term.startingTime, ['milliseconds']);
+    if (differenceBetweenCurrentTimeAndStartingTimeOfTerm.milliseconds >= 0) {
+      return true;
+    }
+
+    return false;
   }
 
   cancelTermForEquipmentOrder(exchangeTermId: number): void {
