@@ -202,18 +202,22 @@ public class OrderingServiceImpl implements OrderingService {
 	}
 	
 	@Override
-	public boolean deleteOrderByExchangeTermId(long exchangeTermId) throws PastTermDeletionException {
+	public int cancelOrderWith(long exchangeTermId) throws PastTermDeletionException {
+		int numberOfPenaltyPoints = 0;
+		
 		EquipmentOrder deletedEquipmentOrder = 
 				equipmentOrderService.deleteByExchangeTermId(exchangeTermId);
 		if (deletedEquipmentOrder == null) {
-			return false;
+			numberOfPenaltyPoints = -1;
+			
+			return numberOfPenaltyPoints;
 		}
 		
 		restoreAmountsOfMedicalEquipment(deletedEquipmentOrder);
 		
-		penalizeProcurementManager(deletedEquipmentOrder);
+		numberOfPenaltyPoints = penalizeProcurementManager(deletedEquipmentOrder);
 		
-		return true;
+		return numberOfPenaltyPoints;
 	}
 	
 	@Override
@@ -226,7 +230,7 @@ public class OrderingServiceImpl implements OrderingService {
 	}
 	
 	@Override
-	public void penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder) {
+	public int penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder) {
 		Timestamp startingTimeOfTerm = deletedEquipmentOrder.getExchangeTerm().getStartingTime();
 		Date currentTime = Calendar.getInstance().getTime();
 		long differenceBetweenStartingTimeOfTermAndCurrentTime = 
@@ -242,5 +246,7 @@ public class OrderingServiceImpl implements OrderingService {
 		
 		procurementManagerService.penalizeWith(
 				deletedEquipmentOrder.getProcurementManager().getId(), numberOfPenaltyPoints);
+		
+		return numberOfPenaltyPoints;
 	}
 }

@@ -175,7 +175,7 @@
                     <ng-container matColumnDef="penaltyAndLoyaltyPoints">
                         <td mat-footer-cell *matFooterCellDef colspan="3">
                             <div class="penaltyAndLoyaltyPointsTableDataDiv">
-                                <p>Penalni poeni: {{ (procurementManager?.penaltyPoints || 0) || (companyAdministrator?.penaltyPoints || 0) }}</p>
+                                <p>Kazneni poeni: {{ (procurementManager?.penaltyPoints || 0) || (companyAdministrator?.penaltyPoints || 0) }}</p>
                                 <p>Poeni lojalnosti: {{ (procurementManager?.loyaltyPoints || 0) || (companyAdministrator?.loyaltyPoints || 0) }}</p>
                             </div>
                         </td>
@@ -216,7 +216,8 @@
                             Otkazivanje
                         </th>
                         <td mat-cell *matCellDef="let term">
-                            <button type="button" (click)="cancelTermForEquipmentOrder(term.id)">
+                            <button [disabled]="isTermForEquipmentOrderBeingCancelled" type="button" 
+                                (click)="cancelTermForEquipmentOrder(term.id)">
                                 <mat-icon>remove_circle</mat-icon>
                             </button>
                         </td>

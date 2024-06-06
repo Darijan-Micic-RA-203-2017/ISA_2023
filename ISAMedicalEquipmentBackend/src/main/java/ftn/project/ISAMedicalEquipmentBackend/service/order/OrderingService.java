@@ -29,7 +29,7 @@ public interface OrderingService {
 	BufferedImage generateImageOfQRCode(String barcodeText) throws WriterException;
 	void sendEmailWithQRCodeOfNewOrder(EquipmentOrderDTO newEquipmentOrder, 
 			byte[] imageOfQRCodeAsByteArray) throws MailException;
-	boolean deleteOrderByExchangeTermId(long exchangeTermId) throws PastTermDeletionException;
+	int cancelOrderWith(long exchangeTermId) throws PastTermDeletionException;
 	void restoreAmountsOfMedicalEquipment(EquipmentOrder deletedEquipmentOrder);
-	void penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder);
+	int penalizeProcurementManager(EquipmentOrder deletedEquipmentOrder);
 }

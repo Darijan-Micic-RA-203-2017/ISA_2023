@@ -416,7 +416,8 @@ export class CompanyProfileComponent implements OnInit {
             this.router.navigateByUrl('/');
 
             console.log('Generating the QR code of new order response: ', data.textMessage);
-            this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan. Na vašu adresu elektronske pošte poslat je QR kod narudžbine.', 
+            this.snackBar.open('Termin za preuzimanje opreme je uspešno zakazan. Na vašu adresu elektronske pošte ' 
+                + 'poslat je QR kod narudžbine.', 
                 'Zatvori', { duration: 10000 });
           },
           (errorResponse: HttpErrorResponse) => {

@@ -36,6 +36,7 @@ export class MyProfileComponent implements OnInit {
   loyaltyProgram: LoyaltyProgram[] = [];
   loyaltyProgramDataSource: MatTableDataSource<LoyaltyProgram> = new MatTableDataSource<LoyaltyProgram>(this.loyaltyProgram);
 
+  isTermForEquipmentOrderBeingCancelled: boolean = false;
   displayedColumnsOfTerms: string[] = ['startingTime', 'endingTime', 'termCancellation'];
   terms: ExchangeTerm[] = [];
   termsDataSource: MatTableDataSource<ExchangeTerm> = new MatTableDataSource<ExchangeTerm>(this.terms);
@@ -316,11 +317,29 @@ export class MyProfileComponent implements OnInit {
   }
 
   cancelTermForEquipmentOrder(exchangeTermId: number): void {
+    this.isTermForEquipmentOrderBeingCancelled = true;
+
     this.orderingService.cancelOrder(exchangeTermId, this.userId).subscribe(
       data => {
         console.log('Cancelling order response: ', data);
+
+        let indexOfCancelledTerm: number = this.terms.findIndex((value: ExchangeTerm) => { value.id == exchangeTermId });
+        this.terms.splice(indexOfCancelledTerm, 1);
+        this.termsDataSource.data = this.terms;
+
+        let numberOfPenaltyPoints: number = Number.parseInt(data.textMessage.split('penalized with ')[1].substring(0));
+        if (this.procurementManager) {
+          this.procurementManager.penaltyPoints += numberOfPenaltyPoints;
+        }
+        this.snackBar.open(`Termin za preuzimanje opreme uspešno je otkazan. Kažnjeni ste sa ` 
+            + `${numberOfPenaltyPoints} kaznenih poena!`, 
+            'Zatvori', { duration: 10000 });
+
+        this.isTermForEquipmentOrderBeingCancelled = false;
       },
       (errorResponse: HttpErrorResponse) => {
+        this.isTermForEquipmentOrderBeingCancelled = false;
+
         console.log(`Error on cancelling order!\n\n${errorResponse.error.textMessage}`);
       }
     );

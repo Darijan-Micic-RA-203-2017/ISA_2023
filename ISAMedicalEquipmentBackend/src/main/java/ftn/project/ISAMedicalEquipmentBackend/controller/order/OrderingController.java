@@ -121,15 +121,15 @@ public class OrderingController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		boolean wasOrderFound = false;
+		int numberOfPenaltyPoints = 0;
 		try {
-			wasOrderFound = orderingService.deleteOrderByExchangeTermId(exchangeTermIdAsLong);
+			numberOfPenaltyPoints = orderingService.cancelOrderWith(exchangeTermIdAsLong);
 		} catch (PastTermDeletionException pTDE) {
 			return new ResponseEntity<SimpleTextResponseDTO>(
 					new SimpleTextResponseDTO("Order cannot be canceled after its exchange term already started!"), 
 					HttpStatus.BAD_REQUEST);
 		}
-		if (!wasOrderFound) {
+		if (numberOfPenaltyPoints == -1) {
 			return new ResponseEntity<SimpleTextResponseDTO>(
 					new SimpleTextResponseDTO("No equipment order with specified exchange term id exists!"), 
 					HttpStatus.BAD_REQUEST);
@@ -137,10 +137,13 @@ public class OrderingController {
 		
 		System.out.println("\nEquipment order and its associations (exchange term and details) " 
 				+ "were successfully deleted.\nAmounts of medical equipment were restored.\n" 
-				+ "Procurement manager was penalized for cancelling the order.");
+				+ "Procurement manager was penalized with " + numberOfPenaltyPoints 
+				+ " penalty point/s for cancelling the order.\n");
 		
 		return new ResponseEntity<SimpleTextResponseDTO>(
-				new SimpleTextResponseDTO("Equipment order was succesfully deleted."), 
+				new SimpleTextResponseDTO("Equipment order was succesfully cancelled. As " 
+						+ "procurement manager, you were penalized with " + numberOfPenaltyPoints 
+						+ " penalty point/s."), 
 				HttpStatus.OK);
 	}
 }
