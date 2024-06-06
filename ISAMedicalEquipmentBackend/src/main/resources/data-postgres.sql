@@ -153,16 +153,27 @@ INSERT INTO Medical_equipment(id, type_id, name, price, amount, company_name, co
 INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
 	company_administrator_id) VALUES (1, '2024-04-26 08:00:00.000+02', '2024-04-26 08:30:00.000+02', 
 	1, 1, 3);
+INSERT INTO Exchange_terms(id, starting_time, ending_time, procurement_manager_id, company_id, 
+	company_administrator_id) VALUES (2, '2024-06-07 11:30:00.000+02', '2024-06-07 12:00:00.000+02', 
+	1, 1, 3);
 
 -- Equipment orders:
 INSERT INTO Equipment_orders(id, exchange_term_id, procurement_manager_id, total_price) VALUES 
 	(1, 1, 1, 39997.5);
+INSERT INTO Equipment_orders(id, exchange_term_id, procurement_manager_id, total_price) VALUES 
+	(2, 2, 1, 53998.15);
 
 -- Details of equipment orders:
 INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
 	(1, 1, 1, 50, 9999.5);
 INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
 	(2, 1, 2, 200, 29998.0);
+INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
+	(3, 2, 1, 45, 8999.55);
+INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
+	(4, 2, 3, 60, 20999.4);
+INSERT INTO Details_of_equipment_orders(id, order_id, equipment_id, amount, subtotal_price) VALUES 
+	(5, 2, 4, 80, 23999.2);
 
 -- REFERENCE: https://dba.stackexchange.com/questions/46125/why-does-postgres-generate-an-already-used-pk-value
 -- REFERENCE: https://dba.stackexchange.com/a/90522
