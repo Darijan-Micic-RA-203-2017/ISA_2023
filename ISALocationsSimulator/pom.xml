@@ -25,9 +25,15 @@
 	</properties>
 	
 	<dependencies>
+		<!-- REFERENCE: https://github.com/ivana-k/isa-vezbe/tree/main/Vezbe08/rabbitmq-producer-example -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
 		<dependency>
