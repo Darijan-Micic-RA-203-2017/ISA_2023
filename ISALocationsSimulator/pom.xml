@@ -25,10 +25,10 @@
 	</properties>
 	
 	<dependencies>
-		<!-- REFERENCE: https://github.com/ivana-k/isa-vezbe/tree/main/Vezbe08/rabbitmq-producer-example -->
+		<!-- REFERENCE: https://github.com/ivana-k/isa-vezbe/tree/main/Vezbe08 -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		
 		<dependency>
