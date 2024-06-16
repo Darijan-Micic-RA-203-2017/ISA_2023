@@ -12,9 +12,9 @@ INSERT INTO Work_times(id, on_mondays_through_fridays, on_saturdays, on_sundays)
 
 -- Medical equipment companies:
 -- REFERENCE: https://stackoverflow.com/questions/26638615/insert-line-break-in-postgresql-when-updating-text-field
-INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
-	description, average_grade, work_time_id) VALUES (1, 'Galenika', 'Batajnički drum b.b.', 
-	'Zemun', 'Srbija', 
+INSERT INTO Medical_equipment_companies(id, name, latitude, longitude, street_and_number, 
+	populated_place, country, description, average_grade, work_time_id) VALUES (1, 'Galenika', 
+	44.85856108034915, 20.363139670000777, 'Batajnički drum b.b.', 'Zemun', 'Srbija', 
 	CONCAT('Galenika je najstarija farmaceutska kompanija u regionu. Galenika je osnovana 1945. ', 
 	'godine. Ime je dobila po Galenu, začetniku naučne farmacije. Galenika je danas deo brazilske', 
 	' NC Grupe, koja obuhvata i EMS – najveću farmaceutsku kompaniju u Brazilu i jednu od ', 
@@ -22,8 +22,9 @@ INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_p
 	'Galenika na dlanu Portfolio proizvoda: Uz portfolio od više od 250 proizvoda, Galenika ', 
 	'proizvodi najsavremenije generičke lekove, dijetetske suplemente, kozmetičke proizvode i ', 
 	'medicinska sredstva.'), 0.0, 1);
-INSERT INTO Medical_equipment_companies(id, name, street_and_number, populated_place, country, 
-	description, average_grade, work_time_id) VALUES (2, 'Apotekarska ustanova Janković', 
+INSERT INTO Medical_equipment_companies(id, name, latitude, longitude, street_and_number, 
+	populated_place, country, description, average_grade, work_time_id) VALUES (2, 
+	'Apotekarska ustanova Janković', 45.24401166066522, 19.847598066936957, 
 	'Dr. Ilije Đuričića 2A', 'Novi Sad', 'Srbija', 
 	CONCAT('Poverenje, sigurnost i dostupnost su, već skoro 30 godina, glavna obeležja ', 
 	'Apotekarske ustanove "Janković". Podrška koju svakodnevno dobijamo od vernih klijenata ', 

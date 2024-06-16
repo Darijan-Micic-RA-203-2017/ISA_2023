@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 import ftn.project.ISAMedicalEquipmentBackend.domain.complaint.Complaint;
 import ftn.project.ISAMedicalEquipmentBackend.domain.equipment.MedicalEquipment;
-import ftn.project.ISAMedicalEquipmentBackend.domain.term.ExchangeTerm;
 import ftn.project.ISAMedicalEquipmentBackend.domain.user.CompanyAdministrator;
 
 @Entity
@@ -34,6 +33,12 @@ public class MedicalEquipmentCompany {
 	
 	@Column(name = "name", nullable = false)
 	private String name;
+	
+	@Column(name = "latitude", nullable = false)
+	private double latitude;
+	
+	@Column(name = "longitude", nullable = false)
+	private double longitude;
 	
 	@Column(name = "street_and_number", nullable = false)
 	private String streetAndNumber;
@@ -61,19 +66,18 @@ public class MedicalEquipmentCompany {
 	private Set<Complaint> complaints;
 	
 	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<ExchangeTerm> unoccupiedExchangeTerms;
-	
-	@OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<CompanyAdministrator> administrators;
 	
 	public MedicalEquipmentCompany() {}
 	
-	public MedicalEquipmentCompany(long id, String name, String streetAndNumber, 
-			String populatedPlace, String country, String description, double averageGrade, 
-			WorkTime workTime, Set<MedicalEquipment> equipment, Set<Complaint> complaints, 
-			Set<ExchangeTerm> unoccupiedExchangeTerms, Set<CompanyAdministrator> administrators) {
+	public MedicalEquipmentCompany(long id, String name, double latitude, double longitude, 
+			String streetAndNumber, String populatedPlace, String country, String description, 
+			double averageGrade, WorkTime workTime, Set<MedicalEquipment> equipment, 
+			Set<Complaint> complaints, Set<CompanyAdministrator> administrators) {
 		this.id = id;
 		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.streetAndNumber = streetAndNumber;
 		this.populatedPlace = populatedPlace;
 		this.country = country;
@@ -82,7 +86,6 @@ public class MedicalEquipmentCompany {
 		this.workTime = workTime;
 		this.equipment = equipment;
 		this.complaints = complaints;
-		this.unoccupiedExchangeTerms = unoccupiedExchangeTerms;
 		this.administrators = administrators;
 	}
 	
@@ -100,6 +103,22 @@ public class MedicalEquipmentCompany {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	
 	public String getStreetAndNumber() {
@@ -164,14 +183,6 @@ public class MedicalEquipmentCompany {
 	
 	public void setComplaints(Set<Complaint> complaints) {
 		this.complaints = complaints;
-	}
-	
-	public Set<ExchangeTerm> getUnoccupiedExchangeTerms() {
-		return unoccupiedExchangeTerms;
-	}
-	
-	public void setUnoccupiedExchangeTerms(Set<ExchangeTerm> unoccupiedExchangeTerms) {
-		this.unoccupiedExchangeTerms = unoccupiedExchangeTerms;
 	}
 	
 	public Set<CompanyAdministrator> getAdministrators() {

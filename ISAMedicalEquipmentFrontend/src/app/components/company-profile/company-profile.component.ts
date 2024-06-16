@@ -38,6 +38,8 @@ export class CompanyProfileComponent implements OnInit {
   company: MedicalEquipmentCompany = {
     id: 0,
     name: '',
+    latitude: 0.0,
+    longitude: 0.0,
     streetAndNumber: '',
     populatedPlace: '',
     country: '',

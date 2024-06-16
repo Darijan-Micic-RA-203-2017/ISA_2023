@@ -31,6 +31,8 @@ public class MedicalEquipmentCompanyConverter {
 		
 		long id = company.getId();
 		String name = company.getName();
+		double latitude = company.getLatitude();
+		double longitude = company.getLongitude();
 		String streetAndNumber = company.getStreetAndNumber();
 		String populatedPlace = company.getPopulatedPlace();
 		String country = company.getCountry();
@@ -38,8 +40,9 @@ public class MedicalEquipmentCompanyConverter {
 		double averageGrade = company.getAverageGrade();
 		WorkTimeDTO workTime = WorkTimeConverter.convertToDTO(company.getWorkTime());
 		
-		MedicalEquipmentCompanyDTO dto = new MedicalEquipmentCompanyDTO(id, name, streetAndNumber, 
-				populatedPlace, country, description, averageGrade, workTime);
+		MedicalEquipmentCompanyDTO dto = new MedicalEquipmentCompanyDTO(id, name, latitude, 
+				longitude, streetAndNumber, populatedPlace, country, description, averageGrade, 
+				workTime);
 		
 		return dto;
 	}

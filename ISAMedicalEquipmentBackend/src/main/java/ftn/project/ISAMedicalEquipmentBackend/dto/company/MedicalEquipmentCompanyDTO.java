@@ -3,6 +3,8 @@ package ftn.project.ISAMedicalEquipmentBackend.dto.company;
 public class MedicalEquipmentCompanyDTO {
 	private long id;
 	private String name;
+	private double latitude;
+	private double longitude;
 	private String streetAndNumber;
 	private String populatedPlace;
 	private String country;
@@ -12,11 +14,13 @@ public class MedicalEquipmentCompanyDTO {
 	
 	public MedicalEquipmentCompanyDTO() {}
 	
-	public MedicalEquipmentCompanyDTO(long id, String name, String streetAndNumber, 
-			String populatedPlace, String country, String description, double averageGrade, 
-			WorkTimeDTO workTime) {
+	public MedicalEquipmentCompanyDTO(long id, String name, double latitude, double longitude, 
+			String streetAndNumber, String populatedPlace, String country, String description, 
+			double averageGrade, WorkTimeDTO workTime) {
 		this.id = id;
 		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.streetAndNumber = streetAndNumber;
 		this.populatedPlace = populatedPlace;
 		this.country = country;
@@ -39,6 +43,22 @@ public class MedicalEquipmentCompanyDTO {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	
 	public String getStreetAndNumber() {
