@@ -55,6 +55,8 @@ public class ProcurementManagerConverter {
 		Gender gender = procurementManager.getGender();
 		String profession = procurementManager.getProfession();
 		String companyName = procurementManager.getCompanyName();
+		double companyLatitude = procurementManager.getCompanyLatitude();
+		double companyLongitude = procurementManager.getCompanyLongitude();
 		int penaltyPoints = procurementManager.getPenaltyPoints();
 		int loyaltyPoints = procurementManager.getLoyaltyPoints();
 		LoyaltyProgramDTO loyaltyProgram = 
@@ -67,8 +69,9 @@ public class ProcurementManagerConverter {
 		ProcurementManagerDTO procurementManagerDTO = new ProcurementManagerDTO(id, roles, 
 				isEnabled, userCode, emailAddress, username, password, lastPasswordResetDate, 
 				firstName, lastName, residence, populatedPlace, country, phoneNumber, 
-				personalIdentityNumber, gender, profession, companyName, penaltyPoints, 
-				loyaltyPoints, loyaltyProgram, exchangeTerms, complaints);
+				personalIdentityNumber, gender, profession, companyName, companyLatitude, 
+				companyLongitude, penaltyPoints, loyaltyPoints, loyaltyProgram, exchangeTerms, 
+				complaints);
 		
 		return procurementManagerDTO;
 	}

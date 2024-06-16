@@ -50,12 +50,15 @@ public class SystemAdministratorConverter {
 		Gender gender = systemAdministrator.getGender();
 		String profession = systemAdministrator.getProfession();
 		String companyName = systemAdministrator.getCompanyName();
+		double companyLatitude = systemAdministrator.getCompanyLatitude();
+		double companyLongitude = systemAdministrator.getCompanyLongitude();
 		Timestamp employedSince = systemAdministrator.getEmployedSince();
 		
 		SystemAdministratorDTO systemAdministratorDTO = new SystemAdministratorDTO(id, roles, 
 				isEnabled, userCode, emailAddress, username, password, lastPasswordResetDate, 
 				firstName, lastName, residence, populatedPlace, country, phoneNumber, 
-				personalIdentityNumber, gender, profession, companyName, employedSince);
+				personalIdentityNumber, gender, profession, companyName, companyLatitude, 
+				companyLongitude, employedSince);
 		
 		return systemAdministratorDTO;
 	}

@@ -111,6 +111,9 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		String profession = procurementManagerRegistrationReqDTO.getProfession();
 		String companyName = procurementManagerRegistrationReqDTO.getCompanyName();
 		
+		double companyLatitude = 45.25076069584408;
+		double companyLongitude = 19.824365676452167;
+		
 		int penaltyPoints = 0;
 		int loyaltyPoints = 0;
 		LoyaltyProgram loyaltyProgram = loyaltyProgramService.findById(1);
@@ -120,8 +123,8 @@ public class ProcurementManagerServiceImpl implements ProcurementManagerService 
 		ProcurementManager newProcurementManager = new ProcurementManager(0, roles, isEnabled, 
 				userCode, emailAddress, username, password, lastPasswordResetDate, firstName, 
 				lastName, residence, populatedPlace, country, phoneNumber, personalIdentityNumber, 
-				gender, profession, companyName, penaltyPoints, loyaltyPoints, loyaltyProgram, 
-				exchangeTerms, complaints);
+				gender, profession, companyName, companyLatitude, companyLongitude, penaltyPoints, 
+				loyaltyPoints, loyaltyProgram, exchangeTerms, complaints);
 		
 		return procurementManagerRepository.save(newProcurementManager);
 	}

@@ -21,12 +21,14 @@ public class CompanyAdministratorDTO extends UserDTO {
 			String userCode, String emailAddress, String username, String password, 
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, String personalIdentityNumber, 
-			Gender gender, String profession, String companyName, long companyId, int penaltyPoints, 
-			int loyaltyPoints, LoyaltyProgramDTO loyaltyProgram, List<ExchangeTermDTO> exchangeTerms, 
+			Gender gender, String profession, String companyName, double companyLatitude, 
+			double companyLongitude, long companyId, int penaltyPoints, int loyaltyPoints, 
+			LoyaltyProgramDTO loyaltyProgram, List<ExchangeTermDTO> exchangeTerms, 
 			List<ComplaintDTO> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
-				phoneNumber, personalIdentityNumber, gender, profession, companyName);
+				phoneNumber, personalIdentityNumber, gender, profession, companyName, 
+				companyLatitude, companyLongitude);
 		
 		this.companyId = companyId;
 		this.penaltyPoints = penaltyPoints;

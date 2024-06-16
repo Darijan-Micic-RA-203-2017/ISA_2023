@@ -18,11 +18,12 @@ export class CompanyAdministrator extends User {
             emailAddress: string, username: string, password: string | null, 
             lastPasswordResetDate: number | DateTime | null, firstName: string, lastName: string, residence: string, 
             populatedPlace: string, country: string, phoneNumber: string, personalIdentityNumber: string, gender: string, 
-            profession: string | null, companyName: string | null, companyId: number, penaltyPoints: number, 
-            loyaltyPoints: number, loyaltyProgram: LoyaltyProgram, exchangeTerms: ExchangeTerm[], complaints: Complaint[]) {
+            profession: string | null, companyName: string | null, companyLatitude: number, companyLongitude: number, 
+            companyId: number, penaltyPoints: number, loyaltyPoints: number, loyaltyProgram: LoyaltyProgram, 
+            exchangeTerms: ExchangeTerm[], complaints: Complaint[]) {
         super(type, id, roles, isEnabled, userCode, emailAddress, username, password, lastPasswordResetDate, firstName, 
                 lastName, residence, populatedPlace, country, phoneNumber, personalIdentityNumber, gender, profession, 
-                companyName);
+                companyName, companyLatitude, companyLongitude);
 
         this.companyId = companyId;
         this.penaltyPoints = penaltyPoints;

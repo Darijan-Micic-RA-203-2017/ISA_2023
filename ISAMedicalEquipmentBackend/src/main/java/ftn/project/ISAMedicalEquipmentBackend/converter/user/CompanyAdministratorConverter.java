@@ -55,6 +55,8 @@ public class CompanyAdministratorConverter {
 		Gender gender = companyAdministrator.getGender();
 		String profession = companyAdministrator.getProfession();
 		String companyName = companyAdministrator.getCompanyName();
+		double companyLatitude = companyAdministrator.getCompanyLatitude();
+		double companyLongitude = companyAdministrator.getCompanyLongitude();
 		long companyId = companyAdministrator.getCompany().getId();
 		int penaltyPoints = companyAdministrator.getPenaltyPoints();
 		int loyaltyPoints = companyAdministrator.getLoyaltyPoints();
@@ -68,8 +70,9 @@ public class CompanyAdministratorConverter {
 		CompanyAdministratorDTO companyAdministratorDTO = new CompanyAdministratorDTO(id, roles, 
 				isEnabled, userCode, emailAddress, username, password, lastPasswordResetDate, 
 				firstName, lastName, residence, populatedPlace, country, phoneNumber, 
-				personalIdentityNumber, gender, profession, companyName, companyId, penaltyPoints, 
-				loyaltyPoints, loyaltyProgram, exchangeTerms, complaints);
+				personalIdentityNumber, gender, profession, companyName, companyLatitude, 
+				companyLongitude,  companyId, penaltyPoints, loyaltyPoints, loyaltyProgram, 
+				exchangeTerms, complaints);
 		
 		return companyAdministratorDTO;
 	}

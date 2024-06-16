@@ -37,6 +37,8 @@ public class UserDTO {
 	protected Gender gender;
 	protected String profession;
 	protected String companyName;
+	protected double companyLatitude;
+	protected double companyLongitude;
 	
 	public UserDTO() {}
 	
@@ -44,7 +46,7 @@ public class UserDTO {
 			String emailAddress, String username, String password, Timestamp lastPasswordResetDate, 
 			String firstName, String lastName, String residence, String populatedPlace, 
 			String country, String phoneNumber, String personalIdentityNumber, Gender gender, 
-			String profession, String companyName) {
+			String profession, String companyName, double companyLatitude, double companyLongitude) {
 		this.id = id;
 		this.roles = roles;
 		this.isEnabled = isEnabled;
@@ -63,6 +65,8 @@ public class UserDTO {
 		this.gender = gender;
 		this.profession = profession;
 		this.companyName = companyName;
+		this.companyLatitude = companyLatitude;
+		this.companyLongitude = companyLongitude;
 	}
 	
 	public long getId() {
@@ -210,5 +214,21 @@ public class UserDTO {
 	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	
+	public double getCompanyLatitude() {
+		return companyLatitude;
+	}
+	
+	public void setCompanyLatitude(double companyLatitude) {
+		this.companyLatitude = companyLatitude;
+	}
+	
+	public double getCompanyLongitude() {
+		return companyLongitude;
+	}
+	
+	public void setCompanyLongitude(double companyLongitude) {
+		this.companyLongitude = companyLongitude;
 	}
 }

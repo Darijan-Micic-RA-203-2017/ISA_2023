@@ -41,11 +41,12 @@ public class ProcurementManager extends User {
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, 
 			String personalIdentityNumber, Gender gender, String profession, String companyName, 
-			int penaltyPoints, int loyaltyPoints, LoyaltyProgram loyaltyProgram, 
-			Set<ExchangeTerm> exchangeTerms, Set<Complaint> complaints) {
+			double companyLatitude, double companyLongitude, int penaltyPoints, int loyaltyPoints, 
+			LoyaltyProgram loyaltyProgram, Set<ExchangeTerm> exchangeTerms, Set<Complaint> complaints) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
-				phoneNumber, personalIdentityNumber, gender, profession, companyName);
+				phoneNumber, personalIdentityNumber, gender, profession, companyName, 
+				companyLatitude, companyLongitude);
 		
 		this.penaltyPoints = penaltyPoints;
 		this.loyaltyPoints = loyaltyPoints;

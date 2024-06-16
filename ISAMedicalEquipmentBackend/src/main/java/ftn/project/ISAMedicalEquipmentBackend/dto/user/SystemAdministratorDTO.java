@@ -15,10 +15,11 @@ public class SystemAdministratorDTO extends UserDTO {
 			Timestamp lastPasswordResetDate, String firstName, String lastName, String residence, 
 			String populatedPlace, String country, String phoneNumber, 
 			String personalIdentityNumber, Gender gender, String profession, String companyName, 
-			Timestamp employedSince) {
+			double companyLatitude, double companyLongitude, Timestamp employedSince) {
 		super(id, roles, isEnabled, userCode, emailAddress, username, password, 
 				lastPasswordResetDate, firstName, lastName, residence, populatedPlace, country, 
-				phoneNumber, personalIdentityNumber, gender, profession, companyName);
+				phoneNumber, personalIdentityNumber, gender, profession, companyName, 
+				companyLatitude, companyLongitude);
 		
 		this.employedSince = employedSince;
 	}

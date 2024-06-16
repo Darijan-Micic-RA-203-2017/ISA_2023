@@ -10,10 +10,11 @@ export class SystemAdministrator extends User {
             emailAddress: string, username: string, password: string | null, 
             lastPasswordResetDate: number | DateTime | null, firstName: string, lastName: string, residence: string, 
             populatedPlace: string, country: string, phoneNumber: string, personalIdentityNumber: string, gender: string, 
-            profession: string | null, companyName: string | null, employedSince: number | DateTime) {
+            profession: string | null, companyName: string | null, companyLatitude: number, companyLongitude: number, 
+            employedSince: number | DateTime) {
         super(type, id, roles, isEnabled, userCode, emailAddress, username, password, lastPasswordResetDate, firstName, 
                 lastName, residence, populatedPlace, country, phoneNumber, personalIdentityNumber, gender, profession, 
-                companyName);
+                companyName, companyLatitude, companyLongitude);
 
         if (DateTime.isDateTime(employedSince)) {
             this.employedSince = employedSince;

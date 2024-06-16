@@ -91,13 +91,19 @@ public abstract class User implements UserDetails {
 	@Column(name = "company_name")
 	protected String companyName;
 	
+	@Column(name = "company_latitude", nullable = false)
+	protected double companyLatitude;
+	
+	@Column(name = "company_longitude", nullable = false)
+	protected double companyLongitude;
+	
 	public User() {}
 	
 	public User(long id, Set<UserRole> roles, boolean isEnabled, String userCode, 
 			String emailAddress, String username, String password, Timestamp lastPasswordResetDate, 
 			String firstName, String lastName, String residence, String populatedPlace, 
 			String country, String phoneNumber, String personalIdentityNumber, Gender gender, 
-			String profession, String companyName) {
+			String profession, String companyName, double companyLatitude, double companyLongitude) {
 		this.id = id;
 		this.roles = roles;
 		this.isEnabled = isEnabled;
@@ -116,6 +122,8 @@ public abstract class User implements UserDetails {
 		this.gender = gender;
 		this.profession = profession;
 		this.companyName = companyName;
+		this.companyLatitude = companyLatitude;
+		this.companyLongitude = companyLongitude;
 	}
 	
 	public long getId() {
@@ -266,6 +274,22 @@ public abstract class User implements UserDetails {
 	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	
+	public double getCompanyLatitude() {
+		return companyLatitude;
+	}
+	
+	public void setCompanyLatitude(double companyLatitude) {
+		this.companyLatitude = companyLatitude;
+	}
+	
+	public double getCompanyLongitude() {
+		return companyLongitude;
+	}
+	
+	public void setCompanyLongitude(double companyLongitude) {
+		this.companyLongitude = companyLongitude;
 	}
 	
 	@JsonIgnore
