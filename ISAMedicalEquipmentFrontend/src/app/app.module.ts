@@ -27,6 +27,7 @@ import { ActivateAccountComponent } from './components/activate-account/activate
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { MapOfOrderTransportComponent } from './components/map-of-order-transport/map-of-order-transport.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -70,7 +71,8 @@ const MaterialComponents = [
     ActivateAccountComponent,
     LandingPageComponent,
     CompanyProfileComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    MapOfOrderTransportComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,14 @@
+/* REFERENCE: https://developer.tomtom.com/blog/build-different/using-tomtom-maps-sdk-angular-and-typescript/ */
+@import "@tomtom-international/web-sdk-maps";
+
+#mapDiv {
+    box-sizing: border-box;
+    height: 500px;
+    /* REFERENCE: https://stackoverflow.com/questions/14590913/div-extends-beyond-screen */
+    width: calc(100% - 6w);
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+}
