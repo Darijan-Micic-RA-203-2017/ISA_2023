@@ -9,6 +9,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { MapOfOrderTransportComponent } from './components/map-of-order-transport/map-of-order-transport.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'activate-account/:userCode', component: ActivateAccountComponent },
   { path: 'company/:id', component: CompanyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] },
-  { path: 'my-profile', component: MyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] }
+  { path: 'my-profile', component: MyProfileComponent, canActivate: [OnlyAuthenticatedUsersGuard] },
+  { path: 'map-of-order-transport', component: MapOfOrderTransportComponent, canActivate: [ OnlyAuthenticatedUsersGuard ] }
 ];
 
 @NgModule({
