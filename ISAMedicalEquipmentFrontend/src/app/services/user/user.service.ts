@@ -12,6 +12,7 @@ import { User } from 'src/app/domain/user/user';
 })
 export class UserService {
   private usersControllerURL: string = 'http://localhost:8080/users';
+  private findUserByUsernameURL: string = this.usersControllerURL.concat('/find-by-username');
   private procurementManagerRegistrationURL: string = 
       this.usersControllerURL.concat('/register-as-a-procurement-manager');
   private accountActivationURL: string = this.usersControllerURL.concat('/activate-account');
@@ -24,6 +25,14 @@ export class UserService {
     });
 
     return this.httpClient.get(this.usersControllerURL.concat(`/${id}`), { headers: headers });
+  }
+
+  findByUsername(username: string): Observable<any> {
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    return this.httpClient.get(this.findUserByUsernameURL.concat(`/${username}`), { headers: headers });
   }
 
   registerAsAProcurementManager(procurementManagerRegistrationReq: ProcurementManagerRegistrationReq): Observable<any> {
